@@ -98,7 +98,7 @@
           "text": "unity"
         },
         "项目3": {
-          "status": "other",
+          "status": "doing",
           "text": "夏校"
         },
         "项目4": {
@@ -134,7 +134,7 @@
           "text": "完成 unity"
         },
         "项目3": {
-          "status": "other",
+          "status": "doing",
           "text": "第二个项目"
         },
         "项目4": {
@@ -166,7 +166,7 @@
           "text": ""
         },
         "Unity项目": {
-          "status": "done",
+          "status": "doing",
           "text": "猫咪模拟经营"
         },
         "项目3": {
@@ -178,7 +178,7 @@
           "text": ""
         }
       },
-      "completed": true
+      "completed": false
     },
     {
       "id": 6,
@@ -292,7 +292,7 @@
       "id": 9,
       "name": "黄若雨",
       "group": "27级",
-      "coming": true,
+      "coming": false,
       "master": false,
       "vip": "",
       "direction": "",
@@ -528,42 +528,6 @@
         "Unity项目": {
           "status": "doing",
           "text": "项目"
-        },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        }
-      },
-      "completed": false
-    },
-    {
-      "id": 16,
-      "name": "Christian",
-      "group": "27级",
-      "coming": true,
-      "master": false,
-      "vip": "",
-      "direction": "",
-      "courses": {
-        "基础课1": {
-          "status": "done",
-          "text": "程序基础"
-        },
-        "基础课2": {
-          "status": "none",
-          "text": ""
-        },
-        "桌游项目": {
-          "status": "none",
-          "text": ""
-        },
-        "Unity项目": {
-          "status": "doing",
-          "text": ""
         },
         "项目3": {
           "status": "none",
@@ -850,11 +814,11 @@
           "text": "桌游"
         },
         "Unity项目": {
-          "status": "done",
+          "status": "doing",
           "text": "UE 马"
         },
         "项目3": {
-          "status": "other",
+          "status": "doing",
           "text": "Unity"
         },
         "项目4": {
@@ -910,7 +874,7 @@
       "direction": "",
       "courses": {
         "基础课1": {
-          "status": "done",
+          "status": "doing",
           "text": "手机界面"
         },
         "基础课2": {
@@ -922,7 +886,7 @@
           "text": ""
         },
         "Unity项目": {
-          "status": "doing",
+          "status": "none",
           "text": ""
         },
         "项目3": {
@@ -990,19 +954,19 @@
           "text": "基础课"
         },
         "桌游项目": {
-          "status": "done",
+          "status": "none",
           "text": ""
         },
         "Unity项目": {
-          "status": "done",
+          "status": "doing",
           "text": "unity拼图"
         },
         "项目3": {
-          "status": "doing",
+          "status": "none",
           "text": ""
         },
         "项目4": {
-          "status": "doing",
+          "status": "none",
           "text": ""
         }
       },
@@ -1371,7 +1335,7 @@
     {
       "id": 40,
       "name": "Christine",
-      "group": "未分组",
+      "group": "27级",
       "coming": true,
       "master": false,
       "vip": "",
@@ -1396,6 +1360,42 @@
         "项目3": {
           "status": "none",
           "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 31,
+      "name": "刘易佳和",
+      "group": "28级",
+      "coming": false,
+      "master": true,
+      "vip": "",
+      "direction": "美本",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "桌游"
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "unity"
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "UE"
         },
         "项目4": {
           "status": "none",
@@ -1758,5 +1758,5 @@
       []
     ]
   },
-  "exportTime": "2026-06-25T08:55:23.080Z"
+  "exportTime": "2026-06-25T08:59:36.703Z"
 }

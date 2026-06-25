@@ -441,6 +441,74 @@ tr:hover td{background:#f8fbff}
   #tab-progress table{min-width:760px}
   #tab-progress .cell{min-width:54px}
 }
+
+/* iPhone portrait app layout */
+@media (max-width:520px){
+  html,body{height:100dvh;overflow:hidden}
+  body{display:flex;flex-direction:column;padding-bottom:0;background:#f6f8fb}
+  .sidebar{position:static;width:100%;min-width:0;height:38px;padding:5px 6px;gap:4px;overflow:visible;border-right:0;border-bottom:var(--hairline)}
+  .sidebar-logo,.sidebar-user{display:none}
+  .nav-item{flex:1;justify-content:center;padding:6px 4px;margin:0;border-radius:9px;font-size:10px;gap:0}
+  .nav-item .dot{display:none}
+  .main{height:calc(100dvh - 38px);overflow:hidden}
+  .topbar{position:static;height:36px;min-height:36px;padding:4px 8px}
+  .topbar .title,.topbar .date{display:none}
+  .top-actions{width:100%;justify-content:flex-end;gap:5px}
+  .top-actions>.btn{height:28px;padding:4px 8px;font-size:10px}
+  .data-menu summary{height:28px;padding:5px 9px;font-size:10px}
+  .menu-panel{right:8px;top:72px;min-width:138px}
+  .content{height:calc(100dvh - 74px);overflow:hidden;padding:6px}
+  #mainTabs{display:none}
+  #tab-progress{height:100%}
+  #tab-progress .panel{height:100%;display:flex;flex-direction:column;margin:0;border-radius:13px}
+  #tab-progress .panel-header{min-height:34px;padding:6px 8px;gap:6px}
+  #tab-progress .panel-header h2{font-size:13px}
+  #tab-progress .panel-header .count{font-size:10px;margin-left:auto}
+  #tab-progress .sub-tabs{gap:4px;margin:0}
+  #tab-progress .sub-tabs .tab-btn{padding:3px 8px;font-size:10px;border-radius:8px}
+  #tab-progress .toolbar{display:grid;grid-template-columns:minmax(0,1fr) 66px 66px 54px;gap:4px;padding:5px 6px}
+  #tab-progress .toolbar input,
+  #tab-progress .toolbar select,
+  #tab-progress .toolbar .btn{height:28px;min-width:0;width:100%;padding:4px 6px;font-size:10px;border-radius:8px!important}
+  #tab-progress .table-wrap{flex:1;overflow:auto;-webkit-overflow-scrolling:touch}
+  #tab-progress table{width:100%;min-width:0!important;table-layout:fixed;font-size:10px}
+  #tab-progress th{padding:5px 2px;font-size:0}
+  #tab-progress td{padding:3px 2px}
+  #tab-progress th:nth-child(1),
+  #tab-progress td:nth-child(1){display:none}
+  #tab-progress th:nth-child(2){width:48px;font-size:0}
+  #tab-progress th:nth-child(2)::after{content:'姓名';font-size:10px}
+  #tab-progress th:nth-child(3){width:28px;font-size:0}
+  #tab-progress th:nth-child(3)::after{content:'勤';font-size:10px}
+  #tab-progress th:nth-child(4),
+  #tab-progress th:nth-child(5),
+  #tab-progress th:nth-child(6),
+  #tab-progress th:nth-child(7),
+  #tab-progress th:nth-child(8),
+  #tab-progress th:nth-child(9){width:28px}
+  #tab-progress th:nth-child(4)::after{content:'基1';font-size:10px}
+  #tab-progress th:nth-child(5)::after{content:'基2';font-size:10px}
+  #tab-progress th:nth-child(6)::after{content:'桌';font-size:10px}
+  #tab-progress th:nth-child(7)::after{content:'U';font-size:10px}
+  #tab-progress th:nth-child(8)::after{content:'3';font-size:10px}
+  #tab-progress th:nth-child(9)::after{content:'4';font-size:10px}
+  #tab-progress th:nth-child(10){width:28px;font-size:0}
+  #tab-progress th:nth-child(10)::after{content:'V';font-size:10px}
+  #tab-progress th:nth-child(11){width:40px;font-size:0}
+  #tab-progress th:nth-child(11)::after{content:'方向';font-size:10px}
+  #tab-progress th:nth-child(12){width:54px;font-size:0}
+  #tab-progress th:nth-child(12)::after{content:'操作';font-size:10px}
+  #tab-progress .section-label{padding:4px 8px;font-size:11px}
+  #tab-progress .name-cell{min-width:0;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #tab-progress .course-chip{width:22px;min-width:22px;height:16px;min-height:16px;font-size:9px}
+  #tab-progress .att-tag{padding:1px 5px;font-size:9px;white-space:nowrap}
+  #tab-progress .dir-tag{display:inline-block;max-width:38px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:1px 5px;font-size:9px}
+  #tab-progress .row-actions{grid-template-columns:repeat(2,22px);gap:2px;min-width:46px;justify-content:center}
+  #tab-progress .row-actions .btn-sm{width:22px;height:18px;padding:0;font-size:0;border-radius:6px}
+  #tab-progress .row-actions .btn-sm::after{content:attr(data-mobile);font-size:9px;line-height:18px}
+  #tab-progress td[style*="min-width:40px"]{font-size:9px!important;max-width:28px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #tab-schedule,#tab-kpi,#tab-overview{height:100%;overflow:auto}
+}
 </style>
 </head>
 <body>
@@ -780,10 +848,10 @@ function renderProgress() {
       html+=`<td onclick="editVip(${s.id})" style="cursor:pointer;font-size:12px;min-width:40px">${s.vip||'<span style="color:#ccc">-</span>'}</td>
         <td><span class="dir-tag dir-${s.direction||'其他'}" onclick="editDirection(${s.id})">${s.direction||'未设置'}</span></td>
         <td><div class="row-actions">
-          ${currentStudentSubTab==='active'?`<button class="btn btn-success btn-sm" onclick="markComplete(${s.id})">完成</button>`:`<button class="btn btn-gray btn-sm" onclick="markActive(${s.id})">恢复</button>`}
-          <button class="btn btn-gray btn-sm" onclick="editGroup(${s.id})" title="改年级">年级</button>
-          <button class="btn btn-gray btn-sm" onclick="toggleMaster(${s.id})" title="主导师">${s.master?'主导师':'导师'}</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id})">删除</button>
+          ${currentStudentSubTab==='active'?`<button class="btn btn-success btn-sm" data-mobile="完" onclick="markComplete(${s.id})">完成</button>`:`<button class="btn btn-gray btn-sm" data-mobile="恢" onclick="markActive(${s.id})">恢复</button>`}
+          <button class="btn btn-gray btn-sm" data-mobile="级" onclick="editGroup(${s.id})" title="改年级">年级</button>
+          <button class="btn btn-gray btn-sm" data-mobile="${s.master?'主':'导'}" onclick="toggleMaster(${s.id})" title="主导师">${s.master?'主导师':'导师'}</button>
+          <button class="btn btn-danger btn-sm" data-mobile="删" onclick="deleteStudent(${s.id})">删除</button>
         </div></td></tr>`;
     });
   }

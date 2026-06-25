@@ -671,7 +671,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 13; // increment on each deploy to force refresh
+const DATA_VER = 14; // increment on each deploy to force refresh
 
 function load(key, fallback) {
   const storedVer = localStorage.getItem('data_version');
@@ -778,7 +778,7 @@ function defaultStudents() {
     mk(36,'王者枫景','27级',true,false,'TOP7','英研',[{s:'none',t:''},{s:'done',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目'},{s:'none',t:''}],false),
     mk(37,'陈思淼','27级',true,false,'top5','',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目'},{s:'none',t:''}],false),
     mk(38,'吴昱震','28级',true,false,'V8','美研',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目课'},{s:'none',t:''}],false),
-    mk(39,'黄泰志','27级',true,true,'V8','美研',[{s:'done',t:'大师课'},{s:'doing',t:'教研studio'},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目课'},{s:'none',t:''}],false),
+    mk(39,'黄泰志','27级',true,false,'V8','美研',[{s:'done',t:'大师课'},{s:'doing',t:'教研studio'},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目课'},{s:'none',t:''}],false),
   ];
 }
 
@@ -807,9 +807,26 @@ function normalizeStudents(list){
   return {list:list||[], migrated};
 }
 
+function hasActiveCourse(student) {
+  return Object.values(student?.courses || {}).some(course => course?.status === 'doing');
+}
+
+function syncCompletionForList(list) {
+  let changed = false;
+  (list || []).forEach(student => {
+    const nextCompleted = !hasActiveCourse(student);
+    if (student.completed !== nextCompleted) {
+      student.completed = nextCompleted;
+      changed = true;
+    }
+  });
+  return changed;
+}
+
 let students = (function(){ const d=defaultStudents(); const normalized=normalizeStudents(load('student_board_v2_merged',d)); const s=normalized.list;
   const ids=new Set(s.map(x=>x.id)); let modified=normalized.migrated;
   d.forEach(def=>{ if(!ids.has(def.id)){ s.push(def); modified=true; } });
+  if(syncCompletionForList(s)) modified=true;
   if(modified) save('student_board_v2_merged',s); return s; })();
 let currentStudentSubTab = 'active'; // active / completed
 
@@ -880,11 +897,12 @@ document.querySelectorAll('.nav-item, #mainTabs .tab-btn').forEach(el=>{
 
 // ==================== STUDENT PROGRESS TAB ====================
 function renderProgress() {
+  if(syncCompletionForList(students)) save('student_board_v2_merged',students);
   const searchQ = (document.getElementById('stuSearch')?.value||'').toLowerCase();
   const dirQ = (document.getElementById('stuDir')?.value||'all');
   const groupQ = (document.getElementById('stuGroup')?.value||'all');
 
-  let list = students.filter(s=>currentStudentSubTab==='active'?!s.completed:s.completed);
+  let list = students.filter(s=>currentStudentSubTab==='active'?hasActiveCourse(s):!hasActiveCourse(s));
   if(searchQ) list=list.filter(s=>s.name.toLowerCase().includes(searchQ)||Object.values(s.courses||{}).some(c=>(c.text||'').toLowerCase().includes(searchQ)));
   if(dirQ!=='all') list=list.filter(s=>s.direction===dirQ);
   if(groupQ!=='all') list=list.filter(s=>s.group===groupQ);
@@ -979,8 +997,8 @@ function addStudent(){
   save('student_board_v2_merged',students);
   renderProgress();setTimeout(()=>editStudentName(mid),200);
 }
-function markComplete(id){const s=students.find(x=>x.id===id);if(s){s.completed=true;save('student_board_v2_merged',students);renderProgress();}}
-function markActive(id){const s=students.find(x=>x.id===id);if(s){s.completed=false;save('student_board_v2_merged',students);renderProgress();}}
+function markComplete(id){const s=students.find(x=>x.id===id);if(s){Object.values(s.courses||{}).forEach(c=>{if(c.status==='doing')c.status='done'});syncCompletionForList(students);save('student_board_v2_merged',students);renderProgress();}}
+function markActive(id){const s=students.find(x=>x.id===id);if(s){const first=COURSES.find(c=>(s.courses[c]?.status||'none')==='none')||COURSES[0];s.courses[first]=s.courses[first]||{status:'none',text:''};s.courses[first].status='doing';syncCompletionForList(students);save('student_board_v2_merged',students);renderProgress();}}
 function toggleComing(id){const s=students.find(x=>x.id===id);if(s){s.coming=!s.coming;save('student_board_v2_merged',students);renderProgress();}}
 function toggleMaster(id){const s=students.find(x=>x.id===id);if(s){s.master=!s.master;save('student_board_v2_merged',students);renderProgress();}}
 function deleteStudent(id){const s=students.find(x=>x.id===id);if(!s)return;if(!confirm(`确定删除「${s.name}」？不可撤销！`))return;students=students.filter(x=>x.id!==id);save('student_board_v2_merged',students);renderProgress();}
@@ -1107,7 +1125,7 @@ function clearKpi(q,idx){kpiData[q].splice(idx,1);save('kpi_board_data_merged',k
 
 // ==================== SCHEDULE TAB ====================
 function renderSchedule(){
-  const allN=[...new Set(students.filter(s=>!s.completed).map(s=>s.name).concat(Object.values(schData).flat(2)))];
+  const allN=[...new Set(students.filter(hasActiveCourse).map(s=>s.name).concat(Object.values(schData).flat(2)))];
   document.getElementById('quickAddBar').innerHTML=allN.map(s=>`<button onclick="schQuickPick('${s}')">+ ${s}</button>`).join('');
   document.getElementById('newStudTime').innerHTML='<option value="">时段</option>'+TIME_SLOTS.map(t=>`<option value="${t}">${t}</option>`).join('');
 
@@ -1152,8 +1170,9 @@ function schCopy(){let t='时间\t周日\t周一\t周二\t周三\t周四\n';TIME
 
 // ==================== OVERVIEW TAB ====================
 function renderOverview(){
-  const active=students.filter(s=>!s.completed);
-  const done=students.filter(s=>s.completed);
+  if(syncCompletionForList(students)) save('student_board_v2_merged',students);
+  const active=students.filter(hasActiveCourse);
+  const done=students.filter(s=>!hasActiveCourse(s));
   const all=Object.values(schData).flat(2);const tl=all.length;const empty=TIME_SLOTS.length*5-tl;
   const totalDone=active.reduce((sum,s)=>sum+Object.values(s.courses).filter(c=>c.status==='done').length,0);
   const totalPoss=active.length*6;

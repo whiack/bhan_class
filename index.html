@@ -450,17 +450,18 @@ tr:hover td{background:#f8fbff}
   .sidebar-logo,.sidebar-user{display:none}
   .nav-item{flex:1;justify-content:center;padding:6px 4px;margin:0;border-radius:9px;font-size:10px;gap:0}
   .nav-item .dot{display:none}
-  .main{height:calc(100dvh - 38px);overflow:hidden}
+  .main{height:calc(100dvh - 38px);min-height:0;display:flex;flex-direction:column;overflow:hidden}
   .topbar{position:static;height:36px;min-height:36px;padding:4px 8px}
   .topbar .title,.topbar .date{display:none}
   .top-actions{width:100%;justify-content:flex-end;gap:5px}
   .top-actions>.btn{height:28px;padding:4px 8px;font-size:10px}
   .data-menu summary{height:28px;padding:5px 9px;font-size:10px}
   .menu-panel{right:8px;top:72px;min-width:138px}
-  .content{height:calc(100dvh - 74px);overflow:hidden;padding:6px}
+  .content{height:calc(100dvh - 74px);min-height:0;display:flex;flex-direction:column;overflow:hidden;padding:6px}
   #mainTabs{display:none}
-  #tab-progress{height:100%;min-height:0}
-  #tab-progress .panel{height:100%;min-height:0;display:flex;flex-direction:column;margin:0;border-radius:13px}
+  .tab-content.active{flex:1;min-height:0;height:100%;overflow:hidden}
+  #tab-progress{height:100%;min-height:0;overflow:hidden}
+  #tab-progress .panel{height:100%;min-height:0;display:flex;flex-direction:column;margin:0;border-radius:13px;overflow:hidden}
   #tab-progress .panel-header{min-height:34px;padding:6px 8px;gap:6px}
   #tab-progress .panel-header h2{font-size:13px}
   #tab-progress .panel-header .count{font-size:10px;margin-left:auto}
@@ -470,7 +471,7 @@ tr:hover td{background:#f8fbff}
   #tab-progress .toolbar input,
   #tab-progress .toolbar select,
   #tab-progress .toolbar .btn{height:28px;min-width:0;width:100%;padding:4px 6px;font-size:10px;border-radius:8px!important}
-  #tab-progress .table-wrap{flex:1;min-height:0;overflow:auto!important;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+  #tab-progress .table-wrap{flex:1 1 auto;min-height:0;height:0;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior:contain}
   #tab-progress table{width:100%;min-width:0!important;table-layout:fixed;font-size:10px}
   #tab-progress th{padding:5px 2px;font-size:0}
   #tab-progress td{padding:3px 2px}

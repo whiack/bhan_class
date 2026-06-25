@@ -166,7 +166,7 @@
           "text": ""
         },
         "Unity项目": {
-          "status": "doing",
+          "status": "done",
           "text": "猫咪模拟经营"
         },
         "项目3": {
@@ -178,7 +178,7 @@
           "text": ""
         }
       },
-      "completed": false
+      "completed": true
     },
     {
       "id": 6,
@@ -850,7 +850,7 @@
           "text": "桌游"
         },
         "Unity项目": {
-          "status": "doing",
+          "status": "done",
           "text": "UE 马"
         },
         "项目3": {
@@ -862,7 +862,7 @@
           "text": "VR 程"
         }
       },
-      "completed": false
+      "completed": true
     },
     {
       "id": 25,
@@ -910,7 +910,7 @@
       "direction": "",
       "courses": {
         "基础课1": {
-          "status": "doing",
+          "status": "done",
           "text": "手机界面"
         },
         "基础课2": {
@@ -922,7 +922,7 @@
           "text": ""
         },
         "Unity项目": {
-          "status": "none",
+          "status": "doing",
           "text": ""
         },
         "项目3": {
@@ -990,19 +990,19 @@
           "text": "基础课"
         },
         "桌游项目": {
-          "status": "none",
+          "status": "done",
           "text": ""
         },
         "Unity项目": {
-          "status": "doing",
+          "status": "done",
           "text": "unity拼图"
         },
         "项目3": {
-          "status": "none",
+          "status": "doing",
           "text": ""
         },
         "项目4": {
-          "status": "none",
+          "status": "doing",
           "text": ""
         }
       },
@@ -1072,42 +1072,6 @@
         "项目3": {
           "status": "none",
           "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        }
-      },
-      "completed": false
-    },
-    {
-      "id": 31,
-      "name": "刘易佳和",
-      "group": "28级",
-      "coming": false,
-      "master": true,
-      "vip": "",
-      "direction": "美本",
-      "courses": {
-        "基础课1": {
-          "status": "none",
-          "text": ""
-        },
-        "基础课2": {
-          "status": "none",
-          "text": ""
-        },
-        "桌游项目": {
-          "status": "done",
-          "text": "桌游"
-        },
-        "Unity项目": {
-          "status": "doing",
-          "text": "unity"
-        },
-        "项目3": {
-          "status": "doing",
-          "text": "UE"
         },
         "项目4": {
           "status": "none",
@@ -1758,5 +1722,5 @@
       []
     ]
   },
-  "exportTime": "2026-06-25T08:48:07.946Z"
+  "exportTime": "2026-06-25T08:49:14.952Z"
 }

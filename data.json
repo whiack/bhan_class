@@ -1,0 +1,1685 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "name": "杨智源",
+      "group": "26级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "doing",
+          "text": "unity 虚拟主播"
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": true
+    },
+    {
+      "id": 2,
+      "name": "纪昂",
+      "group": "26级",
+      "coming": false,
+      "master": true,
+      "vip": "",
+      "direction": "英本",
+      "courses": {
+        "基础课1": {
+          "status": "doing",
+          "text": "桌游 查视频"
+        },
+        "基础课2": {
+          "status": "doing",
+          "text": "unity横版UI"
+        },
+        "项目3": {
+          "status": "other",
+          "text": ""
+        },
+        "项目4": {
+          "status": "other",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "doing",
+          "text": "屠老师 VR"
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "UE 俯视角"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 3,
+      "name": "苏畅",
+      "group": "27级",
+      "coming": true,
+      "master": true,
+      "vip": "",
+      "direction": "美本",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "done",
+          "text": "策划"
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "夏校"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "ue 程"
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "桌游 等视频"
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "unity"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 4,
+      "name": "沈雅丹",
+      "group": "27级",
+      "coming": true,
+      "master": true,
+      "vip": "",
+      "direction": "英研",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "完成 策划"
+        },
+        "基础课2": {
+          "status": "done",
+          "text": "完成 程序"
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "第二个项目"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "数媒项目"
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "桌游"
+        },
+        "Unity项目": {
+          "status": "done",
+          "text": "完成 unity"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 5,
+      "name": "毛一同",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "英研",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "done",
+          "text": "完成 程序"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "猫咪模拟经营"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 6,
+      "name": "邹晨笛",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "策划基础"
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "unity"
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 7,
+      "name": "刘思含",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "石"
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 8,
+      "name": "王楷仡",
+      "group": "27级",
+      "coming": true,
+      "master": true,
+      "vip": "",
+      "direction": "英本",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "done",
+          "text": "基础2"
+        },
+        "项目3": {
+          "status": "other",
+          "text": "屠老师"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "alevel"
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "桌游"
+        },
+        "Unity项目": {
+          "status": "done",
+          "text": "完成Btec"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 9,
+      "name": "黄若雨",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "画画"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 10,
+      "name": "陈牧天",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "studio"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 11,
+      "name": "钱星蓉",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "探索"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 12,
+      "name": "黄柯瑜",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "程序"
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 13,
+      "name": "蔡宜辰",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "家和万事兴"
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 14,
+      "name": "吕青蓝",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "基础课完成"
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "项目2d"
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 15,
+      "name": "陈天宇",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "studio"
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 16,
+      "name": "Christian",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "程序基础"
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 17,
+      "name": "唐瑞欣",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "项目 挤公交"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 18,
+      "name": "游溪",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 19,
+      "name": "何欣妍",
+      "group": "27级",
+      "coming": false,
+      "master": false,
+      "vip": "",
+      "direction": "英研",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "done",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "大师课？"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "邓 桌游"
+        },
+        "桌游项目": {
+          "status": "doing",
+          "text": "UE/VR"
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "unity"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 20,
+      "name": "辛颖",
+      "group": "27级",
+      "coming": false,
+      "master": true,
+      "vip": "",
+      "direction": "北欧",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "基础课"
+        },
+        "基础课2": {
+          "status": "done",
+          "text": "完成 美术"
+        },
+        "项目3": {
+          "status": "other",
+          "text": "ue 马老师"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "VR 程老师"
+        },
+        "桌游项目": {
+          "status": "doing",
+          "text": "桌游川剧"
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "game jam"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 21,
+      "name": "吴天哲",
+      "group": "27级",
+      "coming": false,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "程序"
+        },
+        "基础课2": {
+          "status": "done",
+          "text": "策划"
+        },
+        "项目3": {
+          "status": "other",
+          "text": "vr 程老师"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "ue 程老师"
+        },
+        "桌游项目": {
+          "status": "doing",
+          "text": "UE 程老师"
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "unity 项目"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 22,
+      "name": "徐晨阳",
+      "group": "27级",
+      "coming": false,
+      "master": false,
+      "vip": "",
+      "direction": "美研",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "完成策划"
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "done",
+          "text": "马老师"
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "doing",
+          "text": "影子"
+        },
+        "Unity项目": {
+          "status": "done",
+          "text": "完成 大师课"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 23,
+      "name": "刘夏乐",
+      "group": "27级",
+      "coming": false,
+      "master": false,
+      "vip": "",
+      "direction": "英研",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "自我救赎(等排版)"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 24,
+      "name": "张英特",
+      "group": "27级",
+      "coming": true,
+      "master": true,
+      "vip": "",
+      "direction": "美研",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "完成 策划"
+        },
+        "基础课2": {
+          "status": "done",
+          "text": "基础课"
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "Unity"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "VR 程"
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "桌游"
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "UE 马"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 25,
+      "name": "程浩真",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "英研",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "基础课"
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "Unity"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 26,
+      "name": "解亦成",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "doing",
+          "text": "手机界面"
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 27,
+      "name": "吕品一",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "unity塔罗牌"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 28,
+      "name": "王天",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "基础1"
+        },
+        "基础课2": {
+          "status": "done",
+          "text": "基础课"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "unity拼图"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 29,
+      "name": "闻韬",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "基础课"
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "doing",
+          "text": "插电线"
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 30,
+      "name": "毕飞扬",
+      "group": "28级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "日本",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "猫咪"
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "unity黏菌"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 31,
+      "name": "刘易佳和",
+      "group": "28级",
+      "coming": false,
+      "master": true,
+      "vip": "",
+      "direction": "美本",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "UE"
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "done",
+          "text": "桌游"
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "unity"
+        }
+      },
+      "completed": true
+    },
+    {
+      "id": 32,
+      "name": "汪恩瑶",
+      "group": "28级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "英本",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "上课"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 33,
+      "name": "沙裕来",
+      "group": "28级",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "美研",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "unity 项目课"
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 34,
+      "name": "蔡恩明",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "V3",
+      "direction": "其他",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "项目课"
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 35,
+      "name": "许波宇",
+      "group": "29级",
+      "coming": true,
+      "master": false,
+      "vip": "v8",
+      "direction": "日本",
+      "courses": {
+        "基础课1": {
+          "status": "doing",
+          "text": "基础课"
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 36,
+      "name": "王者枫景",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "TOP7",
+      "direction": "英研",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "done",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "项目"
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 37,
+      "name": "陈思淼",
+      "group": "27级",
+      "coming": true,
+      "master": false,
+      "vip": "top5",
+      "direction": "",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "项目"
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    },
+    {
+      "id": 38,
+      "name": "吴昱震",
+      "group": "28级",
+      "coming": true,
+      "master": false,
+      "vip": "V8",
+      "direction": "美研",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "项目课"
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
+    }
+  ],
+  "kpiData": {
+    "345": [],
+    "678": [
+      {
+        "name": "毕飞杨",
+        "project": "项目2",
+        "status": "差视频"
+      },
+      {
+        "name": "吕青蓝",
+        "project": "项目1",
+        "status": "差视频"
+      },
+      {
+        "name": "纪昂",
+        "project": "项目2",
+        "status": "差视频"
+      },
+      {
+        "name": "闻韬",
+        "project": "项目1",
+        "status": "已提交"
+      },
+      {
+        "name": "苏畅",
+        "project": "项目2 unity",
+        "status": "差视频"
+      },
+      {
+        "name": "黄泰志",
+        "project": "USC",
+        "status": "已提交"
+      },
+      {
+        "name": "邹晨笛",
+        "project": "MA专业项目一",
+        "status": "过审了"
+      },
+      {
+        "name": "毛一同",
+        "project": "项目2",
+        "status": "过审了"
+      },
+      {
+        "name": "王天",
+        "project": "商业时间",
+        "status": "过审了"
+      },
+      {
+        "name": "刘明浩",
+        "project": "商业实践项目-20H",
+        "status": "过审了"
+      },
+      {
+        "name": "陈纪羽",
+        "project": "USC",
+        "status": "已提交"
+      },
+      {
+        "name": "曲倬锐",
+        "project": "USC",
+        "status": "已提交"
+      },
+      {
+        "name": "汪恩瑶",
+        "project": "项目1",
+        "status": "给教务"
+      },
+      {
+        "name": "王天",
+        "project": "大师课",
+        "status": "等完成"
+      },
+      {
+        "name": "何晨嘉",
+        "project": "大师课",
+        "status": "等完成"
+      },
+      {
+        "name": "顾昊",
+        "project": "大师课",
+        "status": "等完成"
+      },
+      {
+        "name": "陈璐瑶",
+        "project": "大师课",
+        "status": "等完成"
+      },
+      {
+        "name": "李治林",
+        "project": "大师课",
+        "status": "等完成"
+      },
+      {
+        "name": "沈雅丹",
+        "project": "大师课",
+        "status": "等完成"
+      },
+      {
+        "name": "王天",
+        "project": "教研studio",
+        "status": "等完成"
+      },
+      {
+        "name": "黄泰志",
+        "project": "教研 studio",
+        "status": "等完成"
+      }
+    ],
+    "91011": [
+      {
+        "name": "唐瑞欣",
+        "project": "项目",
+        "status": "等完成"
+      },
+      {
+        "name": "钱星蓉",
+        "project": "项目",
+        "status": "等完成"
+      },
+      {
+        "name": "吕品一",
+        "project": "项目1",
+        "status": "等完成"
+      },
+      {
+        "name": "游溪",
+        "project": "项目1",
+        "status": "等完成"
+      },
+      {
+        "name": "程浩真",
+        "project": "项目1",
+        "status": "等完成"
+      },
+      {
+        "name": "张祎昊",
+        "project": "项目1",
+        "status": "等完成"
+      },
+      {
+        "name": "张祎昊",
+        "project": "基础课1",
+        "status": "等完成"
+      },
+      {
+        "name": "陈天宇",
+        "project": "项目2",
+        "status": "等完成"
+      },
+      {
+        "name": "蔡恩明",
+        "project": "项目课",
+        "status": "等完成"
+      },
+      {
+        "name": "陈思淼",
+        "project": "项目课",
+        "status": "等完成"
+      },
+      {
+        "name": "王天",
+        "project": "大师课2",
+        "status": "等完成"
+      },
+      {
+        "name": "许波宇",
+        "project": "项目",
+        "status": "等完成"
+      },
+      {
+        "name": "蔡欣悦",
+        "project": "项目",
+        "status": "等完成"
+      },
+      {
+        "name": "王者枫景",
+        "project": "基础课",
+        "status": "等完成"
+      },
+      {
+        "name": "许波宇",
+        "project": "基础课",
+        "status": "等完成"
+      },
+      {
+        "name": "王天",
+        "project": "基础课",
+        "status": "等完成"
+      },
+      {
+        "name": "Christine",
+        "project": "项目1",
+        "status": "等完成"
+      },
+      {
+        "name": "王者风景",
+        "project": "项目1",
+        "status": "等完成"
+      },
+      {
+        "name": "唐天一",
+        "project": "教研 studio",
+        "status": "等完成"
+      },
+      {
+        "name": "沙裕来",
+        "project": "项目1",
+        "status": "等完成"
+      }
+    ],
+    "120102": []
+  },
+  "schedule": {
+    "9:30": [
+      [],
+      [],
+      [],
+      [],
+      [
+        "usc 大师课"
+      ]
+    ],
+    "10:30": [
+      [
+        "陈天宇"
+      ],
+      [
+        "王天"
+      ],
+      [],
+      [
+        "吕青蓝"
+      ],
+      [
+        "教研studio"
+      ]
+    ],
+    "13:00": [
+      [
+        "蔡恩明"
+      ],
+      [
+        "许波宇"
+      ],
+      [
+        "吕品一"
+      ],
+      [
+        "吕品一"
+      ],
+      [
+        "许波宇"
+      ]
+    ],
+    "14:00": [
+      [],
+      [
+        "吕品一"
+      ],
+      [
+        "钱星蓉"
+      ],
+      [
+        "王者枫景"
+      ],
+      [
+        "陈思淼"
+      ]
+    ],
+    "15:00": [
+      [
+        "程浩真"
+      ],
+      [
+        "陈思淼"
+      ],
+      [
+        "何欣妍"
+      ],
+      [],
+      [
+        "吕青蓝"
+      ]
+    ],
+    "16:00": [
+      [
+        "吴昱震"
+      ],
+      [
+        "Christine"
+      ],
+      [
+        "游溪"
+      ],
+      [
+        "陈思淼"
+      ],
+      [
+        "解亦成"
+      ]
+    ],
+    "17:00": [
+      [],
+      [],
+      [],
+      [
+        "游溪"
+      ],
+      []
+    ]
+  },
+  "exportTime": "2026-06-24T10:06:23.686Z"
+}

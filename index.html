@@ -421,6 +421,11 @@ tr:hover td{background:#f8fbff}
 #tab-progress .section-label{padding:6px 12px;font-size:12px}
 #tab-progress .name-cell{min-width:58px;font-size:11px}
 #tab-progress .cell{min-height:26px;min-width:58px;padding:3px 5px;font-size:10px;border-radius:7px;line-height:1.15}
+#tab-progress .course-chip{width:34px;height:18px;min-width:34px;min-height:18px;padding:0;border-radius:999px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;letter-spacing:0}
+#tab-progress .course-chip.cell-none{background:#fff;border:1px dashed #d6dce5;color:#b8c0cc}
+#tab-progress .course-chip.cell-doing{background:#dff0ff;color:#0066cc}
+#tab-progress .course-chip.cell-done{background:#dff8e8;color:#07823f}
+#tab-progress .course-chip.cell-other{background:#eef2f6;color:#64748b}
 #tab-progress .dir-tag,
 #tab-progress .att-tag{font-size:10px;padding:2px 7px}
 #tab-progress .row-actions{display:grid;grid-template-columns:repeat(2,minmax(42px,auto));gap:3px;min-width:92px}
@@ -749,7 +754,7 @@ function renderProgress() {
       </div>
     </div>
     <div class="toolbar">
-      <input id="stuSearch" placeholder="🔍 搜索姓名..." oninput="renderProgress()" value="${searchQ||''}">
+      <input id="stuSearch" placeholder="搜索姓名或项目" oninput="renderProgress()" value="${searchQ||''}">
       <select id="stuDir" onchange="renderProgress()"><option value="all">全部方向</option>${DIR_OPTIONS.map(d=>`<option value="${d}" ${dirQ===d?'selected':''}>${d}</option>`).join('')}</select>
       <select id="stuGroup" onchange="renderProgress()"><option value="all">全部年级</option>${allGroups.map(g=>`<option value="${g}" ${groupQ===g?'selected':''}>${g}</option>`).join('')}</select>
       ${currentStudentSubTab==='active'?`<button class="btn btn-primary btn-sm" onclick="addStudent()">新增学生</button>`:''}
@@ -769,7 +774,8 @@ function renderProgress() {
         <td><span class="att-tag ${s.coming?'att-yes':'att-no'}" onclick="toggleComing(${s.id})">${s.coming?'✓':'✗不来'}</span></td>`;
       COURSES.forEach(c=>{
         const co=s.courses[c] || {status:'none',text:''};
-        html+=`<td onclick="editCourse(${s.id},'${c}')" title="点击编辑"><span class="cell cell-${co.status}">${cellIcon(co.status)} ${co.text||(co.status==='none'?'-':'')}</span></td>`;
+        const note=co.text?`${c}：${STATUS_LABELS[co.status]} · ${co.text}`:`${c}：${STATUS_LABELS[co.status]}`;
+        html+=`<td onclick="editCourse(${s.id},'${c}')" title="${esc(note)}"><span class="cell course-chip cell-${co.status}">${cellIcon(co.status)}</span></td>`;
       });
       html+=`<td onclick="editVip(${s.id})" style="cursor:pointer;font-size:12px;min-width:40px">${s.vip||'<span style="color:#ccc">-</span>'}</td>
         <td><span class="dir-tag dir-${s.direction||'其他'}" onclick="editDirection(${s.id})">${s.direction||'未设置'}</span></td>
@@ -787,7 +793,8 @@ function renderProgress() {
 }
 
 function setStudentSub(sub){currentStudentSubTab=sub;renderProgress();}
-function cellIcon(s){return {none:'○',doing:'🔄',done:'✅',other:'👤'}[s]||'○';}
+function cellIcon(s){return {none:'○',doing:'进',done:'✓',other:'他'}[s]||'○';}
+function esc(v){return String(v||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 
 function addStudent(){
   const grp=prompt('年级（如 26级、27级、28级）：','27级');if(!grp)return;

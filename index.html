@@ -671,7 +671,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 12; // increment on each deploy to force refresh
+const DATA_VER = 13; // increment on each deploy to force refresh
 
 function load(key, fallback) {
   const storedVer = localStorage.getItem('data_version');
@@ -852,7 +852,7 @@ function normalizeKpiData(data) {
 }
 
 // ---- Schedule data ----
-function defaultSched() { return {"9:30":[[],[],[],[],["usc 大师课"]],"10:30":[["陈天宇"],["王天"],[],["吕青蓝"],["教研studio"]],"13:00":[["蔡恩明"],["许波宇"],["吕品一"],["吕品一"],["许波宇"]],"14:00":[["黄泰志"],["吕品一"],["钱星蓉"],["王者枫景"],["陈思淼"]],"15:00":[["程浩真"],["陈思淼"],["何欣妍"],[],["吕青蓝"]],"16:00":[["吴昱震"],["Christine"],["游溪"],["陈思淼"],["解亦成"]],"17:00":[[],[],[],["游溪"],[]]}; }
+function defaultSched() { return {"9:30":[[],[],[],[],["usc 大师课"]],"10:30":[["陈天宇"],["王天"],[],["吕青蓝"],["教研studio"]],"13:00":[["蔡恩明"],["许波宇"],["吕品一"],["吕品一"],["许波宇"]],"14:00":[["黄泰志"],["吕品一"],["钱星蓉"],["王者枫景"],["陈思淼"]],"15:00":[["程浩真"],["陈思淼"],["何欣妍"],[],["吕青蓝"]],"16:00":[["吴昱震"],["Christine"],["游溪"],["陈思淼"],[]],"17:00":[[],[],[],["游溪"],[]]}; }
 
 let schData = load('sch_merged', defaultSched());
 let schUndo = load('sch_undo', []);

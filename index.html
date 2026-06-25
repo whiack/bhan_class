@@ -821,7 +821,35 @@ const KPI_Q_LABELS = {678:'678月（6-7-8月）',91011:'91011月（9-10-11月）
 function defaultKpi() { return {"345":[],"678":[{"name":"毕飞杨","project":"项目2","status":"差视频"},{"name":"吕青蓝","project":"项目1","status":"差视频"},{"name":"纪昂","project":"项目2","status":"差视频"},{"name":"闻韬","project":"项目1","status":"已提交"},{"name":"苏畅","project":"项目2 unity","status":"差视频"},{"name":"黄泰志","project":"USC","status":"已提交"},{"name":"邹晨笛","project":"MA专业项目一","status":"过审了"},{"name":"毛一同","project":"项目2","status":"过审了"},{"name":"王天","project":"商业时间","status":"过审了"},{"name":"刘明浩","project":"商业实践项目-20H","status":"过审了"},{"name":"陈纪羽","project":"USC","status":"已提交"},{"name":"曲倬锐","project":"USC","status":"已提交"},{"name":"汪恩瑶","project":"项目1","status":"给教务"},{"name":"王天","project":"大师课","status":"等完成"},{"name":"何晨嘉","project":"大师课","status":"等完成"},{"name":"顾昊","project":"大师课","status":"等完成"},{"name":"陈璐瑶","project":"大师课","status":"等完成"},{"name":"李治林","project":"大师课","status":"等完成"},{"name":"沈雅丹","project":"大师课","status":"等完成"},{"name":"王天","project":"教研studio","status":"等完成"},{"name":"黄泰志","project":"教研 studio","status":"等完成"}],"91011":[{"name":"唐瑞欣","project":"项目","status":"等完成"},{"name":"钱星蓉","project":"项目","status":"等完成"},{"name":"吕品一","project":"项目1","status":"等完成"},{"name":"游溪","project":"项目1","status":"等完成"},{"name":"程浩真","project":"项目1","status":"等完成"},{"name":"张祎昊","project":"项目1","status":"等完成"},{"name":"张祎昊","project":"基础课1","status":"等完成"},{"name":"陈天宇","project":"项目2","status":"等完成"},{"name":"蔡恩明","project":"项目课","status":"等完成"},{"name":"陈思淼","project":"项目课","status":"等完成"},{"name":"王天","project":"大师课2","status":"等完成"},{"name":"许波宇","project":"项目","status":"等完成"},{"name":"蔡欣悦","project":"项目","status":"等完成"},{"name":"王者枫景","project":"基础课","status":"等完成"},{"name":"许波宇","project":"基础课","status":"等完成"},{"name":"王天","project":"基础课","status":"等完成"},{"name":"Christine","project":"项目1","status":"等完成"},{"name":"王者风景","project":"项目1","status":"等完成"},{"name":"唐天一","project":"教研 studio","status":"等完成"},{"name":"沙裕来","project":"项目1","status":"等完成"}],"120102":[]}; }
 
 let kpiData = load('kpi_board_data_merged', defaultKpi());
+normalizeKpiData(kpiData);
 let kpiPopover = null;
+
+function defaultKpiAmount(item={}) {
+  const text = `${item.project||''}${item.type||''}`;
+  return text.includes('排版') ? 0.2 : 1;
+}
+function kpiAmount(item={}) {
+  const n = parseFloat(item.amount);
+  return Number.isFinite(n) ? n : defaultKpiAmount(item);
+}
+function fmtAmount(n) {
+  const v = Math.round((Number(n)||0)*10)/10;
+  return Number.isInteger(v) ? String(v) : v.toFixed(1);
+}
+function kpiApprovedAmount(items) {
+  return items.filter(i=>i.status==='过审了').reduce((sum,i)=>sum+kpiAmount(i),0);
+}
+function kpiTotalAmount(items) {
+  return items.reduce((sum,i)=>sum+kpiAmount(i),0);
+}
+function normalizeKpiData(data) {
+  Object.values(data||{}).forEach(items=>{
+    (items||[]).forEach(item=>{
+      if(item.amount===undefined) item.amount = defaultKpiAmount(item);
+    });
+  });
+  return data;
+}
 
 // ---- Schedule data ----
 function defaultSched() { return {"9:30":[[],[],[],[],["usc 大师课"]],"10:30":[["陈天宇"],["王天"],[],["吕青蓝"],["教研studio"]],"13:00":[["蔡恩明"],["许波宇"],["吕品一"],["吕品一"],["许波宇"]],"14:00":[["黄泰志"],["吕品一"],["钱星蓉"],["王者枫景"],["陈思淼"]],"15:00":[["程浩真"],["陈思淼"],["何欣妍"],[],["吕青蓝"]],"16:00":[["吴昱震"],["Christine"],["游溪"],["陈思淼"],["解亦成"]],"17:00":[[],[],[],["游溪"],[]]}; }
@@ -1019,42 +1047,40 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopover();});
 function renderKpi(){
   let html='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;padding:0 0 12px">';
   for(const [q,items] of Object.entries(kpiData)){
-    const done=items.filter(i=>i.status==='过审了').length;
+    const done=kpiApprovedAmount(items);
+    const total=kpiTotalAmount(items);
     const pct=Math.round(done/KPI_TARGET*100);
     const cls=done>=KPI_TARGET?'good':done>=5?'warn':'bad';
     const clr=cls==='good'?'#22c55e':cls==='warn'?'#f59e0b':'#ef4444';
     html+=`<div class="kpi-q-card" style="border-left-color:${clr}">
       <h4 style="font-size:13px;margin-bottom:4px">${KPI_Q_LABELS[q]}</h4>
-      <div style="font-size:26px;font-weight:700;color:${clr}">${done}/${KPI_TARGET}</div>
-      <div style="font-size:11px;color:#999">✅过审 ${done}  📋已填 ${items.length}</div>
+      <div style="font-size:26px;font-weight:700;color:${clr}">${fmtAmount(done)}/${KPI_TARGET}</div>
+      <div style="font-size:11px;color:#999">过审结课量 ${fmtAmount(done)}  · 已填 ${items.length} 条 / ${fmtAmount(total)} 量</div>
       <div style="background:#f0f0f0;border-radius:6px;height:14px;margin-top:4px;overflow:hidden"><div style="height:100%;border-radius:6px;background:${clr};width:${Math.min(pct,100)}%"></div></div>
     </div>`;
   }
   html+='</div>';
   for(const [q,items] of Object.entries(kpiData)){
-    const done=items.filter(i=>i.status==='过审了').length;
-    html+=`<div class="panel" style="margin-bottom:12px"><div class="panel-header"><h2>${KPI_Q_LABELS[q]}</h2><span class="count">✅过审 ${done}/${KPI_TARGET}  📋已填 ${items.length}</span></div><div class="kpi-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;padding:12px">`;
-    for(let i=0;i<KPI_TARGET;i++){
-      const item=items[i];
-      if(item){
-        html+=`<div class="kpi-slot kpi-${item.status}" onclick="editKpi('${q}',${i})"><div class="slot-num">#${i+1}</div><div class="slot-name">${item.name||'-'}</div><div class="slot-proj">${item.project||''}</div><div class="slot-status">${item.status}</div></div>`;
-      }else{
-        html+=`<div class="kpi-slot empty" onclick="editKpi('${q}',${i})"><span>＋ 空缺</span></div>`;
-      }
-    }
+    const done=kpiApprovedAmount(items);
+    html+=`<div class="panel" style="margin-bottom:12px"><div class="panel-header"><h2>${KPI_Q_LABELS[q]}</h2><span class="count">过审结课量 ${fmtAmount(done)}/${KPI_TARGET} · 已填 ${items.length} 条</span></div><div class="kpi-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:6px;padding:12px">`;
+    items.forEach((item,i)=>{
+      html+=`<div class="kpi-slot kpi-${item.status}" onclick="editKpi('${q}',${i})"><div class="slot-num">#${i+1} · ${fmtAmount(kpiAmount(item))} 量</div><div class="slot-name">${item.name||'-'}</div><div class="slot-proj">${item.project||''}</div><div class="slot-status">${item.status}</div></div>`;
+    });
+    html+=`<div class="kpi-slot empty" onclick="editKpi('${q}',${items.length})"><span>＋ 新增记录</span></div>`;
     html+='</div></div>';
   }
   document.getElementById('kpiRoot').innerHTML=html;
 }
 
 function editKpi(q,idx){
-  while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成'});
+  while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成',amount:1});
   const item=kpiData[q][idx];
   const div=document.createElement('div');
   div.innerHTML=`<div onclick="event.stopPropagation()" style="min-width:250px" onmousedown="event.stopPropagation()">
     <div style="font-weight:600;margin-bottom:8px;font-size:13px">编辑 #${idx+1}</div>
     <input style="width:100%;padding:7px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;margin-bottom:6px" id="kpiName" value="${item.name||''}" placeholder="学生姓名">
-    <input style="width:100%;padding:7px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;margin-bottom:8px" id="kpiProj" value="${item.project||''}" placeholder="项目名称">
+    <input style="width:100%;padding:7px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;margin-bottom:6px" id="kpiProj" value="${item.project||''}" placeholder="项目名称">
+    <input type="number" step="0.1" min="0" style="width:100%;padding:7px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;margin-bottom:8px" id="kpiAmount" value="${kpiAmount(item)}" placeholder="结课量（项目=1，排版=0.2）">
     <div style="font-size:11px;color:#999;margin-bottom:4px">状态：</div>
     <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:10px">
       ${KPI_STATUSES.map(st=>`<button style="padding:5px 9px;border:2px solid ${item.status===st?'#6366f1':'#e5e7eb'};border-radius:6px;background:${item.status===st?'#f5f3ff':'#fff'};cursor:pointer;font-size:11px;font-weight:${item.status===st?'600':'400'}" onmousedown="event.preventDefault()" onclick="setKpiStatus('${q}',${idx},'${st}')">${st}</button>`).join('')}
@@ -1068,11 +1094,13 @@ function editKpi(q,idx){
   setTimeout(()=>{const i=document.getElementById('kpiName');if(i)i.focus()},100);
 }
 
-function setKpiStatus(q,idx,status){while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成'});kpiData[q][idx].status=status;save('kpi_board_data_merged',kpiData);closePopover();renderKpi();setTimeout(()=>editKpi(q,idx),100);}
+function setKpiStatus(q,idx,status){while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成',amount:1});kpiData[q][idx].status=status;save('kpi_board_data_merged',kpiData);closePopover();renderKpi();setTimeout(()=>editKpi(q,idx),100);}
 function saveKpi(q,idx){
-  while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成'});
-  const ni=document.getElementById('kpiName'),pi=document.getElementById('kpiProj');
+  while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成',amount:1});
+  const ni=document.getElementById('kpiName'),pi=document.getElementById('kpiProj'),ai=document.getElementById('kpiAmount');
   kpiData[q][idx].name=(ni?.value||'').trim();kpiData[q][idx].project=(pi?.value||'').trim();
+  const amount=parseFloat(ai?.value);
+  kpiData[q][idx].amount=Number.isFinite(amount)?Math.max(0,amount):defaultKpiAmount(kpiData[q][idx]);
   save('kpi_board_data_merged',kpiData);closePopover();renderKpi();
 }
 function clearKpi(q,idx){kpiData[q].splice(idx,1);save('kpi_board_data_merged',kpiData);closePopover();renderKpi();}

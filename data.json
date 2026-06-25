@@ -1367,6 +1367,42 @@
         }
       },
       "completed": false
+    },
+    {
+      "id": 39,
+      "name": "黄泰志",
+      "group": "27级",
+      "coming": true,
+      "master": true,
+      "vip": "V8",
+      "direction": "美研",
+      "courses": {
+        "基础课1": {
+          "status": "done",
+          "text": "大师课"
+        },
+        "基础课2": {
+          "status": "doing",
+          "text": "教研studio"
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "项目课"
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
     }
   ],
   "kpiData": {

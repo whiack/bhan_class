@@ -641,7 +641,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 10; // increment on each deploy to force refresh
+const DATA_VER = 11; // increment on each deploy to force refresh
 
 function load(key, fallback) {
   const storedVer = localStorage.getItem('data_version');
@@ -748,6 +748,7 @@ function defaultStudents() {
     mk(36,'王者枫景','27级',true,false,'TOP7','英研',[{s:'none',t:''},{s:'done',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目'},{s:'none',t:''}],false),
     mk(37,'陈思淼','27级',true,false,'top5','',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目'},{s:'none',t:''}],false),
     mk(38,'吴昱震','28级',true,false,'V8','美研',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目课'},{s:'none',t:''}],false),
+    mk(39,'黄泰志','27级',true,true,'V8','美研',[{s:'done',t:'大师课'},{s:'doing',t:'教研studio'},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目课'},{s:'none',t:''}],false),
   ];
 }
 

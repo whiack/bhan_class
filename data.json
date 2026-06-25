@@ -10,18 +10,10 @@
       "direction": "",
       "courses": {
         "基础课1": {
-          "status": "doing",
+          "status": "done",
           "text": "unity 虚拟主播"
         },
         "基础课2": {
-          "status": "none",
-          "text": ""
-        },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
           "status": "none",
           "text": ""
         },
@@ -32,9 +24,17 @@
         "Unity项目": {
           "status": "none",
           "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
-      "completed": false
+      "completed": true
     },
     {
       "id": 2,
@@ -53,14 +53,6 @@
           "status": "doing",
           "text": "unity横版UI"
         },
-        "项目3": {
-          "status": "other",
-          "text": ""
-        },
-        "项目4": {
-          "status": "other",
-          "text": ""
-        },
         "桌游项目": {
           "status": "doing",
           "text": "屠老师 VR"
@@ -68,6 +60,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "UE 俯视角"
+        },
+        "项目3": {
+          "status": "other",
+          "text": ""
+        },
+        "项目4": {
+          "status": "other",
+          "text": ""
         }
       },
       "completed": false
@@ -89,14 +89,6 @@
           "status": "done",
           "text": "策划"
         },
-        "项目3": {
-          "status": "doing",
-          "text": "夏校"
-        },
-        "项目4": {
-          "status": "other",
-          "text": "ue 程"
-        },
         "桌游项目": {
           "status": "done",
           "text": "桌游 等视频"
@@ -104,6 +96,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "unity"
+        },
+        "项目3": {
+          "status": "other",
+          "text": "夏校"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "ue 程"
         }
       },
       "completed": false
@@ -125,14 +125,6 @@
           "status": "done",
           "text": "完成 程序"
         },
-        "项目3": {
-          "status": "doing",
-          "text": "第二个项目"
-        },
-        "项目4": {
-          "status": "other",
-          "text": "数媒项目"
-        },
         "桌游项目": {
           "status": "done",
           "text": "桌游"
@@ -140,9 +132,17 @@
         "Unity项目": {
           "status": "done",
           "text": "完成 unity"
+        },
+        "项目3": {
+          "status": "other",
+          "text": "第二个项目"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "数媒项目"
         }
       },
-      "completed": false
+      "completed": true
     },
     {
       "id": 5,
@@ -161,14 +161,6 @@
           "status": "done",
           "text": "完成 程序"
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -176,6 +168,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "猫咪模拟经营"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -197,19 +197,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "done",
           "text": "unity"
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -233,19 +233,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "done",
           "text": "石"
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -269,14 +269,6 @@
           "status": "done",
           "text": "基础2"
         },
-        "项目3": {
-          "status": "other",
-          "text": "屠老师"
-        },
-        "项目4": {
-          "status": "other",
-          "text": "alevel"
-        },
         "桌游项目": {
           "status": "done",
           "text": "桌游"
@@ -284,6 +276,14 @@
         "Unity项目": {
           "status": "done",
           "text": "完成Btec"
+        },
+        "项目3": {
+          "status": "other",
+          "text": "屠老师"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "alevel"
         }
       },
       "completed": true
@@ -305,14 +305,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -320,6 +312,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "画画"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -341,14 +341,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -356,6 +348,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "studio"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -377,14 +377,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -392,6 +384,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "探索"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -413,19 +413,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -449,19 +449,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "done",
           "text": "家和万事兴"
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -485,19 +485,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "done",
           "text": "项目2d"
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -521,19 +521,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "done",
           "text": "studio"
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -557,20 +557,20 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
         },
         "Unity项目": {
           "status": "doing",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
           "text": ""
         }
       },
@@ -593,14 +593,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -608,6 +600,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "项目 挤公交"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -629,19 +629,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -665,14 +665,6 @@
           "status": "done",
           "text": ""
         },
-        "项目3": {
-          "status": "doing",
-          "text": "大师课？"
-        },
-        "项目4": {
-          "status": "other",
-          "text": "邓 桌游"
-        },
         "桌游项目": {
           "status": "doing",
           "text": "UE/VR"
@@ -680,6 +672,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "unity"
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "大师课？"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "邓 桌游"
         }
       },
       "completed": false
@@ -701,14 +701,6 @@
           "status": "done",
           "text": "完成 美术"
         },
-        "项目3": {
-          "status": "other",
-          "text": "ue 马老师"
-        },
-        "项目4": {
-          "status": "other",
-          "text": "VR 程老师"
-        },
         "桌游项目": {
           "status": "doing",
           "text": "桌游川剧"
@@ -716,6 +708,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "game jam"
+        },
+        "项目3": {
+          "status": "other",
+          "text": "ue 马老师"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "VR 程老师"
         }
       },
       "completed": false
@@ -737,14 +737,6 @@
           "status": "done",
           "text": "策划"
         },
-        "项目3": {
-          "status": "other",
-          "text": "vr 程老师"
-        },
-        "项目4": {
-          "status": "other",
-          "text": "ue 程老师"
-        },
         "桌游项目": {
           "status": "doing",
           "text": "UE 程老师"
@@ -752,6 +744,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "unity 项目"
+        },
+        "项目3": {
+          "status": "other",
+          "text": "vr 程老师"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "ue 程老师"
         }
       },
       "completed": false
@@ -773,14 +773,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "done",
-          "text": "马老师"
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "doing",
           "text": "影子"
@@ -788,6 +780,14 @@
         "Unity项目": {
           "status": "done",
           "text": "完成 大师课"
+        },
+        "项目3": {
+          "status": "done",
+          "text": "马老师"
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -809,14 +809,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -824,6 +816,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "自我救赎(等排版)"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -845,14 +845,6 @@
           "status": "done",
           "text": "基础课"
         },
-        "项目3": {
-          "status": "doing",
-          "text": "Unity"
-        },
-        "项目4": {
-          "status": "other",
-          "text": "VR 程"
-        },
         "桌游项目": {
           "status": "done",
           "text": "桌游"
@@ -860,6 +852,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "UE 马"
+        },
+        "项目3": {
+          "status": "other",
+          "text": "Unity"
+        },
+        "项目4": {
+          "status": "other",
+          "text": "VR 程"
         }
       },
       "completed": false
@@ -881,14 +881,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -896,6 +888,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "Unity"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -917,19 +917,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -953,14 +953,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -968,6 +960,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "unity塔罗牌"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -989,14 +989,6 @@
           "status": "done",
           "text": "基础课"
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -1004,6 +996,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "unity拼图"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -1025,19 +1025,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "doing",
           "text": "插电线"
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -1061,14 +1061,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "done",
           "text": "猫咪"
@@ -1076,6 +1068,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "unity黏菌"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -1097,14 +1097,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "doing",
-          "text": "UE"
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "done",
           "text": "桌游"
@@ -1112,6 +1104,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "unity"
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "UE"
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -1133,14 +1133,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -1148,6 +1140,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "上课"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -1169,14 +1169,6 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
@@ -1184,6 +1176,14 @@
         "Unity项目": {
           "status": "doing",
           "text": "unity 项目课"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
         }
       },
       "completed": false
@@ -1205,19 +1205,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "doing",
-          "text": "项目课"
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "项目课"
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -1241,19 +1241,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "none",
-          "text": ""
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -1277,19 +1277,19 @@
           "status": "done",
           "text": ""
         },
-        "项目3": {
-          "status": "doing",
-          "text": "项目"
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "项目"
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -1313,19 +1313,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "doing",
-          "text": "项目"
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "项目"
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -1349,19 +1349,19 @@
           "status": "none",
           "text": ""
         },
-        "项目3": {
-          "status": "doing",
-          "text": "项目课"
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        },
         "桌游项目": {
           "status": "none",
           "text": ""
         },
         "Unity项目": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "doing",
+          "text": "项目课"
+        },
+        "项目4": {
           "status": "none",
           "text": ""
         }
@@ -1758,5 +1758,5 @@
       []
     ]
   },
-  "exportTime": "2026-06-25T08:46:32.099Z"
+  "exportTime": "2026-06-25T08:48:07.946Z"
 }

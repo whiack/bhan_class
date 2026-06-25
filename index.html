@@ -671,8 +671,9 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 18; // increment on each deploy to force refresh
+const DATA_VER = 19; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
+const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
 function load(key, fallback) {
   const storedVer = localStorage.getItem('data_version');
@@ -737,6 +738,39 @@ function importAll(event){
   reader.readAsText(file, 'utf-8');
 }
 
+function applyFullData(data, stamp) {
+  students = normalizeStudents(data.students).list;
+  if(syncCompletionForList(students)) save('student_board_v2_merged', students);
+  kpiData = data.kpiData;
+  normalizeKpiData(kpiData);
+  schData = data.schedule;
+  schUndo = [];
+  save('student_board_v2_merged', students);
+  save('kpi_board_data_merged', kpiData);
+  save('sch_merged', schData);
+  save('sch_undo', schUndo);
+  if(stamp) localStorage.setItem(DATA_JSON_STAMP_KEY, stamp);
+}
+
+async function loadBundledDataJson() {
+  if(location.protocol === 'file:') return false;
+  try {
+    const res = await fetch('data.json?ts=' + Date.now(), {cache:'no-store'});
+    if(!res.ok) return false;
+    const data = await res.json();
+    if(!Array.isArray(data.students) || !data.kpiData || !data.schedule) return false;
+    const stamp = data.exportTime || String(DATA_VER);
+    if(localStorage.getItem(DATA_JSON_STAMP_KEY) === stamp) return false;
+    applyFullData(data, stamp);
+    switchTab(load('activeTab','progress'));
+    renderSchedule();
+    renderKpi();
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
+
 // ---- Student data ----
 function normalizeGrade(value) {
   const m = String(value || '').match(/\d+/);
@@ -746,7 +780,7 @@ function normalizeGrade(value) {
 function defaultStudents() {
   const mk = (id,name,group,coming,master,vip,dir,cd,cmpl) => ({id,name,group:normalizeGrade(group),coming,master,vip,direction:dir,courses:Object.fromEntries(COURSES.map((c,i)=>{const d=cd[i]||{};return[c,{status:d.s||'none',text:d.t||''}]})),completed:cmpl||false});
   return [
-    mk(1,'杨智源','26级',true,false,'','',[{s:'doing',t:'unity 虚拟主播'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],true),
+    mk(1,'杨智源','26级',true,false,'','',[{s:'done',t:'unity 虚拟主播'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],true),
     mk(2,'纪昂','26级',false,true,'','英本',[{s:'doing',t:'桌游 查视频'},{s:'doing',t:'unity横版UI'},{s:'doing',t:'屠老师 VR'},{s:'doing',t:'UE 俯视角'},{s:'other',t:''},{s:'other',t:''}],false),
     mk(3,'苏畅','27级',true,true,'','美本',[{s:'done',t:''},{s:'done',t:'策划'},{s:'done',t:'桌游 等视频'},{s:'doing',t:'unity'},{s:'doing',t:'夏校'},{s:'other',t:'ue 程'}],false),
     mk(4,'沈雅丹','27级',true,true,'','英研',[{s:'done',t:'完成 策划'},{s:'done',t:'完成 程序'},{s:'done',t:'桌游'},{s:'done',t:'完成 unity'},{s:'doing',t:'第二个项目'},{s:'other',t:'数媒项目'}],false),
@@ -1220,6 +1254,7 @@ function renderOverview(){
   const savedTab=load('activeTab','progress');
   switchTab(savedTab);
   renderSchedule();renderKpi();
+  loadBundledDataJson();
   restoreHandle(); // auto-restore previous file binding
 })();
 </script>

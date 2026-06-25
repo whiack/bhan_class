@@ -671,7 +671,8 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 16; // increment on each deploy to force refresh
+const DATA_VER = 17; // increment on each deploy to force refresh
+const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 
 function load(key, fallback) {
   const storedVer = localStorage.getItem('data_version');
@@ -755,7 +756,6 @@ function defaultStudents() {
     mk(13,'蔡宜辰','27级',true,false,'','',[{s:'none',t:''},{s:'none',t:''},{s:'done',t:'家和万事兴'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
     mk(14,'吕青蓝','27F',true,false,'V5','美本',[{s:'done',t:'基础课完成'},{s:'none',t:''},{s:'done',t:'项目2d'},{s:'doing',t:'项目'},{s:'none',t:''},{s:'none',t:''}],false),
     mk(15,'陈天宇','28F',true,false,'Top5','英研',[{s:'none',t:''},{s:'none',t:''},{s:'done',t:'studio'},{s:'doing',t:'项目'},{s:'none',t:''},{s:'none',t:''}],false),
-    mk(16,'Christian','27级',true,false,'','',[{s:'done',t:'程序基础'},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:''},{s:'none',t:''},{s:'none',t:''}],false),
     mk(17,'唐瑞欣','27级',true,false,'','',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目 挤公交'},{s:'none',t:''},{s:'none',t:''}],false),
     mk(18,'游溪','27F',true,false,'','美研',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目'},{s:'none',t:''},{s:'none',t:''}],false),
     mk(19,'何欣妍','27级',false,false,'','英研',[{s:'done',t:''},{s:'done',t:''},{s:'doing',t:'UE/VR'},{s:'doing',t:'unity'},{s:'doing',t:'大师课？'},{s:'other',t:'邓 桌游'}],false),
@@ -770,7 +770,6 @@ function defaultStudents() {
     mk(28,'王天','27级',true,false,'','',[{s:'done',t:'基础1'},{s:'done',t:'基础课'},{s:'none',t:''},{s:'doing',t:'unity拼图'},{s:'none',t:''},{s:'none',t:''}],false),
     mk(29,'闻韬','27级',true,false,'','',[{s:'done',t:'基础课'},{s:'none',t:''},{s:'doing',t:'插电线'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
     mk(30,'毕飞扬','28级',true,false,'','日本',[{s:'none',t:''},{s:'none',t:''},{s:'done',t:'猫咪'},{s:'doing',t:'unity黏菌'},{s:'none',t:''},{s:'none',t:''}],false),
-    mk(31,'刘易佳和','28级',false,true,'','美本',[{s:'none',t:''},{s:'none',t:''},{s:'done',t:'桌游'},{s:'doing',t:'unity'},{s:'doing',t:'UE'},{s:'none',t:''}],true),
     mk(32,'汪恩瑶','28级',true,false,'','英本',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'上课'},{s:'none',t:''},{s:'none',t:''}],false),
     mk(33,'沙裕来','28级',true,false,'','美研',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'unity 项目课'},{s:'none',t:''},{s:'none',t:''}],false),
     mk(34,'蔡恩明','27级',true,false,'V3','其他',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目课'},{s:'none',t:''}],false),
@@ -828,9 +827,19 @@ function syncCompletionForList(list) {
   return changed;
 }
 
-let students = (function(){ const d=defaultStudents(); const normalized=normalizeStudents(load('student_board_v2_merged',d)); const s=normalized.list;
+function getDeletedStudentIds() {
+  try { return new Set(JSON.parse(localStorage.getItem(STUDENT_DELETED_KEY) || '[]')); }
+  catch(e) { return new Set(); }
+}
+
+function saveDeletedStudentIds(ids) {
+  localStorage.setItem(STUDENT_DELETED_KEY, JSON.stringify([...ids]));
+}
+
+let students = (function(){ const deletedIds=getDeletedStudentIds(); const d=defaultStudents().filter(s=>!deletedIds.has(s.id)); const normalized=normalizeStudents(load('student_board_v2_merged',d)); const s=normalized.list.filter(st=>!deletedIds.has(st.id));
   const ids=new Set(s.map(x=>x.id)); let modified=normalized.migrated;
-  d.forEach(def=>{ if(!ids.has(def.id)){ s.push(def); modified=true; } });
+  if(s.length!==normalized.list.length) modified=true;
+  d.forEach(def=>{ if(!ids.has(def.id) && !deletedIds.has(def.id)){ s.push(def); modified=true; } });
   if(syncCompletionForList(s)) modified=true;
   if(modified) save('student_board_v2_merged',s); return s; })();
 let currentStudentSubTab = 'active'; // active / completed
@@ -1006,7 +1015,7 @@ function markComplete(id){const s=students.find(x=>x.id===id);if(s){Object.value
 function markActive(id){const s=students.find(x=>x.id===id);if(s){const first=COURSES.find(c=>(s.courses[c]?.status||'none')==='none')||COURSES[0];s.courses[first]=s.courses[first]||{status:'none',text:''};s.courses[first].status='doing';syncCompletionForList(students);save('student_board_v2_merged',students);renderProgress();}}
 function toggleComing(id){const s=students.find(x=>x.id===id);if(s){s.coming=!s.coming;save('student_board_v2_merged',students);renderProgress();}}
 function toggleMaster(id){const s=students.find(x=>x.id===id);if(s){s.master=!s.master;save('student_board_v2_merged',students);renderProgress();}}
-function deleteStudent(id){const s=students.find(x=>x.id===id);if(!s)return;if(!confirm(`确定删除「${s.name}」？不可撤销！`))return;students=students.filter(x=>x.id!==id);save('student_board_v2_merged',students);renderProgress();}
+function deleteStudent(id){const s=students.find(x=>x.id===id);if(!s)return;if(!confirm(`确定删除「${s.name}」？不可撤销！`))return;const deletedIds=getDeletedStudentIds();deletedIds.add(id);saveDeletedStudentIds(deletedIds);students=students.filter(x=>x.id!==id);save('student_board_v2_merged',students);renderProgress();}
 function editStudentName(id){const s=students.find(x=>x.id===id);if(!s)return;const n=prompt('姓名：',s.name);if(n&&n.trim()){s.name=n.trim();save('student_board_v2_merged',students);renderProgress();}}
 function editVip(id){const s=students.find(x=>x.id===id);if(!s)return;const v=prompt('VIP等级（如 V1,V3,非）：',s.vip);if(v!==null){s.vip=v.trim();save('student_board_v2_merged',students);renderProgress();}}
 function editGroup(id){const s=students.find(x=>x.id===id);if(!s)return;const g=prompt('年级：',s.group);if(g&&g.trim()){s.group=g.trim();save('student_board_v2_merged',students);renderProgress();}}

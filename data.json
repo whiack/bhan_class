@@ -1367,42 +1367,6 @@
         }
       },
       "completed": false
-    },
-    {
-      "id": 31,
-      "name": "刘易佳和",
-      "group": "28级",
-      "coming": false,
-      "master": true,
-      "vip": "",
-      "direction": "美本",
-      "courses": {
-        "基础课1": {
-          "status": "none",
-          "text": ""
-        },
-        "基础课2": {
-          "status": "none",
-          "text": ""
-        },
-        "桌游项目": {
-          "status": "done",
-          "text": "桌游"
-        },
-        "Unity项目": {
-          "status": "doing",
-          "text": "unity"
-        },
-        "项目3": {
-          "status": "doing",
-          "text": "UE"
-        },
-        "项目4": {
-          "status": "none",
-          "text": ""
-        }
-      },
-      "completed": false
     }
   ],
   "kpiData": {
@@ -1758,5 +1722,5 @@
       []
     ]
   },
-  "exportTime": "2026-06-25T08:59:36.703Z"
+  "exportTime": "2026-06-25T09:02:01.241Z"
 }

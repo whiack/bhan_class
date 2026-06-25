@@ -471,11 +471,11 @@
     {
       "id": 14,
       "name": "吕青蓝",
-      "group": "27级",
+      "group": "27F",
       "coming": true,
       "master": false,
-      "vip": "",
-      "direction": "",
+      "vip": "V5",
+      "direction": "美本",
       "courses": {
         "基础课1": {
           "status": "done",
@@ -490,8 +490,8 @@
           "text": "项目2d"
         },
         "Unity项目": {
-          "status": "none",
-          "text": ""
+          "status": "doing",
+          "text": "项目"
         },
         "项目3": {
           "status": "none",
@@ -502,16 +502,16 @@
           "text": ""
         }
       },
-      "completed": true
+      "completed": false
     },
     {
       "id": 15,
       "name": "陈天宇",
-      "group": "27级",
+      "group": "28F",
       "coming": true,
       "master": false,
-      "vip": "",
-      "direction": "",
+      "vip": "Top5",
+      "direction": "英研",
       "courses": {
         "基础课1": {
           "status": "none",
@@ -526,8 +526,8 @@
           "text": "studio"
         },
         "Unity项目": {
-          "status": "none",
-          "text": ""
+          "status": "doing",
+          "text": "项目"
         },
         "项目3": {
           "status": "none",
@@ -538,7 +538,7 @@
           "text": ""
         }
       },
-      "completed": true
+      "completed": false
     },
     {
       "id": 16,
@@ -615,11 +615,11 @@
     {
       "id": 18,
       "name": "游溪",
-      "group": "27级",
+      "group": "27F",
       "coming": true,
       "master": false,
       "vip": "",
-      "direction": "",
+      "direction": "美研",
       "courses": {
         "基础课1": {
           "status": "none",
@@ -634,8 +634,8 @@
           "text": ""
         },
         "Unity项目": {
-          "status": "none",
-          "text": ""
+          "status": "doing",
+          "text": "项目"
         },
         "项目3": {
           "status": "none",
@@ -646,7 +646,7 @@
           "text": ""
         }
       },
-      "completed": true
+      "completed": false
     },
     {
       "id": 19,
@@ -1367,6 +1367,42 @@
         }
       },
       "completed": false
+    },
+    {
+      "id": 40,
+      "name": "Christine",
+      "group": "未分组",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "美本A计划",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "桌游项目": {
+          "status": "none",
+          "text": ""
+        },
+        "Unity项目": {
+          "status": "doing",
+          "text": "项目"
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
     }
   ],
   "kpiData": {
@@ -1722,5 +1758,5 @@
       []
     ]
   },
-  "exportTime": "2026-06-25T08:49:14.952Z"
+  "exportTime": "2026-06-25T08:53:17.180Z"
 }

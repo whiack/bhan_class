@@ -671,7 +671,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 14; // increment on each deploy to force refresh
+const DATA_VER = 15; // increment on each deploy to force refresh
 
 function load(key, fallback) {
   const storedVer = localStorage.getItem('data_version');
@@ -753,11 +753,11 @@ function defaultStudents() {
     mk(11,'钱星蓉','27级',true,false,'','',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'探索'},{s:'none',t:''},{s:'none',t:''}],false),
     mk(12,'黄柯瑜','27级',true,false,'','',[{s:'done',t:'程序'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
     mk(13,'蔡宜辰','27级',true,false,'','',[{s:'none',t:''},{s:'none',t:''},{s:'done',t:'家和万事兴'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
-    mk(14,'吕青蓝','27级',true,false,'','',[{s:'done',t:'基础课完成'},{s:'none',t:''},{s:'done',t:'项目2d'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
-    mk(15,'陈天宇','27级',true,false,'','',[{s:'none',t:''},{s:'none',t:''},{s:'done',t:'studio'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
+    mk(14,'吕青蓝','27F',true,false,'V5','美本',[{s:'done',t:'基础课完成'},{s:'none',t:''},{s:'done',t:'项目2d'},{s:'doing',t:'项目'},{s:'none',t:''},{s:'none',t:''}],false),
+    mk(15,'陈天宇','28F',true,false,'Top5','英研',[{s:'none',t:''},{s:'none',t:''},{s:'done',t:'studio'},{s:'doing',t:'项目'},{s:'none',t:''},{s:'none',t:''}],false),
     mk(16,'Christian','27级',true,false,'','',[{s:'done',t:'程序基础'},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:''},{s:'none',t:''},{s:'none',t:''}],false),
     mk(17,'唐瑞欣','27级',true,false,'','',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目 挤公交'},{s:'none',t:''},{s:'none',t:''}],false),
-    mk(18,'游溪','27级',true,false,'','',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
+    mk(18,'游溪','27F',true,false,'','美研',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目'},{s:'none',t:''},{s:'none',t:''}],false),
     mk(19,'何欣妍','27级',false,false,'','英研',[{s:'done',t:''},{s:'done',t:''},{s:'doing',t:'UE/VR'},{s:'doing',t:'unity'},{s:'doing',t:'大师课？'},{s:'other',t:'邓 桌游'}],false),
     mk(20,'辛颖','27级',false,true,'','北欧',[{s:'done',t:'基础课'},{s:'done',t:'完成 美术'},{s:'doing',t:'桌游川剧'},{s:'doing',t:'game jam'},{s:'other',t:'ue 马老师'},{s:'other',t:'VR 程老师'}],false),
     mk(21,'吴天哲','27级',false,false,'','',[{s:'done',t:'程序'},{s:'done',t:'策划'},{s:'doing',t:'UE 程老师'},{s:'doing',t:'unity 项目'},{s:'other',t:'vr 程老师'},{s:'other',t:'ue 程老师'}],false),
@@ -779,6 +779,7 @@ function defaultStudents() {
     mk(37,'陈思淼','27级',true,false,'top5','',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目'},{s:'none',t:''}],false),
     mk(38,'吴昱震','28级',true,false,'V8','美研',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目课'},{s:'none',t:''}],false),
     mk(39,'黄泰志','27级',true,false,'V8','美研',[{s:'done',t:'大师课'},{s:'doing',t:'教研studio'},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目课'},{s:'none',t:''}],false),
+    mk(40,'Christine','未分组',true,false,'','美本A计划',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目'},{s:'none',t:''},{s:'none',t:''}],false),
   ];
 }
 

@@ -500,7 +500,7 @@ tr:hover td{background:#f8fbff}
   #tab-progress th:nth-child(11)::after{content:'方向';font-size:10px}
   #tab-progress th:nth-child(12){width:54px;font-size:0}
   #tab-progress th:nth-child(12)::after{content:'操作';font-size:10px}
-  #tab-progress .section-label{padding:4px 8px;font-size:11px}
+  #tab-progress .section-label{padding:4px 8px;font-size:11px;white-space:nowrap}
   #tab-progress .name-cell{min-width:0;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #tab-progress .course-chip{width:22px;min-width:22px;height:16px;min-height:16px;font-size:9px}
   #tab-progress .att-tag{padding:1px 5px;font-size:9px;white-space:nowrap}
@@ -512,7 +512,7 @@ tr:hover td{background:#f8fbff}
   #tab-progress .table-wrap{display:none}
   #tab-progress .mobile-student-list{display:block;flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px;background:#f8fafc}
   .mobile-group{margin-bottom:10px}
-  .mobile-group-title{position:sticky;top:0;z-index:1;padding:5px 2px 6px;font-size:11px;font-weight:700;color:#64748b;background:#f8fafc}
+  .mobile-group-title{position:sticky;top:0;z-index:1;display:inline-flex;align-items:center;width:max-content;max-width:100%;height:24px;margin:0 0 6px;padding:0 9px;border:1px solid rgba(10,132,255,.16);border-radius:999px;background:rgba(239,246,255,.96);box-shadow:0 6px 14px rgba(15,23,42,.04);font-size:11px;font-weight:700;line-height:1;color:#2563eb;white-space:nowrap;letter-spacing:0}
   .mobile-student-card{background:#fff;border:1px solid rgba(148,163,184,.2);border-radius:12px;padding:8px;margin-bottom:6px;box-shadow:0 8px 18px rgba(15,23,42,.04)}
   .mobile-student-card.master-card{border-color:rgba(10,132,255,.36);box-shadow:0 8px 20px rgba(10,132,255,.08)}
   .mobile-card-head{display:flex;align-items:center;gap:6px}
@@ -671,7 +671,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 20; // increment on each deploy to force refresh
+const DATA_VER = 21; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -1018,8 +1018,8 @@ function renderProgress() {
   let mobileHtml='<div class="mobile-student-list">';
   for(const group of groupKeys) {
     const gl=groups[group];
-    html+=`<tr><td colspan="12" class="section-label"><span class="dot ${currentStudentSubTab==='active'?'dot-blue':'dot-green'}"></span>${group} (${gl.length}人)</td></tr>`;
-    mobileHtml+=`<div class="mobile-group"><div class="mobile-group-title">${group} (${gl.length}人)</div>`;
+    html+=`<tr><td colspan="12" class="section-label"><span class="dot ${currentStudentSubTab==='active'?'dot-blue':'dot-green'}"></span>${group} · ${gl.length}人</td></tr>`;
+    mobileHtml+=`<div class="mobile-group"><div class="mobile-group-title">${group} · ${gl.length}人</div>`;
     gl.forEach(s=>{
       mobileHtml+=`<article class="mobile-student-card ${s.master?'master-card':''}">
         <div class="mobile-card-head">

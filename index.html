@@ -671,7 +671,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 19; // increment on each deploy to force refresh
+const DATA_VER = 20; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -685,10 +685,10 @@ function load(key, fallback) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : (typeof fallback === 'function' ? fallback() : fallback); }
   catch(e) { return (typeof fallback === 'function') ? fallback() : fallback; }
 }
-function save(key,v) { localStorage.setItem(key,JSON.stringify(v)); localStorage.setItem('data_version',DATA_VER); autoSyncToFile(); }
+function save(key,v) { localStorage.setItem(key,JSON.stringify(v)); localStorage.setItem('data_version',DATA_VER); if(!_syncPaused) autoSyncToFile(); }
 
 // ===== Auto-sync to local data.json (File System Access API) =====
-let _syncHandle=null, _syncDirty=false;
+let _syncHandle=null, _syncDirty=false, _syncPaused=false;
 function updateSyncBadge(){ const b=document.getElementById('syncBadge'); if(!b)return; b.textContent=_syncDirty?'●':'○'; b.style.color=_syncDirty?'#f59e0b':'#22c55e'; }
 function updateBindUI(){ const b=document.getElementById('bindBtn'); if(!b)return; b.textContent=_syncHandle?'已绑定':'绑定JSON'; b.style.background=_syncHandle?'#dcfce7':''; b.style.color=_syncHandle?'#166534':''; }
 function saveFileNow(){ if(!_syncHandle)return; _syncHandle.createWritable().then(w=>{const d={students,kpiData,schedule:schData,exportTime:new Date().toISOString()};w.write(JSON.stringify(d,null,2)).then(()=>{w.close();_syncDirty=false;updateSyncBadge()}).catch(()=>{})}).catch(()=>{_syncHandle=null;updateBindUI()}) }
@@ -696,7 +696,7 @@ function autoSyncToFile(){ _syncDirty=true; updateSyncBadge(); saveFileNow(); }
 
 // Persist handle in IndexedDB so it survives page reloads
 function storeHandle(h){ const r=indexedDB.open('sync_fs',1); r.onupgradeneeded=()=>r.result.createObjectStore('handles'); r.onsuccess=()=>{const t=r.result.transaction('handles','readwrite');t.objectStore('handles').put(h,'fh');t.oncomplete=()=>r.result.close()} }
-async function restoreHandle(){ try{const ok=new Promise((res,rej)=>{const r=indexedDB.open('sync_fs',1);r.onsuccess=()=>{const t=r.result.transaction('handles','readonly');const g=t.objectStore('handles').get('fh');g.onsuccess=()=>{const h=g.result;r.result.close();if(h){h.queryPermission().then(p=>{if(p==='granted')res(h);else h.requestPermission().then(p2=>p2==='granted'?res(h):res(null))}).catch(()=>res(null))}else res(null)};g.onerror=()=>{r.result.close();res(null)}};r.onerror=()=>rej(null);r.onupgradeneeded=()=>{r.result.createObjectStore('handles')}});const h=await ok;if(h){_syncHandle=h;updateBindUI()} }catch(e){} }
+async function restoreHandle(){ try{const ok=new Promise((res,rej)=>{const r=indexedDB.open('sync_fs',1);r.onsuccess=()=>{const t=r.result.transaction('handles','readonly');const g=t.objectStore('handles').get('fh');g.onsuccess=()=>{const h=g.result;r.result.close();if(h){h.queryPermission().then(p=>{if(p==='granted')res(h);else h.requestPermission().then(p2=>p2==='granted'?res(h):res(null))}).catch(()=>res(null))}else res(null)};g.onerror=()=>{r.result.close();res(null)}};r.onerror=()=>rej(null);r.onupgradeneeded=()=>{r.result.createObjectStore('handles')}});const h=await ok;if(h){_syncHandle=h;updateBindUI();await loadBoundDataJson(h)} }catch(e){} }
 
 async function bindSyncFile(){ if(!window.showOpenFilePicker){alert('绑定功能需要 Chrome/Edge，并且页面需运行在 https、localhost 或本地文件环境。在线分享时可用“下载备份/导入备份”。');return} try{const[h]=await window.showOpenFilePicker({types:[{description:'JSON Files',accept:{'application/json':['.json']}}],multiple:false});_syncHandle=h;storeHandle(h);saveFileNow();alert('绑定成功！以后打开自动连接，无需重新绑定。');updateBindUI()}catch(e){if(e.name!=='AbortError')alert('需要 Chrome/Edge 浏览器授权文件访问')} }
 async function bindNewFile(){ if(!window.showSaveFilePicker){alert('绑定功能需要 Chrome/Edge，并且页面需运行在 https、localhost 或本地文件环境。在线分享时可用“下载备份/导入备份”。');return} try{const h=await window.showSaveFilePicker({suggestedName:'data.json',types:[{description:'JSON Files',accept:{'application/json':['.json']}}]});_syncHandle=h;storeHandle(h);saveFileNow();alert('绑定成功！以后打开自动连接，无需重新绑定。');updateBindUI()}catch(e){if(e.name!=='AbortError')alert('需要 Chrome/Edge 浏览器授权文件访问')} }
@@ -738,18 +738,45 @@ function importAll(event){
   reader.readAsText(file, 'utf-8');
 }
 
-function applyFullData(data, stamp) {
-  students = normalizeStudents(data.students).list;
-  if(syncCompletionForList(students)) save('student_board_v2_merged', students);
-  kpiData = data.kpiData;
-  normalizeKpiData(kpiData);
-  schData = data.schedule;
-  schUndo = [];
-  save('student_board_v2_merged', students);
-  save('kpi_board_data_merged', kpiData);
-  save('sch_merged', schData);
-  save('sch_undo', schUndo);
-  if(stamp) localStorage.setItem(DATA_JSON_STAMP_KEY, stamp);
+function renderCurrentData() {
+  switchTab(load('activeTab','progress'));
+  renderSchedule();
+  renderKpi();
+}
+
+function applyFullData(data, stamp, options={}) {
+  const previousPause = _syncPaused;
+  _syncPaused = options.writeBack === false ? true : previousPause;
+  try {
+    students = normalizeStudents(data.students).list;
+    if(syncCompletionForList(students)) save('student_board_v2_merged', students);
+    kpiData = data.kpiData;
+    normalizeKpiData(kpiData);
+    schData = data.schedule;
+    schUndo = [];
+    save('student_board_v2_merged', students);
+    save('kpi_board_data_merged', kpiData);
+    save('sch_merged', schData);
+    save('sch_undo', schUndo);
+    if(stamp) localStorage.setItem(DATA_JSON_STAMP_KEY, stamp);
+  } finally {
+    _syncPaused = previousPause;
+  }
+}
+
+async function loadBoundDataJson(handle) {
+  try {
+    const file = await handle.getFile();
+    const data = JSON.parse(await file.text());
+    if(!Array.isArray(data.students) || !data.kpiData || !data.schedule) return false;
+    applyFullData(data, data.exportTime || String(file.lastModified || DATA_VER), {writeBack:false});
+    _syncDirty = false;
+    updateSyncBadge();
+    renderCurrentData();
+    return true;
+  } catch(e) {
+    return false;
+  }
 }
 
 async function loadBundledDataJson() {
@@ -761,10 +788,8 @@ async function loadBundledDataJson() {
     if(!Array.isArray(data.students) || !data.kpiData || !data.schedule) return false;
     const stamp = data.exportTime || String(DATA_VER);
     if(localStorage.getItem(DATA_JSON_STAMP_KEY) === stamp) return false;
-    applyFullData(data, stamp);
-    switchTab(load('activeTab','progress'));
-    renderSchedule();
-    renderKpi();
+    applyFullData(data, stamp, {writeBack:false});
+    renderCurrentData();
     return true;
   } catch(e) {
     return false;

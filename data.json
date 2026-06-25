@@ -142,7 +142,7 @@
           "text": "数媒项目"
         }
       },
-      "completed": true
+      "completed": false
     },
     {
       "id": 5,
@@ -286,7 +286,7 @@
           "text": "alevel"
         }
       },
-      "completed": true
+      "completed": false
     },
     {
       "id": 9,
@@ -862,7 +862,7 @@
           "text": "VR 程"
         }
       },
-      "completed": true
+      "completed": false
     },
     {
       "id": 25,
@@ -1758,5 +1758,5 @@
       []
     ]
   },
-  "exportTime": "2026-06-25T08:53:17.180Z"
+  "exportTime": "2026-06-25T08:55:23.080Z"
 }

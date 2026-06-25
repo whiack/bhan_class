@@ -671,7 +671,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 15; // increment on each deploy to force refresh
+const DATA_VER = 16; // increment on each deploy to force refresh
 
 function load(key, fallback) {
   const storedVer = localStorage.getItem('data_version');
@@ -812,10 +812,14 @@ function hasActiveCourse(student) {
   return Object.values(student?.courses || {}).some(course => course?.status === 'doing');
 }
 
+function isActiveStudent(student) {
+  return !!student?.master || hasActiveCourse(student);
+}
+
 function syncCompletionForList(list) {
   let changed = false;
   (list || []).forEach(student => {
-    const nextCompleted = !hasActiveCourse(student);
+    const nextCompleted = !isActiveStudent(student);
     if (student.completed !== nextCompleted) {
       student.completed = nextCompleted;
       changed = true;
@@ -903,7 +907,7 @@ function renderProgress() {
   const dirQ = (document.getElementById('stuDir')?.value||'all');
   const groupQ = (document.getElementById('stuGroup')?.value||'all');
 
-  let list = students.filter(s=>currentStudentSubTab==='active'?hasActiveCourse(s):!hasActiveCourse(s));
+  let list = students.filter(s=>currentStudentSubTab==='active'?isActiveStudent(s):!isActiveStudent(s));
   if(searchQ) list=list.filter(s=>s.name.toLowerCase().includes(searchQ)||Object.values(s.courses||{}).some(c=>(c.text||'').toLowerCase().includes(searchQ)));
   if(dirQ!=='all') list=list.filter(s=>s.direction===dirQ);
   if(groupQ!=='all') list=list.filter(s=>s.group===groupQ);
@@ -1126,7 +1130,7 @@ function clearKpi(q,idx){kpiData[q].splice(idx,1);save('kpi_board_data_merged',k
 
 // ==================== SCHEDULE TAB ====================
 function renderSchedule(){
-  const allN=[...new Set(students.filter(hasActiveCourse).map(s=>s.name).concat(Object.values(schData).flat(2)))];
+  const allN=[...new Set(students.filter(isActiveStudent).map(s=>s.name).concat(Object.values(schData).flat(2)))];
   document.getElementById('quickAddBar').innerHTML=allN.map(s=>`<button onclick="schQuickPick('${s}')">+ ${s}</button>`).join('');
   document.getElementById('newStudTime').innerHTML='<option value="">时段</option>'+TIME_SLOTS.map(t=>`<option value="${t}">${t}</option>`).join('');
 
@@ -1172,8 +1176,8 @@ function schCopy(){let t='时间\t周日\t周一\t周二\t周三\t周四\n';TIME
 // ==================== OVERVIEW TAB ====================
 function renderOverview(){
   if(syncCompletionForList(students)) save('student_board_v2_merged',students);
-  const active=students.filter(hasActiveCourse);
-  const done=students.filter(s=>!hasActiveCourse(s));
+  const active=students.filter(isActiveStudent);
+  const done=students.filter(s=>!isActiveStudent(s));
   const all=Object.values(schData).flat(2);const tl=all.length;const empty=TIME_SLOTS.length*5-tl;
   const totalDone=active.reduce((sum,s)=>sum+Object.values(s.courses).filter(c=>c.status==='done').length,0);
   const totalPoss=active.length*6;

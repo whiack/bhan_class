@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "杨智源",
-      "group": "26级",
+      "group": "26",
       "coming": true,
       "master": false,
       "vip": "",
@@ -39,7 +39,7 @@
     {
       "id": 2,
       "name": "纪昂",
-      "group": "26级",
+      "group": "26",
       "coming": false,
       "master": true,
       "vip": "",
@@ -75,7 +75,7 @@
     {
       "id": 3,
       "name": "苏畅",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": true,
       "vip": "",
@@ -111,7 +111,7 @@
     {
       "id": 4,
       "name": "沈雅丹",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": true,
       "vip": "",
@@ -147,7 +147,7 @@
     {
       "id": 5,
       "name": "毛一同",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -183,7 +183,7 @@
     {
       "id": 6,
       "name": "邹晨笛",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -219,7 +219,7 @@
     {
       "id": 7,
       "name": "刘思含",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -255,7 +255,7 @@
     {
       "id": 8,
       "name": "王楷仡",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": true,
       "vip": "",
@@ -291,7 +291,7 @@
     {
       "id": 9,
       "name": "黄若雨",
-      "group": "27级",
+      "group": "27",
       "coming": false,
       "master": false,
       "vip": "",
@@ -327,7 +327,7 @@
     {
       "id": 10,
       "name": "陈牧天",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -363,7 +363,7 @@
     {
       "id": 11,
       "name": "钱星蓉",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -399,7 +399,7 @@
     {
       "id": 12,
       "name": "黄柯瑜",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -435,7 +435,7 @@
     {
       "id": 13,
       "name": "蔡宜辰",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -471,7 +471,7 @@
     {
       "id": 14,
       "name": "吕青蓝",
-      "group": "27F",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "V5",
@@ -507,7 +507,7 @@
     {
       "id": 15,
       "name": "陈天宇",
-      "group": "28F",
+      "group": "28",
       "coming": true,
       "master": false,
       "vip": "Top5",
@@ -543,7 +543,7 @@
     {
       "id": 17,
       "name": "唐瑞欣",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -579,7 +579,7 @@
     {
       "id": 18,
       "name": "游溪",
-      "group": "27F",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -615,7 +615,7 @@
     {
       "id": 19,
       "name": "何欣妍",
-      "group": "27级",
+      "group": "27",
       "coming": false,
       "master": false,
       "vip": "",
@@ -651,7 +651,7 @@
     {
       "id": 20,
       "name": "辛颖",
-      "group": "27级",
+      "group": "27",
       "coming": false,
       "master": true,
       "vip": "",
@@ -687,7 +687,7 @@
     {
       "id": 21,
       "name": "吴天哲",
-      "group": "27级",
+      "group": "27",
       "coming": false,
       "master": false,
       "vip": "",
@@ -723,7 +723,7 @@
     {
       "id": 22,
       "name": "徐晨阳",
-      "group": "27级",
+      "group": "27",
       "coming": false,
       "master": false,
       "vip": "",
@@ -759,7 +759,7 @@
     {
       "id": 23,
       "name": "刘夏乐",
-      "group": "27级",
+      "group": "27",
       "coming": false,
       "master": false,
       "vip": "",
@@ -795,7 +795,7 @@
     {
       "id": 24,
       "name": "张英特",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": true,
       "vip": "",
@@ -831,7 +831,7 @@
     {
       "id": 25,
       "name": "程浩真",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -867,7 +867,7 @@
     {
       "id": 26,
       "name": "解亦成",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -903,7 +903,7 @@
     {
       "id": 27,
       "name": "吕品一",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -939,7 +939,7 @@
     {
       "id": 28,
       "name": "王天",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -975,7 +975,7 @@
     {
       "id": 29,
       "name": "闻韬",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -1011,7 +1011,7 @@
     {
       "id": 30,
       "name": "毕飞扬",
-      "group": "28级",
+      "group": "28",
       "coming": true,
       "master": false,
       "vip": "",
@@ -1047,7 +1047,7 @@
     {
       "id": 32,
       "name": "汪恩瑶",
-      "group": "28级",
+      "group": "28",
       "coming": true,
       "master": false,
       "vip": "",
@@ -1083,7 +1083,7 @@
     {
       "id": 33,
       "name": "沙裕来",
-      "group": "28级",
+      "group": "28",
       "coming": true,
       "master": false,
       "vip": "",
@@ -1119,7 +1119,7 @@
     {
       "id": 34,
       "name": "蔡恩明",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "V3",
@@ -1155,7 +1155,7 @@
     {
       "id": 35,
       "name": "许波宇",
-      "group": "29级",
+      "group": "29",
       "coming": true,
       "master": false,
       "vip": "v8",
@@ -1191,7 +1191,7 @@
     {
       "id": 36,
       "name": "王者枫景",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "TOP7",
@@ -1227,7 +1227,7 @@
     {
       "id": 37,
       "name": "陈思淼",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "top5",
@@ -1263,7 +1263,7 @@
     {
       "id": 38,
       "name": "吴昱震",
-      "group": "28级",
+      "group": "28",
       "coming": true,
       "master": false,
       "vip": "V8",
@@ -1299,7 +1299,7 @@
     {
       "id": 39,
       "name": "黄泰志",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "V8",
@@ -1335,7 +1335,7 @@
     {
       "id": 40,
       "name": "Christine",
-      "group": "27级",
+      "group": "27",
       "coming": true,
       "master": false,
       "vip": "",
@@ -1722,5 +1722,5 @@
       []
     ]
   },
-  "exportTime": "2026-06-25T09:02:01.241Z"
+  "exportTime": "2026-06-25T09:04:45.064Z"
 }

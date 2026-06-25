@@ -520,8 +520,8 @@ tr:hover td{background:#f8fbff}
   .mobile-name.master{color:#0a84ff}
   .mobile-master{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#e8f3ff;color:#0a64c7;font-size:10px;font-weight:800}
   .mobile-card-head .att-tag{margin-left:auto;font-size:10px}
-  .mobile-meta{display:flex;gap:5px;margin-top:6px}
-  .mobile-meta button{border:1px solid rgba(148,163,184,.24);background:#f8fafc;border-radius:999px;padding:2px 7px;font-size:10px;color:#475569}
+  .mobile-meta{display:flex;align-items:center;gap:4px;margin-top:6px;white-space:nowrap}
+  .mobile-meta button{min-width:0;border:1px solid rgba(148,163,184,.24);background:#f8fafc;border-radius:999px;padding:2px 7px;font-size:10px;color:#475569;overflow:hidden;text-overflow:ellipsis}
   .mobile-courses{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:7px}
   .mobile-course{height:28px;border:0;border-radius:8px;padding:2px 3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
   .mobile-course span{font-size:9px;color:rgba(15,23,42,.58);line-height:1}
@@ -671,7 +671,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 17; // increment on each deploy to force refresh
+const DATA_VER = 18; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 
 function load(key, fallback) {
@@ -738,8 +738,13 @@ function importAll(event){
 }
 
 // ---- Student data ----
+function normalizeGrade(value) {
+  const m = String(value || '').match(/\d+/);
+  return m ? m[0] : String(value || '').trim();
+}
+
 function defaultStudents() {
-  const mk = (id,name,group,coming,master,vip,dir,cd,cmpl) => ({id,name,group,coming,master,vip,direction:dir,courses:Object.fromEntries(COURSES.map((c,i)=>{const d=cd[i]||{};return[c,{status:d.s||'none',text:d.t||''}]})),completed:cmpl||false});
+  const mk = (id,name,group,coming,master,vip,dir,cd,cmpl) => ({id,name,group:normalizeGrade(group),coming,master,vip,direction:dir,courses:Object.fromEntries(COURSES.map((c,i)=>{const d=cd[i]||{};return[c,{status:d.s||'none',text:d.t||''}]})),completed:cmpl||false});
   return [
     mk(1,'杨智源','26级',true,false,'','',[{s:'doing',t:'unity 虚拟主播'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],true),
     mk(2,'纪昂','26级',false,true,'','英本',[{s:'doing',t:'桌游 查视频'},{s:'doing',t:'unity横版UI'},{s:'doing',t:'屠老师 VR'},{s:'doing',t:'UE 俯视角'},{s:'other',t:''},{s:'other',t:''}],false),
@@ -786,6 +791,11 @@ function normalizeStudents(list){
   const keyMap = {'项目1':'桌游项目','项目2':'Unity项目'};
   let migrated = false;
   (list||[]).forEach(st=>{
+    const nextGroup = normalizeGrade(st.group);
+    if(st.group !== nextGroup) {
+      st.group = nextGroup;
+      migrated = true;
+    }
     st.courses = st.courses || {};
     for(const [oldK,newK] of Object.entries(keyMap)){
       if(st.courses[oldK] && !st.courses[newK]) {
@@ -923,8 +933,8 @@ function renderProgress() {
 
   const groups = {}; list.forEach(s=>{if(!groups[s.group])groups[s.group]=[];groups[s.group].push(s)});
   Object.values(groups).forEach(gl=>gl.sort((a,b)=>(b.master?1:0)-(a.master?1:0)||a.id-b.id));
-  const groupKeys = Object.keys(groups).sort((a,b)=>a.localeCompare(b,'zh-Hans-CN'));
-  const allGroups = [...new Set(students.map(s=>s.group))].sort();
+  const groupKeys = Object.keys(groups).sort((a,b)=>Number(a)-Number(b));
+  const allGroups = [...new Set(students.map(s=>s.group))].sort((a,b)=>Number(a)-Number(b));
   let html=`<div class="panel">
     <div class="panel-header">
       <h2>${currentStudentSubTab==='active'?'在读学生':'已完成学生'}</h2>
@@ -959,7 +969,8 @@ function renderProgress() {
           <span class="att-tag ${s.coming?'att-yes':'att-no'}" onclick="toggleComing(${s.id})">${s.coming?'来':'不来'}</span>
         </div>
         <div class="mobile-meta">
-          <button onclick="editVip(${s.id})">VIP ${esc(s.vip||'-')}</button>
+          <button onclick="editGroup(${s.id})">${esc(s.group||'-')}</button>
+          <button onclick="editVip(${s.id})">${esc(s.vip||'-')}</button>
           <button onclick="editDirection(${s.id})">${esc(s.direction||'未设置')}</button>
         </div>
         <div class="mobile-courses">
@@ -1004,9 +1015,9 @@ function courseShort(c){return {'基础课1':'基1','基础课2':'基2','桌游�
 function esc(v){return String(v||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 
 function addStudent(){
-  const grp=prompt('年级（如 26级、27级、28级）：','27级');if(!grp)return;
+  const grp=prompt('年级（只填数字，如 26、27、28）：','27');if(!grp)return;
   const mid=Math.max(...students.map(s=>s.id),0)+1;
-  students.push({id:mid,name:'新学生',group:grp,coming:true,master:false,vip:'',direction:'',
+  students.push({id:mid,name:'新学生',group:normalizeGrade(grp),coming:true,master:false,vip:'',direction:'',
     courses:Object.fromEntries(COURSES.map(c=>[c,{status:'none',text:''}])),completed:false});
   save('student_board_v2_merged',students);
   renderProgress();setTimeout(()=>editStudentName(mid),200);
@@ -1018,7 +1029,7 @@ function toggleMaster(id){const s=students.find(x=>x.id===id);if(s){s.master=!s.
 function deleteStudent(id){const s=students.find(x=>x.id===id);if(!s)return;if(!confirm(`确定删除「${s.name}」？不可撤销！`))return;const deletedIds=getDeletedStudentIds();deletedIds.add(id);saveDeletedStudentIds(deletedIds);students=students.filter(x=>x.id!==id);save('student_board_v2_merged',students);renderProgress();}
 function editStudentName(id){const s=students.find(x=>x.id===id);if(!s)return;const n=prompt('姓名：',s.name);if(n&&n.trim()){s.name=n.trim();save('student_board_v2_merged',students);renderProgress();}}
 function editVip(id){const s=students.find(x=>x.id===id);if(!s)return;const v=prompt('VIP等级（如 V1,V3,非）：',s.vip);if(v!==null){s.vip=v.trim();save('student_board_v2_merged',students);renderProgress();}}
-function editGroup(id){const s=students.find(x=>x.id===id);if(!s)return;const g=prompt('年级：',s.group);if(g&&g.trim()){s.group=g.trim();save('student_board_v2_merged',students);renderProgress();}}
+function editGroup(id){const s=students.find(x=>x.id===id);if(!s)return;const g=prompt('年级（只填数字）：',s.group);if(g&&g.trim()){s.group=normalizeGrade(g);save('student_board_v2_merged',students);renderProgress();}}
 
 function editDirection(id){
   const s=students.find(x=>x.id===id);if(!s)return;

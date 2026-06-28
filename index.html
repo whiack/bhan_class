@@ -625,6 +625,29 @@ body{font-size:15px}
 .student-detail-hero{background:linear-gradient(135deg,#0a84ff 0%,#5ac8fa 100%)}.student-detail-hero:after{content:"";position:absolute;inset:auto 0 0;height:1px;background:rgba(255,255,255,.35)}.student-detail-close{border-radius:999px;background:rgba(255,255,255,.24);backdrop-filter:blur(12px)}.student-detail-avatar{border-radius:22px}.student-detail-body{background:linear-gradient(180deg,rgba(255,255,255,.48),rgba(250,251,253,.2))}.detail-course-row{border-color:rgba(214,220,230,.55);background:rgba(255,255,255,.72);box-shadow:inset 0 1px 0 rgba(255,255,255,.9);transition:transform .16s ease,background .16s ease}.detail-course-row:hover{transform:translateY(-1px);background:#fff}.student-detail-info>div{min-height:50px;padding:0 14px;border-radius:14px;background:rgba(255,255,255,.58);box-shadow:inset 0 1px 0 rgba(255,255,255,.82)}
 @keyframes sheetFade{from{opacity:0}to{opacity:1}}
 @media (max-width:768px){.student-row-card{grid-template-columns:1fr auto;min-height:82px}.student-row-flags{grid-column:2;grid-row:1;align-self:start}.student-status-dots{gap:7px}.status-dot{width:36px;height:36px;font-size:13px}.student-edit-btn{height:32px}.student-sheet-popup{width:100vw!important;border-radius:0!important}.student-sheet-popup .student-detail-modal{border-radius:0}.student-detail-hero{padding-top:34px}.student-row-meta{flex-wrap:wrap}}
+
+/* Larger schedule and KPI views */
+#tab-schedule .panel-header h2,#tab-kpi .panel-header h2{font-size:20px}
+#tab-schedule .panel-header .count,#tab-kpi .panel-header .count{font-size:15px}
+#tab-schedule .panel-header .btn-sm{height:34px;padding:0 14px;font-size:14px}
+#tab-schedule .schedule-table{font-size:15px}
+#tab-schedule .schedule-table th{height:44px;padding:10px 8px;font-size:15px;font-weight:760}
+#tab-schedule .schedule-table th:first-child{width:72px}
+#tab-schedule .schedule-table td{min-height:68px;padding:12px 8px;font-size:15px}
+#tab-schedule .schedule-table td:first-child{font-size:15px}
+#tab-schedule .student-tag{padding:5px 12px;margin:3px;border-radius:14px;font-size:14px;line-height:1.25}
+#tab-schedule .empty-cell{font-size:14px}
+#tab-schedule .quick-add button{padding:7px 12px;font-size:13px}
+#tab-kpi #kpiRoot>div:first-child{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important;gap:14px!important}
+#tab-kpi .kpi-q-card,#tab-kpi .panel{border-radius:18px}
+#tab-kpi .kpi-grid{grid-template-columns:repeat(auto-fill,minmax(148px,1fr))!important;gap:10px!important;padding:14px!important}
+#tab-kpi .kpi-slot{min-height:86px;padding:12px 10px;border-radius:16px}
+#tab-kpi .kpi-slot .slot-num{font-size:13px;margin-bottom:6px}
+#tab-kpi .kpi-slot .slot-name{font-size:16px;line-height:1.25}
+#tab-kpi .kpi-slot .slot-proj{font-size:13px;line-height:1.25;margin-top:4px}
+#tab-kpi .kpi-slot .slot-status{font-size:12px;padding:4px 8px;border-radius:999px;margin-top:8px}
+#tab-kpi .kpi-slot.empty{font-size:15px}
+@media (max-width:768px){#tab-schedule .schedule-table th{height:32px;font-size:11px;padding:5px 2px}#tab-schedule .schedule-table td{height:calc((100dvh - 174px)/7);padding:4px 2px;font-size:11px}#tab-schedule .schedule-table th:first-child{width:42px}#tab-schedule .student-tag{padding:3px 5px;margin:1px;font-size:10px;border-radius:8px;line-height:1.15}#tab-kpi .kpi-grid{grid-template-columns:repeat(2,1fr)!important;gap:8px!important;padding:10px!important}#tab-kpi .kpi-slot{min-height:78px;padding:10px 8px}#tab-kpi .kpi-slot .slot-name{font-size:14px}#tab-kpi .kpi-slot .slot-proj{font-size:12px}#tab-kpi .kpi-slot .slot-status{font-size:11px}}
 </style>
 </head>
 <body>
@@ -635,7 +658,6 @@ body{font-size:15px}
   <div class="nav-item active" data-tab="progress"><div class="dot"></div><span>学生进度</span></div>
   <div class="nav-item" data-tab="schedule"><div class="dot"></div><span>课表管理</span></div>
   <div class="nav-item" data-tab="kpi"><div class="dot"></div><span>KPI看板</span></div>
-  <div class="nav-item" data-tab="overview"><div class="dot"></div><span>数据概览</span></div>
   <div class="sidebar-user"><div class="avatar">韩</div><span class="name">韩老师</span></div>
 </aside>
 
@@ -666,7 +688,6 @@ body{font-size:15px}
       <button class="tab-btn active" data-tab="progress">学生总览</button>
       <button class="tab-btn" data-tab="schedule">课表管理</button>
       <button class="tab-btn" data-tab="kpi">KPI看板</button>
-      <button class="tab-btn" data-tab="overview">数据概览</button>
     </div>
 
     <!-- ======== TAB: 学生进度 ======== -->
@@ -715,17 +736,6 @@ body{font-size:15px}
       <div id="kpiRoot"></div>
     </div>
 
-    <!-- ======== TAB: 数据概览 ======== -->
-    <div class="tab-content" id="tab-overview">
-      <div class="panel">
-        <div class="panel-header"><h2>综合数据概览</h2></div>
-        <div id="overviewStats" style="padding:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px"></div>
-      </div>
-      <div class="panel" style="margin-top:12px">
-        <div class="panel-header"><h2>学生课时排行</h2></div>
-        <div class="table-wrap"><table><thead><tr><th>学生</th><th>周课时</th><th>分布</th></tr></thead><tbody id="overviewBody"></tbody></table></div>
-      </div>
-    </div>
   </div>
 </main>
 
@@ -739,7 +749,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 25; // increment on each deploy to force refresh
+const DATA_VER = 26; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -1028,6 +1038,7 @@ let schQuickAdd = null;
 
 // ==================== TAB NAVIGATION ====================
 function switchTab(tab) {
+  if(tab==='overview') tab='progress';
   document.documentElement.dataset.activeTab = tab;
   document.body.dataset.activeTab = tab;
   document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));

@@ -597,6 +597,18 @@ th{background:rgba(255,255,255,.52);color:#8b95a5;border-bottom:1px solid rgba(2
 .section-label{background:rgba(244,248,255,.72);border-bottom:1px solid rgba(214,220,230,.66)}.section-label-inner{background:transparent;color:#374151;padding:0;font-size:12.5px;font-weight:730}.cell{border-radius:8px;transform:none!important}.cell:hover{filter:none;box-shadow:0 0 0 3px rgba(0,113,227,.10)}.cell-doing{background:#e8f1fd;color:#0071e3}.cell-done{background:#e7f6ea;color:#2f8f43}.cell-other{background:#eef0f3;color:#6b7280}
 .dir-tag,.att-tag,.student-tag{border-radius:999px;font-weight:650}.schedule-table th{background:rgba(255,255,255,.52);color:#687386}.schedule-table th:first-child,.schedule-table td:first-child{background:rgba(244,248,255,.72);color:#0071e3}.student-tag{background:#e8f1fd;color:#0071e3}.student-tag.special{background:#fff3e6;color:#b45309}.kpi-slot,.kpi-q-card{border-radius:14px;box-shadow:none}.kpi-slot:hover{transform:translateY(-1px);box-shadow:0 14px 30px -18px rgba(28,42,92,.34)}.pop-popup{border:1px solid rgba(255,255,255,.72);border-radius:18px;box-shadow:0 28px 72px -24px rgba(28,42,92,.45)}
 @media (max-width:768px){.sidebar{width:100%;min-width:100%;background:rgba(255,255,255,.82)}.topbar{padding:8px 12px}.content{padding:10px}.panel{border-radius:16px}#tab-progress .panel{border-radius:16px}.mobile-group-title{background:rgba(255,255,255,.82);border-color:rgba(214,220,230,.72);color:#0071e3}}
+
+/* Compact student rows + detail sheet */
+body{font-size:15px}
+.student-panel{overflow:hidden}
+.student-panel-head>div:first-child{display:flex;align-items:baseline;gap:12px}.student-panel-head h2{font-size:19px}.student-panel-head .count{font-size:14px}.student-toolbar input,.student-toolbar select{font-size:14px}
+.student-compact-list{display:grid;gap:10px;padding:14px;background:rgba(255,255,255,.28)}
+.student-group-heading{display:inline-flex;align-items:center;gap:8px;width:max-content;max-width:100%;margin:3px 0 2px;padding:4px 10px;border-radius:999px;color:#657081;background:rgba(255,255,255,.68);font-size:14px;font-weight:760;white-space:nowrap}
+.student-row-card{display:grid;grid-template-columns:minmax(148px,1.4fr) minmax(150px,1.2fr) 88px minmax(270px,2.2fr) 104px;align-items:center;gap:18px;min-height:74px;padding:12px 18px;border:1px solid rgba(214,220,230,.72);border-radius:18px;background:rgba(255,255,255,.78);box-shadow:0 12px 34px -26px rgba(28,42,92,.4)}
+.student-row-card.master-card{border-color:rgba(0,113,227,.24);box-shadow:0 15px 34px -25px rgba(0,113,227,.5)}
+.student-row-name{display:flex;align-items:center;gap:12px;min-width:0;border:0;background:transparent;color:#111827;cursor:pointer;text-align:left;font:inherit}.student-avatar-mini{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#1d9bf0,#58c7ff);color:#fff;font-size:21px;font-weight:800;flex:0 0 auto}.student-name-main{font-size:22px;font-weight:780;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.student-row-meta{display:grid;gap:7px;justify-items:start}.meta-pill{display:inline-flex;align-items:center;height:30px;padding:0 18px;border-radius:2px;background:rgba(31,41,55,.16);color:#111827;font-size:16px;font-weight:650;white-space:nowrap}.vip-pill{min-width:110px;justify-content:center}.student-row-flags{display:flex;gap:10px}.round-flag{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:999px;background:rgba(31,41,55,.22);color:#111827;font-size:17px;font-weight:760}.round-flag.off{opacity:.38}.round-flag.on{background:rgba(0,113,227,.14);color:#0071e3}.student-status-dots{display:flex;align-items:center;justify-content:space-between;gap:14px}.status-dot{width:54px;height:54px;border-radius:999px;border:0;background:rgba(31,41,55,.28);color:#111827;font-size:30px;font-weight:760;line-height:1;cursor:pointer}.status-dot.dot-doing{background:#e8f1fd;color:#0071e3}.status-dot.dot-done{background:#e7f6ea;color:#1f8f43}.status-dot.dot-other{background:#fff0dc;color:#b66a00;font-size:18px}.status-dot.dot-none{color:transparent}.student-edit-btn{height:38px;border:0;border-radius:2px;background:rgba(31,41,55,.26);color:#111827;font-size:16px;font-weight:680;cursor:pointer}.student-edit-btn:hover{background:#0071e3;color:#fff}.student-empty{padding:34px;text-align:center;color:#8b95a5;font-size:16px}
+.student-detail-modal{width:min(560px,calc(100vw - 28px));max-height:min(860px,calc(100vh - 28px));overflow:auto;border-radius:24px;background:rgba(255,255,255,.94)}.student-detail-hero{position:relative;display:flex;align-items:center;gap:20px;padding:28px 38px 30px;background:linear-gradient(135deg,#147fe3 0%,#55c4f2 100%);color:#fff}.student-detail-close{position:absolute;right:20px;top:18px;width:44px;height:44px;border:0;border-radius:14px;background:rgba(255,255,255,.22);color:#fff;font-size:32px;line-height:1;cursor:pointer}.student-detail-avatar{width:90px;height:90px;border:0;border-radius:24px;background:rgba(255,255,255,.22);color:#fff;font-size:44px;font-weight:850;cursor:pointer}.student-detail-title button{border:0;background:transparent;color:#fff;font-size:34px;font-weight:850;line-height:1.1;cursor:pointer}.student-detail-title p{margin-top:8px;font-size:18px;font-weight:560;opacity:.96}.student-detail-title span{display:inline-flex;margin-top:12px;padding:7px 12px;border-radius:10px;background:rgba(255,255,255,.2);font-size:16px;font-weight:650}.student-detail-body{padding:28px 38px 34px}.student-detail-section-title{margin:0 0 12px;color:#8b95a5;font-size:16px;font-weight:780}.student-detail-courses{display:grid;gap:12px;margin-bottom:28px}.detail-course-row{display:grid;grid-template-columns:120px minmax(90px,1fr) 92px;align-items:center;gap:14px;min-height:58px;padding:0 18px;border:1px solid rgba(214,220,230,.72);border-radius:14px;background:#fff;text-align:left;cursor:pointer}.detail-course-row span{font-size:19px;font-weight:650;color:#374151}.detail-course-row em{font-style:normal;font-size:17px;color:#657081;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.detail-status{justify-self:end;padding:6px 12px;border-radius:10px;font-size:16px;font-weight:780}.detail-status.dot-doing{background:#e8f1fd;color:#0071e3}.detail-status.dot-done{background:#e7f6ea;color:#1f8f43}.detail-status.dot-other{background:#fff0dc;color:#b66a00}.detail-status.dot-none{background:#f3f4f6;color:#9ca3af}.student-detail-info{display:grid;gap:8px}.student-detail-info>div{display:grid;grid-template-columns:100px 1fr 74px;align-items:center;gap:16px;min-height:46px}.student-detail-info span{font-size:20px;color:#111827}.student-detail-info strong{font-size:19px;font-weight:560;color:#111827}.student-detail-info button{height:34px;border:0;border-radius:10px;background:#f3f7fd;color:#0071e3;font-size:16px;font-weight:700;cursor:pointer}.student-detail-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:28px}
+@media (max-width:768px){body{font-size:16px}.student-compact-list{padding:8px;gap:8px}.student-row-card{grid-template-columns:1fr auto;gap:10px;min-height:86px;padding:12px}.student-row-meta{grid-column:1 / 2;display:flex;gap:6px}.student-row-flags{grid-column:2;grid-row:1}.student-status-dots{grid-column:1 / -1;justify-content:flex-start;gap:8px}.status-dot{width:38px;height:38px;font-size:21px}.student-edit-btn{grid-column:2;grid-row:2;width:72px}.student-name-main{font-size:19px}.student-avatar-mini{width:36px;height:36px;border-radius:12px;font-size:18px}.meta-pill{height:25px;padding:0 10px;font-size:13px}.round-flag{width:34px;height:34px;font-size:13px}.student-detail-modal{width:100vw;max-height:100vh;border-radius:0}.student-detail-hero{padding:28px 28px 26px}.student-detail-avatar{width:78px;height:78px;font-size:36px}.student-detail-title button{font-size:30px}.student-detail-body{padding:24px 28px}.detail-course-row{grid-template-columns:96px 1fr 74px}.student-detail-info>div{grid-template-columns:86px 1fr 60px}.student-detail-info span{font-size:18px}.student-detail-info strong{font-size:17px}}
 </style>
 </head>
 <body>
@@ -711,7 +723,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 23; // increment on each deploy to force refresh
+const DATA_VER = 24; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -1034,79 +1046,79 @@ function renderProgress() {
   Object.values(groups).forEach(gl=>gl.sort((a,b)=>(b.master?1:0)-(a.master?1:0)||a.id-b.id));
   const groupKeys = Object.keys(groups).sort((a,b)=>Number(a)-Number(b));
   const allGroups = [...new Set(students.map(s=>s.group))].sort((a,b)=>Number(a)-Number(b));
-  let html=`<div class="panel">
-    <div class="panel-header">
-      <h2>${currentStudentSubTab==='active'?'在读学生':'已完成学生'}</h2>
-      <span class="count">${list.length} 人</span>
+  let html=`<div class="panel student-panel">
+    <div class="panel-header student-panel-head">
+      <div><h2>${currentStudentSubTab==='active'?'在读学生':'已完成学生'}</h2><span class="count">${list.length} 人</span></div>
       <div class="sub-tabs">
         <button class="tab-btn ${currentStudentSubTab==='active'?'active':''}" onclick="setStudentSub('active')">在读</button>
         <button class="tab-btn ${currentStudentSubTab==='completed'?'active':''}" onclick="setStudentSub('completed')">已完成</button>
       </div>
     </div>
-    <div class="toolbar">
+    <div class="toolbar student-toolbar">
       <input id="stuSearch" placeholder="搜索姓名或项目" oninput="renderProgress()" value="${searchQ||''}">
       <select id="stuDir" onchange="renderProgress()"><option value="all">全部方向</option>${DIR_OPTIONS.map(d=>`<option value="${d}" ${dirQ===d?'selected':''}>${d}</option>`).join('')}</select>
       <select id="stuGroup" onchange="renderProgress()"><option value="all">全部年级</option>${allGroups.map(g=>`<option value="${g}" ${groupQ===g?'selected':''}>${g}</option>`).join('')}</select>
       ${currentStudentSubTab==='active'?`<button class="btn btn-primary btn-sm" onclick="addStudent()">新增学生</button>`:''}
     </div>
-    <div class="table-wrap"><table><thead><tr>
-      <th>姓名</th><th>出勤</th>
-      ${COURSES.map(c=>`<th>${c}</th>`).join('')}
-      <th>VIP</th><th>申请方向</th><th>操作</th>
-    </tr></thead><tbody>`;
+    <div class="student-compact-list">`;
 
-  let mobileHtml='<div class="mobile-student-list">';
   for(const group of groupKeys) {
     const gl=groups[group];
-    html+=`<tr><td colspan="11" class="section-label"><span class="section-label-inner"><span class="dot ${currentStudentSubTab==='active'?'dot-blue':'dot-green'}"></span>${group} · ${gl.length}人</span></td></tr>`;
-    mobileHtml+=`<div class="mobile-group"><div class="mobile-group-title">${group} · ${gl.length}人</div>`;
+    html+=`<div class="student-group-heading"><span class="dot ${currentStudentSubTab==='active'?'dot-blue':'dot-green'}"></span>${group} · ${gl.length}人</div>`;
     gl.forEach(s=>{
-      mobileHtml+=`<article class="mobile-student-card ${s.master?'master-card':''}">
-        <div class="mobile-card-head">
-          <button class="mobile-name${s.master?' master':''}" onclick="editStudentName(${s.id})">${esc(s.name)}</button>
-          ${s.master?'<span class="mobile-master">主</span>':''}
-          <span class="att-tag ${s.coming?'att-yes':'att-no'}" onclick="toggleComing(${s.id})">${s.coming?'来':'不来'}</span>
-        </div>
-        <div class="mobile-meta">
-          <button onclick="editGroup(${s.id})">${esc(s.group||'-')}</button>
-          <button onclick="editVip(${s.id})">${esc(s.vip||'-')}</button>
-          <button onclick="editDirection(${s.id})">${esc(s.direction||'未设置')}</button>
-        </div>
-        <div class="mobile-courses">
-          ${COURSES.map(c=>{const co=s.courses[c]||{status:'none',text:''};const note=co.text?`${c}：${STATUS_LABELS[co.status]} · ${co.text}`:`${c}：${STATUS_LABELS[co.status]}`;return`<button class="mobile-course cell-${co.status}" title="${esc(note)}" onclick="editCourse(${s.id},'${c}')"><span>${courseShort(c)}</span><b>${cellIcon(co.status)}</b></button>`}).join('')}
-        </div>
-        <div class="mobile-actions">
-          ${currentStudentSubTab==='active'?`<button class="btn btn-success btn-sm" onclick="markComplete(${s.id})">完成</button>`:`<button class="btn btn-gray btn-sm" onclick="markActive(${s.id})">恢复</button>`}
-          <button class="btn btn-gray btn-sm" onclick="editGroup(${s.id})">年级</button>
-          <button class="btn btn-gray btn-sm" onclick="toggleMaster(${s.id})">${s.master?'取消主导师':'设主导师'}</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id})">删除</button>
-        </div>
+      html+=`<article class="student-row-card ${s.master?'master-card':''}">
+        <button class="student-row-name" onclick="showStudentDetail(${s.id})"><span class="student-avatar-mini">${esc((s.name||'?').slice(0,1))}</span><span class="student-name-main">${esc(s.name)}</span></button>
+        <div class="student-row-meta"><span class="meta-pill vip-pill">${esc(s.vip||'VIP')}</span><span class="meta-pill">${esc(s.direction||'申请方向')}</span></div>
+        <div class="student-row-flags"><span class="round-flag ${s.coming?'on':'off'}">${s.coming?'来':'缺'}</span><span class="round-flag ${s.master?'on':'off'}">主</span></div>
+        <div class="student-status-dots">${COURSES.map(c=>{const co=s.courses[c]||{status:'none',text:''};return `<button class="status-dot dot-${co.status}" title="${esc(c)}：${esc(STATUS_LABELS[co.status]||'')} ${esc(co.text||'')}" onclick="showStudentDetail(${s.id})">${studentStatusMark(co.status)}</button>`}).join('')}</div>
+        <button class="student-edit-btn" onclick="showStudentDetail(${s.id})">编辑</button>
       </article>`;
-      html+=`<tr>
-        <td class="name-cell${s.master?' master':''}" onclick="editStudentName(${s.id})">${s.name}</td>
-        <td><span class="att-tag ${s.coming?'att-yes':'att-no'}" onclick="toggleComing(${s.id})">${s.coming?'✓':'✗不来'}</span></td>`;
-      COURSES.forEach(c=>{
-        const co=s.courses[c] || {status:'none',text:''};
-        const note=co.text?`${c}：${STATUS_LABELS[co.status]} · ${co.text}`:`${c}：${STATUS_LABELS[co.status]}`;
-        html+=`<td onclick="editCourse(${s.id},'${c}')" title="${esc(note)}"><span class="cell course-chip cell-${co.status}">${cellIcon(co.status)}</span></td>`;
-      });
-      html+=`<td onclick="editVip(${s.id})" style="cursor:pointer;font-size:12px;min-width:40px">${s.vip||'<span style="color:#ccc">-</span>'}</td>
-        <td><span class="dir-tag dir-${s.direction||'其他'}" onclick="editDirection(${s.id})">${s.direction||'未设置'}</span></td>
-        <td><div class="row-actions">
-          ${currentStudentSubTab==='active'?`<button class="btn btn-success btn-sm" data-mobile="完" onclick="markComplete(${s.id})">完成</button>`:`<button class="btn btn-gray btn-sm" data-mobile="恢" onclick="markActive(${s.id})">恢复</button>`}
-          <button class="btn btn-gray btn-sm" data-mobile="级" onclick="editGroup(${s.id})" title="改年级">年级</button>
-          <button class="btn btn-gray btn-sm" data-mobile="${s.master?'主':'导'}" onclick="toggleMaster(${s.id})" title="主导师">${s.master?'主导师':'导师'}</button>
-          <button class="btn btn-danger btn-sm" data-mobile="删" onclick="deleteStudent(${s.id})">删除</button>
-        </div></td></tr>`;
     });
-    mobileHtml+='</div>';
   }
-  mobileHtml+='</div>';
-  html+=`</tbody></table></div>${mobileHtml}`;
-  html+=`</div>`;
+  html+=`${list.length?'':'<div class="student-empty">没有匹配的学生</div>'}</div></div>`;
   document.getElementById('studentRoot').innerHTML=html;
 }
 
+function studentStatusMark(status){return {done:'✓',doing:'↑',other:'他',none:''}[status]||'';}
+function studentStatusText(status){return STATUS_LABELS[status]||'未开始';}
+function studentWeeklyHours(student){return Object.values(schData||{}).flat(2).filter(n=>n===student.name).length*1.5;}
+
+function showStudentDetail(id){
+  const s=students.find(x=>x.id===id);if(!s)return;
+  const active=isActiveStudent(s);
+  const hours=studentWeeklyHours(s);
+  const div=document.createElement('div');
+  div.className='student-detail-modal';
+  div.innerHTML=`<div class="student-detail-hero">
+      <button class="student-detail-close" onclick="closePopover()">×</button>
+      <button class="student-detail-avatar" onclick="detailEditName(${s.id})">${esc((s.name||'?').slice(0,1))}</button>
+      <div class="student-detail-title"><button onclick="detailEditName(${s.id})">${esc(s.name)}</button><p>${esc(s.group||'-')}届 · ${esc(s.direction||'未设置')} · ${active?'在读':'已完成'}</p><span>${s.master?'主导师':'导师'} · ${s.coming?'来上课':'不来'} · 本周 ${hours || 0}h</span></div>
+    </div>
+    <div class="student-detail-body">
+      <div class="student-detail-section-title">课程进度</div>
+      <div class="student-detail-courses">${COURSES.map(c=>{const co=s.courses[c]||{status:'none',text:''};return `<button class="detail-course-row" onclick="closePopover();setTimeout(()=>editCourse(${s.id},'${c}'),80)"><span>${esc(c)}</span><em>${esc(co.text||'内容')}</em><b class="detail-status dot-${co.status}">${esc(studentStatusText(co.status))}</b></button>`}).join('')}</div>
+      <div class="student-detail-section-title">学生信息</div>
+      <div class="student-detail-info">
+        <div><span>VIP</span><strong>${esc(s.vip||'-')}</strong><button onclick="detailEditVip(${s.id})">修改</button></div>
+        <div><span>主导师</span><strong>${s.master?'是':'否'}</strong><button onclick="detailToggleMaster(${s.id})">修改</button></div>
+        <div><span>来上课</span><strong>${s.coming?'是':'否'}</strong><button onclick="detailToggleComing(${s.id})">修改</button></div>
+        <div><span>申请年份</span><strong>${esc(s.group||'-')}</strong><button onclick="detailEditGroup(${s.id})">修改</button></div>
+        <div><span>申请方向</span><strong>${esc(s.direction||'未设置')}</strong><button onclick="closePopover();setTimeout(()=>editDirection(${s.id}),80)">修改</button></div>
+        <div><span>在读</span><strong>${active?'是':'否'}</strong><button onclick="detailToggleActive(${s.id})">修改</button></div>
+      </div>
+      <div class="student-detail-actions"><button class="btn btn-gray" onclick="closePopover()">关闭</button><button class="btn btn-danger" onclick="detailDeleteStudent(${s.id})">删除</button></div>
+    </div>`;
+  showPopover(div);
+}
+
+function refreshStudentDetail(id){closePopover();renderProgress();setTimeout(()=>showStudentDetail(id),60);}
+function detailEditName(id){const s=students.find(x=>x.id===id);if(!s)return;const n=prompt('姓名：',s.name);if(n&&n.trim()){s.name=n.trim();save('student_board_v2_merged',students);refreshStudentDetail(id);}}
+function detailEditVip(id){const s=students.find(x=>x.id===id);if(!s)return;const v=prompt('VIP等级：',s.vip);if(v!==null){s.vip=v.trim();save('student_board_v2_merged',students);refreshStudentDetail(id);}}
+function detailEditGroup(id){const s=students.find(x=>x.id===id);if(!s)return;const g=prompt('年级（只填数字）：',s.group);if(g&&g.trim()){s.group=normalizeGrade(g);save('student_board_v2_merged',students);refreshStudentDetail(id);}}
+function detailToggleComing(id){const s=students.find(x=>x.id===id);if(!s)return;s.coming=!s.coming;save('student_board_v2_merged',students);refreshStudentDetail(id);}
+function detailToggleMaster(id){const s=students.find(x=>x.id===id);if(!s)return;s.master=!s.master;syncCompletionForList(students);save('student_board_v2_merged',students);refreshStudentDetail(id);}
+function detailToggleActive(id){const s=students.find(x=>x.id===id);if(!s)return;if(isActiveStudent(s)){Object.values(s.courses||{}).forEach(c=>{if(c.status==='doing')c.status='done'});s.master=false;}else{const first=COURSES.find(c=>(s.courses[c]?.status||'none')==='none')||COURSES[0];s.courses[first]=s.courses[first]||{status:'none',text:''};s.courses[first].status='doing';}syncCompletionForList(students);save('student_board_v2_merged',students);refreshStudentDetail(id);}
+function detailDeleteStudent(id){closePopover();deleteStudent(id);}
 function setStudentSub(sub){currentStudentSubTab=sub;renderProgress();}
 function cellIcon(s){return {none:'○',doing:'进',done:'✓',other:'他'}[s]||'○';}
 function courseShort(c){return {'基础课1':'基1','基础课2':'基2','桌游项目':'桌','Unity项目':'U','项目3':'3','项目4':'4'}[c]||c;}

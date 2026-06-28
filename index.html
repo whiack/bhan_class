@@ -588,6 +588,8 @@ body{
 .sidebar-logo{padding:0 8px 22px}.sidebar-logo .icon{width:34px;height:34px;border-radius:9px;background:#0071e3;box-shadow:0 12px 28px -14px rgba(0,113,227,.72)}.sidebar-logo .text{color:#1d1d1f;font-size:17px;font-weight:700}
 .nav-label{color:#aeb4bf;padding:10px 10px 6px;letter-spacing:1px}.nav-item{margin:3px 0;padding:10px 12px;border-radius:12px;color:#596270;font-size:13.5px;font-weight:560}.nav-item:hover{background:var(--sidebar-hover);color:#1d1d1f}.nav-item.active{background:rgba(255,255,255,.9);color:#0071e3;box-shadow:0 10px 24px -14px rgba(0,113,227,.62), inset 0 1px 0 rgba(255,255,255,.86)}.nav-item .dot{background:#aeb7c4}.nav-item.active .dot{background:#0071e3}.sidebar-user{border-top:1px solid rgba(214,220,230,.72);padding:14px 8px}.sidebar-user .avatar{background:#0071e3}.sidebar-user .name{color:#596270}
 .topbar{height:68px;background:rgba(255,255,255,.72);border-bottom:1px solid rgba(255,255,255,.62);box-shadow:none;backdrop-filter:blur(22px);padding:0 30px}.topbar .title{font-size:20px;font-weight:760;color:#1d1d1f}.date{color:#8b95a5}.content{padding:22px 28px}
+.sync-badge{align-items:center;height:28px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:760;cursor:pointer;white-space:nowrap}
+.sync-badge.sync-off{background:#fff2e8;color:#b45309}.sync-badge.sync-wait{background:#fff7d6;color:#946200}.sync-badge.sync-ok{background:#e8f7ee;color:#16813b}
 .panel{background:var(--card);border:1px solid rgba(255,255,255,.72);border-radius:20px;box-shadow:var(--shadow)}.panel-header{padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.66);background:rgba(255,255,255,.42)}.panel-header h2{font-size:16px;font-weight:730;color:#1d1d1f}.panel-header .count{color:#8b95a5;font-weight:600}
 .tab-row{background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.65);border-radius:14px;padding:4px;box-shadow:none}.tab-btn{border-radius:9px;color:#687386;font-weight:650}.tab-btn:hover{background:rgba(255,255,255,.62);color:#0071e3}.tab-btn.active{background:#fff;color:#0071e3;box-shadow:0 2px 8px rgba(15,23,42,.08)}
 .toolbar{padding:13px 22px;background:rgba(255,255,255,.38);border-bottom:1px solid rgba(255,255,255,.62)}.toolbar input,.toolbar select,#newStudName,#newStudTime,#newStudDay{height:38px;border:1px solid rgba(214,220,230,.82)!important;border-radius:12px!important;background:rgba(255,255,255,.82)!important;color:#1d1d1f}.toolbar input:focus,.toolbar select:focus,#newStudName:focus,#newStudTime:focus,#newStudDay:focus{border-color:#0071e3!important;box-shadow:0 0 0 4px rgba(0,113,227,.12)}
@@ -664,7 +666,7 @@ body{font-size:15px}
   <header class="topbar">
     <span class="title" id="pageTitle">教务管理综合平台</span>
     <div class="top-actions">
-      <span id="syncBadge" style="display:none" title="同步状态：● 有未同步更改 / ○ 已同步" onclick="if(_syncDirty)autoSyncToFile()">○</span>
+      <span id="syncBadge" class="sync-badge" title="同步状态" onclick="handleSyncBadgeClick()">未绑定</span>
       <button class="btn btn-gray btn-sm" onclick="copyShareLink()">复制链接</button>
       <details class="data-menu">
         <summary>数据</summary>
@@ -744,7 +746,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 27; // increment on each deploy to force refresh
+const DATA_VER = 28; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -762,9 +764,15 @@ function save(key,v) { localStorage.setItem(key,JSON.stringify(v)); localStorage
 
 // ===== Auto-sync to local data.json (File System Access API) =====
 let _syncHandle=null, _syncDirty=false, _syncPaused=false;
-function updateSyncBadge(){ const b=document.getElementById('syncBadge'); if(!b)return; b.textContent=_syncDirty?'●':'○'; b.style.color=_syncDirty?'#f59e0b':'#22c55e'; }
-function updateBindUI(){ const b=document.getElementById('bindBtn'); if(!b)return; b.textContent=_syncHandle?'已绑定':'绑定JSON'; b.style.background=_syncHandle?'#dcfce7':''; b.style.color=_syncHandle?'#166534':''; }
-function saveFileNow(){ if(!_syncHandle)return; _syncHandle.createWritable().then(w=>{const d={students,kpiData,schedule:schData,exportTime:new Date().toISOString()};w.write(JSON.stringify(d,null,2)).then(()=>{w.close();_syncDirty=false;updateSyncBadge()}).catch(()=>{})}).catch(()=>{_syncHandle=null;updateBindUI()}) }
+function updateSyncBadge(){
+  const b=document.getElementById('syncBadge'); if(!b)return;
+  b.style.display='inline-flex';
+  if(!_syncHandle){b.textContent=_syncDirty?'未绑定 · 有修改':'未绑定';b.className='sync-badge sync-off';b.title='还没有绑定 data.json，本次修改只保存在当前浏览器里。点击后选择 D:\\AIAgent\\课表\\教务平台\\data.json。';return}
+  b.textContent=_syncDirty?'同步中':'已同步';b.className='sync-badge '+(_syncDirty?'sync-wait':'sync-ok');b.title=_syncDirty?'正在写入已绑定的 data.json':'已自动同步到绑定的 data.json';
+}
+function updateBindUI(){ const b=document.getElementById('bindBtn'); if(!b)return; b.textContent=_syncHandle?'已绑定':'绑定JSON'; b.style.background=_syncHandle?'#dcfce7':''; b.style.color=_syncHandle?'#166534':''; updateSyncBadge(); }
+function handleSyncBadgeClick(){ if(!_syncHandle){bindSyncFile();return} if(_syncDirty)saveFileNow(); }
+function saveFileNow(){ if(!_syncHandle){updateSyncBadge();return} _syncHandle.createWritable().then(w=>{const d={students,kpiData,schedule:schData,exportTime:new Date().toISOString()};w.write(JSON.stringify(d,null,2)).then(()=>{w.close();_syncDirty=false;updateSyncBadge()}).catch(()=>{_syncDirty=true;updateSyncBadge()})}).catch(()=>{_syncHandle=null;updateBindUI()}) }
 function autoSyncToFile(){ _syncDirty=true; updateSyncBadge(); saveFileNow(); }
 
 // Persist handle in IndexedDB so it survives page reloads
@@ -1357,6 +1365,7 @@ function renderOverview(){
 (function(){
   const now=new Date();const wd=['日','一','二','三','四','五','六'];
   document.getElementById('pageDate').textContent=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 周${wd[now.getDay()]}`;
+  updateBindUI();
   const savedTab=load('activeTab','progress');
   switchTab(savedTab);
   renderSchedule();renderKpi();

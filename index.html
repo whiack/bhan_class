@@ -754,7 +754,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 31; // increment on each deploy to force refresh
+const DATA_VER = 32; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -815,7 +815,7 @@ function importAll(event){
       schData = data.schedule;
       schUndo = [];
       save('student_board_v2_merged', students);
-      save('kpi_board_data_merged', kpiData);
+      saveKpiDataSorted();
       save('sch_merged', schData);
       save('sch_undo', schUndo);
       switchTab(load('activeTab','progress'));
@@ -844,7 +844,7 @@ function applyFullData(data, stamp, options={}) {
     schData = data.schedule;
     schUndo = [];
     save('student_board_v2_merged', students);
-    save('kpi_board_data_merged', kpiData);
+    saveKpiDataSorted();
     save('sch_merged', schData);
     save('sch_undo', schUndo);
     if(stamp) localStorage.setItem(DATA_JSON_STAMP_KEY, stamp);
@@ -1004,7 +1004,7 @@ let currentStudentSubTab = 'active'; // active / completed
 
 // ---- KPI data ----
 const KPI_TARGET = 21;
-const KPI_STATUSES = ['\u7b49\u5b8c\u6210','\u7b49\u6392\u7248','\u53ef\u4ee5\u6392','\u5dee\u89c6\u9891','\u6709\u95ee\u9898','\u7ed9\u6559\u52a1','\u5df2\u63d0\u4ea4','\u8fc7\u5ba1\u4e86'];
+const KPI_STATUSES = ['\u8fc7\u5ba1\u4e86','\u5df2\u63d0\u4ea4','\u7ed9\u6559\u52a1','\u5dee\u89c6\u9891','\u7b49\u6392\u7248','\u53ef\u4ee5\u6392','\u7b49\u5b8c\u6210','\u6709\u95ee\u9898'];
 const KPI_Q_LABELS = {678:'678月（6-7-8月）',91011:'91011月（9-10-11月）',120102:'120102月（12-1-2月）',345:'345月（3-4-5月）'};
 
 function defaultKpi() { return {"345":[],"678":[{"name":"毕飞杨","project":"项目2","status":"差视频","amount":1},{"name":"吕青蓝","project":"项目1","status":"差视频","amount":1},{"name":"纪昂","project":"项目2","status":"差视频","amount":1},{"name":"闻韬","project":"项目1","status":"已提交","amount":1},{"name":"苏畅","project":"项目2 unity","status":"差视频","amount":1},{"name":"黄泰志","project":"USC","status":"已提交","amount":1},{"name":"邹晨笛","project":"MA专业项目一","status":"过审了","amount":1},{"name":"毛一同","project":"项目2","status":"过审了","amount":1},{"name":"王天","project":"商业时间","status":"过审了","amount":1},{"name":"刘明浩","project":"商业实践项目-20H","status":"过审了","amount":1},{"name":"陈纪羽","project":"USC","status":"已提交","amount":1},{"name":"曲倬锐","project":"USC","status":"已提交","amount":1},{"name":"汪恩瑶","project":"项目1","status":"给教务","amount":1},{"name":"王天","project":"大师课","status":"等完成","amount":1},{"name":"何晨嘉","project":"大师课","status":"等完成","amount":1},{"name":"顾昊","project":"大师课","status":"等完成","amount":1},{"name":"陈璐瑶","project":"大师课","status":"等完成","amount":1},{"name":"李治林","project":"大师课","status":"等完成","amount":1},{"name":"沈雅丹","project":"大师课","status":"等完成","amount":1},{"name":"王天","project":"教研studio","status":"等完成","amount":1},{"name":"黄泰志","project":"教研 studio","status":"等完成","amount":1},{"name":"唐瑞欣","project":"项目1","status":"等完成","amount":1}],"91011":[{"name":"钱星蓉","project":"项目","status":"等完成","amount":1},{"name":"吕品一","project":"项目1","status":"等完成","amount":1},{"name":"游溪","project":"项目1","status":"等完成","amount":1},{"name":"程浩真","project":"项目1","status":"等完成","amount":1},{"name":"张祎昊","project":"项目1","status":"等完成","amount":1},{"name":"张祎昊","project":"基础课1","status":"等完成","amount":1},{"name":"陈天宇","project":"项目2","status":"等完成","amount":1},{"name":"蔡恩明","project":"项目课","status":"等完成","amount":1},{"name":"陈思淼","project":"项目课","status":"等完成","amount":1},{"name":"王天","project":"大师课2","status":"等完成","amount":1},{"name":"许波宇","project":"项目","status":"等完成","amount":1},{"name":"蔡欣悦","project":"项目","status":"等完成","amount":1},{"name":"王者枫景","project":"基础课","status":"等完成","amount":1},{"name":"许波宇","project":"基础课","status":"等完成","amount":1},{"name":"王天","project":"基础课","status":"等完成","amount":1},{"name":"Christine","project":"项目1","status":"等完成","amount":1},{"name":"王者风景","project":"项目1","status":"等完成","amount":1},{"name":"唐天一","project":"教研 studio","status":"等完成","amount":1},{"name":"沙裕来","project":"项目1","status":"等完成","amount":1}],"120102":[]}; }
@@ -1031,6 +1031,18 @@ function kpiApprovedAmount(items) {
 function kpiTotalAmount(items) {
   return items.reduce((sum,i)=>sum+kpiAmount(i),0);
 }
+function kpiStatusRank(status){const i=KPI_STATUSES.indexOf(status);return i>=0?i:KPI_STATUSES.length;}
+function sortKpiItems(items){
+  let changed=false;
+  items.sort((a,b)=>{
+    const byStatus=kpiStatusRank(a.status)-kpiStatusRank(b.status);
+    if(byStatus)return byStatus;
+    return String(a.name||'').localeCompare(String(b.name||''),'zh-Hans-CN')||String(a.project||'').localeCompare(String(b.project||''),'zh-Hans-CN');
+  });
+  return changed;
+}
+function sortAllKpiData(data){Object.values(data||{}).forEach(items=>Array.isArray(items)&&sortKpiItems(items));return data;}
+function saveKpiDataSorted(){sortAllKpiData(kpiData);save('kpi_board_data_merged',kpiData);}
 function normalizeKpiData(data) {
   Object.values(data||{}).forEach(items=>{
     (items||[]).forEach(item=>{
@@ -1244,6 +1256,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopover();});
 
 // ==================== KPI TAB ====================
 function renderKpi(){
+  sortAllKpiData(kpiData);
   let html='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;padding:0 0 12px">';
   for(const [q,items] of Object.entries(kpiData)){
     const done=kpiApprovedAmount(items);
@@ -1333,7 +1346,7 @@ function kpiPointerUp(ev,g){
   ev.preventDefault();
   if(g.targetQ && kpiData[g.q] && kpiData[g.targetQ]){
     const [item]=kpiData[g.q].splice(g.idx,1);
-    if(item){kpiData[g.targetQ].push(item);save('kpi_board_data_merged',kpiData);}
+    if(item){kpiData[g.targetQ].push(item);saveKpiDataSorted();}
   }
   renderKpi();
 }
@@ -1371,16 +1384,16 @@ function editKpi(q,idx){
   setTimeout(()=>{const i=document.getElementById('kpiName');if(i)i.focus()},100);
 }
 
-function setKpiStatus(q,idx,status){while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成',amount:1});kpiData[q][idx].status=status;save('kpi_board_data_merged',kpiData);closePopover();renderKpi();setTimeout(()=>editKpi(q,idx),100);}
+function setKpiStatus(q,idx,status){while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成',amount:1});kpiData[q][idx].status=status;saveKpiDataSorted();closePopover();renderKpi();setTimeout(()=>editKpi(q,idx),100);}
 function saveKpi(q,idx){
   while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成',amount:1});
   const ni=document.getElementById('kpiName'),pi=document.getElementById('kpiProj'),ai=document.getElementById('kpiAmount');
   kpiData[q][idx].name=(ni?.value||'').trim();kpiData[q][idx].project=(pi?.value||'').trim();
   const amount=parseFloat(ai?.value);
   kpiData[q][idx].amount=Number.isFinite(amount)?Math.max(0,amount):defaultKpiAmount(kpiData[q][idx]);
-  save('kpi_board_data_merged',kpiData);closePopover();renderKpi();
+  saveKpiDataSorted();closePopover();renderKpi();
 }
-function clearKpi(q,idx){kpiData[q].splice(idx,1);save('kpi_board_data_merged',kpiData);closePopover();renderKpi();}
+function clearKpi(q,idx){kpiData[q].splice(idx,1);saveKpiDataSorted();closePopover();renderKpi();}
 
 // ==================== SCHEDULE TAB ====================
 function renderSchedule(){

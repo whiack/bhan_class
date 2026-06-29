@@ -648,6 +648,11 @@ body{font-size:15px}
 #tab-kpi .kpi-slot .slot-proj{font-size:13px;line-height:1.25;margin-top:4px}
 #tab-kpi .kpi-slot .slot-status{font-size:12px;padding:4px 8px;border-radius:999px;margin-top:8px}
 #tab-kpi .kpi-slot.empty{font-size:15px}
+#tab-kpi .kpi-\6709\95ee\9898{background:#fff1f2;border:1px solid #fb7185;box-shadow:0 14px 30px -20px rgba(190,18,60,.42)}
+#tab-kpi .kpi-\6709\95ee\9898 .slot-status{background:#ffe4e6;color:#be123c}
+#tab-kpi .kpi-slot[draggable="true"]{cursor:grab}
+#tab-kpi .kpi-slot.dragging{opacity:.45;cursor:grabbing;transform:scale(.98)}
+#tab-kpi .kpi-drop-target{outline:2px solid rgba(0,113,227,.45);outline-offset:3px;background:#eef6ff!important}
 @media (max-width:768px){#tab-schedule .schedule-table th{height:32px;font-size:11px;padding:5px 2px}#tab-schedule .schedule-table td{height:calc((100dvh - 174px)/7);padding:4px 2px;font-size:11px}#tab-schedule .schedule-table th:first-child{width:42px}#tab-schedule .student-tag{padding:3px 5px;margin:1px;font-size:10px;border-radius:8px;line-height:1.15}#tab-kpi .kpi-grid{grid-template-columns:repeat(2,1fr)!important;gap:8px!important;padding:10px!important}#tab-kpi .kpi-slot{min-height:78px;padding:10px 8px}#tab-kpi .kpi-slot .slot-name{font-size:14px}#tab-kpi .kpi-slot .slot-proj{font-size:12px}#tab-kpi .kpi-slot .slot-status{font-size:11px}}
 </style>
 </head>
@@ -746,7 +751,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 28; // increment on each deploy to force refresh
+const DATA_VER = 29; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -996,7 +1001,7 @@ let currentStudentSubTab = 'active'; // active / completed
 
 // ---- KPI data ----
 const KPI_TARGET = 21;
-const KPI_STATUSES = ['等完成','等排版','可以排','差视频','给教务','已提交','过审了'];
+const KPI_STATUSES = ['\u7b49\u5b8c\u6210','\u7b49\u6392\u7248','\u53ef\u4ee5\u6392','\u5dee\u89c6\u9891','\u6709\u95ee\u9898','\u7ed9\u6559\u52a1','\u5df2\u63d0\u4ea4','\u8fc7\u5ba1\u4e86'];
 const KPI_Q_LABELS = {678:'678月（6-7-8月）',91011:'91011月（9-10-11月）',120102:'120102月（12-1-2月）',345:'345月（3-4-5月）'};
 
 function defaultKpi() { return {"345":[],"678":[{"name":"毕飞杨","project":"项目2","status":"差视频","amount":1},{"name":"吕青蓝","project":"项目1","status":"差视频","amount":1},{"name":"纪昂","project":"项目2","status":"差视频","amount":1},{"name":"闻韬","project":"项目1","status":"已提交","amount":1},{"name":"苏畅","project":"项目2 unity","status":"差视频","amount":1},{"name":"黄泰志","project":"USC","status":"已提交","amount":1},{"name":"邹晨笛","project":"MA专业项目一","status":"过审了","amount":1},{"name":"毛一同","project":"项目2","status":"过审了","amount":1},{"name":"王天","project":"商业时间","status":"过审了","amount":1},{"name":"刘明浩","project":"商业实践项目-20H","status":"过审了","amount":1},{"name":"陈纪羽","project":"USC","status":"已提交","amount":1},{"name":"曲倬锐","project":"USC","status":"已提交","amount":1},{"name":"汪恩瑶","project":"项目1","status":"给教务","amount":1},{"name":"王天","project":"大师课","status":"等完成","amount":1},{"name":"何晨嘉","project":"大师课","status":"等完成","amount":1},{"name":"顾昊","project":"大师课","status":"等完成","amount":1},{"name":"陈璐瑶","project":"大师课","status":"等完成","amount":1},{"name":"李治林","project":"大师课","status":"等完成","amount":1},{"name":"沈雅丹","project":"大师课","status":"等完成","amount":1},{"name":"王天","project":"教研studio","status":"等完成","amount":1},{"name":"黄泰志","project":"教研 studio","status":"等完成","amount":1},{"name":"唐瑞欣","project":"项目1","status":"等完成","amount":1}],"91011":[{"name":"钱星蓉","project":"项目","status":"等完成","amount":1},{"name":"吕品一","project":"项目1","status":"等完成","amount":1},{"name":"游溪","project":"项目1","status":"等完成","amount":1},{"name":"程浩真","project":"项目1","status":"等完成","amount":1},{"name":"张祎昊","project":"项目1","status":"等完成","amount":1},{"name":"张祎昊","project":"基础课1","status":"等完成","amount":1},{"name":"陈天宇","project":"项目2","status":"等完成","amount":1},{"name":"蔡恩明","project":"项目课","status":"等完成","amount":1},{"name":"陈思淼","project":"项目课","status":"等完成","amount":1},{"name":"王天","project":"大师课2","status":"等完成","amount":1},{"name":"许波宇","project":"项目","status":"等完成","amount":1},{"name":"蔡欣悦","project":"项目","status":"等完成","amount":1},{"name":"王者枫景","project":"基础课","status":"等完成","amount":1},{"name":"许波宇","project":"基础课","status":"等完成","amount":1},{"name":"王天","project":"基础课","status":"等完成","amount":1},{"name":"Christine","project":"项目1","status":"等完成","amount":1},{"name":"王者风景","project":"项目1","status":"等完成","amount":1},{"name":"唐天一","project":"教研 studio","status":"等完成","amount":1},{"name":"沙裕来","project":"项目1","status":"等完成","amount":1}],"120102":[]}; }
@@ -1253,7 +1258,7 @@ function renderKpi(){
   html+='</div>';
   for(const [q,items] of Object.entries(kpiData)){
     const done=kpiApprovedAmount(items);
-    html+=`<div class="panel" style="margin-bottom:12px"><div class="panel-header"><h2>${KPI_Q_LABELS[q]}</h2><span class="count">过审结课量 ${fmtAmount(done)}/${KPI_TARGET} · 已填 ${items.length} 条</span></div><div class="kpi-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:6px;padding:12px">`;
+    html+=`<div class="panel kpi-quarter" data-kpi-q="${q}" ondragover="kpiDragOver(event)" ondragleave="kpiDragLeave(event)" ondrop="kpiDrop(event,'${q}',${items.length})" style="margin-bottom:12px"><div class="panel-header"><h2>${KPI_Q_LABELS[q]}</h2><span class="count">过审结课量 ${fmtAmount(done)}/${KPI_TARGET} · 已填 ${items.length} 条</span></div><div class="kpi-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:6px;padding:12px">`;
     items.forEach((item,i)=>{
       html+=`<div class="kpi-slot kpi-${item.status}" onclick="editKpi('${q}',${i})"><div class="slot-num">#${i+1} · ${fmtAmount(kpiAmount(item))} 量</div><div class="slot-name">${item.name||'-'}</div><div class="slot-proj">${item.project||''}</div><div class="slot-status">${item.status}</div></div>`;
     });
@@ -1261,6 +1266,30 @@ function renderKpi(){
     html+='</div></div>';
   }
   document.getElementById('kpiRoot').innerHTML=html;
+}
+
+let kpiDragState=null, kpiDidDrag=false;
+function kpiDragStart(ev,q,idx){
+  kpiDragState={q,idx};kpiDidDrag=true;
+  ev.currentTarget.classList.add('dragging');
+  if(ev.dataTransfer){ev.dataTransfer.effectAllowed='move';ev.dataTransfer.setData('text/plain',JSON.stringify(kpiDragState));}
+}
+function kpiDragOver(ev){ev.preventDefault();ev.currentTarget.classList.add('kpi-drop-target');if(ev.dataTransfer)ev.dataTransfer.dropEffect='move';}
+function kpiDragLeave(ev){ev.currentTarget.classList.remove('kpi-drop-target');}
+function kpiDragEnd(ev){ev.currentTarget.classList.remove('dragging');document.querySelectorAll('.kpi-drop-target').forEach(el=>el.classList.remove('kpi-drop-target'));setTimeout(()=>{kpiDidDrag=false},0);}
+function kpiDrop(ev,targetQ,targetIdx){
+  ev.preventDefault();ev.stopPropagation();document.querySelectorAll('.kpi-drop-target').forEach(el=>el.classList.remove('kpi-drop-target'));
+  let src=kpiDragState;
+  if(!src&&ev.dataTransfer){try{src=JSON.parse(ev.dataTransfer.getData('text/plain'))}catch(e){}}
+  if(!src||!kpiData[src.q]||!kpiData[targetQ])return;
+  if(src.q===targetQ&&src.idx===targetIdx)return;
+  const [item]=kpiData[src.q].splice(src.idx,1);
+  if(!item)return;
+  let insertAt=Math.max(0,Math.min(targetIdx,kpiData[targetQ].length));
+  if(src.q===targetQ&&src.idx<targetIdx)insertAt--;
+  kpiData[targetQ].splice(insertAt,0,item);
+  save('kpi_board_data_merged',kpiData);
+  renderKpi();
 }
 
 function editKpi(q,idx){

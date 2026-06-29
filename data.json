@@ -42,19 +42,19 @@
       "group": "26",
       "coming": false,
       "master": true,
-      "vip": "",
+      "vip": "v8",
       "direction": "英本",
       "courses": {
         "基础课1": {
-          "status": "doing",
+          "status": "done",
           "text": "桌游 查视频"
         },
         "基础课2": {
-          "status": "doing",
+          "status": "done",
           "text": "unity横版UI"
         },
         "桌游项目": {
-          "status": "doing",
+          "status": "done",
           "text": "屠老师 VR"
         },
         "Unity项目": {
@@ -78,7 +78,7 @@
       "group": "27",
       "coming": true,
       "master": true,
-      "vip": "",
+      "vip": "v8",
       "direction": "美本",
       "courses": {
         "基础课1": {
@@ -114,7 +114,7 @@
       "group": "27",
       "coming": true,
       "master": true,
-      "vip": "",
+      "vip": "v5",
       "direction": "英研",
       "courses": {
         "基础课1": {
@@ -258,7 +258,7 @@
       "group": "27",
       "coming": true,
       "master": true,
-      "vip": "",
+      "vip": "v3",
       "direction": "英本",
       "courses": {
         "基础课1": {
@@ -292,7 +292,7 @@
       "id": 9,
       "name": "黄若雨",
       "group": "27",
-      "coming": false,
+      "coming": true,
       "master": false,
       "vip": "",
       "direction": "",
@@ -654,7 +654,7 @@
       "group": "27",
       "coming": false,
       "master": true,
-      "vip": "",
+      "vip": "v8",
       "direction": "北欧",
       "courses": {
         "基础课1": {
@@ -798,7 +798,7 @@
       "group": "27",
       "coming": true,
       "master": true,
-      "vip": "",
+      "vip": "非v",
       "direction": "美研",
       "courses": {
         "基础课1": {
@@ -1503,6 +1503,12 @@
         "project": "项目1",
         "status": "等完成",
         "amount": 1
+      },
+      {
+        "name": "解亦成",
+        "project": "",
+        "status": "给教务",
+        "amount": 1
       }
     ],
     "91011": [
@@ -1722,5 +1728,5 @@
       []
     ]
   },
-  "exportTime": "2026-06-25T10:13:44.485Z"
+  "exportTime": "2026-06-28T02:19:54.234Z"
 }

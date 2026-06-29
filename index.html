@@ -713,6 +713,7 @@ body{font-size:15px}
             <div style="display:flex;gap:6px">
               <button class="btn btn-gray btn-sm" onclick="schUndoLast()">撤销</button>
               <button class="btn btn-gray btn-sm" onclick="schCopy()">复制表格</button>
+              <button class="btn btn-primary btn-sm" onclick="copyScheduleImage()">复制图片</button>
             </div>
           </div>
           <div class="table-wrap">
@@ -753,7 +754,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 30; // increment on each deploy to force refresh
+const DATA_VER = 31; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -1425,6 +1426,87 @@ function schExport(){
 }
 function exportAll(){schExport();}
 function schCopy(){let t='时间\t周日\t周一\t周二\t周三\t周四\n';TIME_SLOTS.forEach(ts=>{t+=ts+'\t'+schData[ts].map(a=>a.join(',')||'-').join('\t')+'\n'});navigator.clipboard.writeText(t).then(()=>alert('已复制'));}
+function roundRectPath(ctx,x,y,w,h,r){
+  const rr=Math.min(r,w/2,h/2);
+  ctx.beginPath();
+  ctx.moveTo(x+rr,y);
+  ctx.arcTo(x+w,y,x+w,y+h,rr);
+  ctx.arcTo(x+w,y+h,x,y+h,rr);
+  ctx.arcTo(x,y+h,x,y,rr);
+  ctx.arcTo(x,y,x+w,y,rr);
+  ctx.closePath();
+}
+function wrapCanvasText(ctx,text,maxWidth,maxLines){
+  const chars=String(text||'').split('');
+  const lines=[];let line='';
+  chars.forEach(ch=>{
+    const next=line+ch;
+    if(ctx.measureText(next).width>maxWidth&&line){lines.push(line);line=ch}else line=next;
+  });
+  if(line)lines.push(line);
+  if(lines.length>maxLines){lines.length=maxLines;let last=lines[maxLines-1];while(ctx.measureText(last+'...').width>maxWidth&&last.length>0)last=last.slice(0,-1);lines[maxLines-1]=last+'...';}
+  return lines;
+}
+function drawScheduleImageCanvas(){
+  const dpr=Math.max(2,Math.min(3,window.devicePixelRatio||2));
+  const width=1440, pad=48, titleH=92, headH=58, rowH=118, footH=50;
+  const days=DAY_NAMES;
+  const height=pad+titleH+headH+TIME_SLOTS.length*rowH+footH;
+  const canvas=document.createElement('canvas');canvas.width=width*dpr;canvas.height=height*dpr;canvas.style.width=width+'px';canvas.style.height=height+'px';
+  const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  ctx.fillStyle='#f4f7fb';ctx.fillRect(0,0,width,height);
+  roundRectPath(ctx,pad,pad,width-pad*2,height-pad*2,28);ctx.fillStyle='#ffffff';ctx.fill();
+  ctx.fillStyle='#111827';ctx.font='800 34px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';ctx.fillText('每周课表',pad+28,pad+48);
+  const now=new Date();ctx.fillStyle='#7b8794';ctx.font='500 18px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';ctx.fillText(`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日  生成`,pad+28,pad+78);
+  const tableX=pad+24, tableY=pad+titleH, tableW=width-pad*2-48;
+  const timeW=130, dayW=(tableW-timeW)/days.length;
+  ctx.font='700 20px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle='#eef4ff';roundRectPath(ctx,tableX,tableY,tableW,headH,18);ctx.fill();
+  ctx.fillStyle='#0071e3';ctx.fillText('时间',tableX+timeW/2,tableY+headH/2);
+  days.forEach((d,i)=>ctx.fillText(d,tableX+timeW+i*dayW+dayW/2,tableY+headH/2));
+  TIME_SLOTS.forEach((time,r)=>{
+    const y=tableY+headH+r*rowH;
+    ctx.fillStyle=r%2?'#fbfcff':'#ffffff';ctx.fillRect(tableX,y,tableW,rowH);
+    ctx.strokeStyle='#e6ebf2';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(tableX,y);ctx.lineTo(tableX+tableW,y);ctx.stroke();
+    ctx.fillStyle='#0071e3';ctx.font='800 18px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';ctx.fillText(time,tableX+timeW/2,y+rowH/2);
+    days.forEach((d,c)=>{
+      const names=(schData[time]&&schData[time][c])?schData[time][c]:[];
+      const cellX=tableX+timeW+c*dayW, cellY=y;
+      ctx.strokeStyle='#edf1f6';ctx.beginPath();ctx.moveTo(cellX,cellY);ctx.lineTo(cellX,cellY+rowH);ctx.stroke();
+      if(!names.length){ctx.fillStyle='#c7ced8';ctx.font='500 18px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';ctx.fillText('-',cellX+dayW/2,cellY+rowH/2);return}
+      const tagGap=8, tagH=32;let cx=cellX+14, cy=cellY+17;
+      names.forEach(name=>{
+        const special=['usc 大师课','教研studio'].includes(name);
+        ctx.font='700 17px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';
+        const lines=wrapCanvasText(ctx,name,dayW-36,1);
+        const label=lines[0]||name;
+        const tw=Math.min(dayW-28,ctx.measureText(label).width+24);
+        if(cx+tw>cellX+dayW-10){cx=cellX+14;cy+=tagH+tagGap}
+        roundRectPath(ctx,cx,cy,tw,tagH,16);ctx.fillStyle=special?'#fff3e6':'#e8f1fd';ctx.fill();
+        ctx.fillStyle=special?'#b45309':'#0071e3';ctx.textAlign='left';ctx.fillText(label,cx+12,cy+tagH/2+1);ctx.textAlign='center';
+        cx+=tw+tagGap;
+      });
+    });
+  });
+  ctx.fillStyle='#92400e';ctx.font='600 18px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';ctx.textAlign='left';ctx.fillText('周五休息 · 周六休息',tableX,tableY+headH+TIME_SLOTS.length*rowH+32);
+  return canvas;
+}
+async function copyScheduleImage(){
+  try{
+    const canvas=drawScheduleImageCanvas();
+    const blob=await new Promise(res=>canvas.toBlob(res,'image/png'));
+    if(!blob)throw new Error('canvas empty');
+    if(navigator.clipboard&&window.ClipboardItem){
+      await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+      alert('课表图片已复制，可以直接粘贴到微信');
+    }else{
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='每周课表.png';a.click();alert('当前浏览器不支持图片剪贴板，已下载课表图片');
+    }
+  }catch(e){
+    alert('复制图片失败：请在 Chrome 或 Edge 中打开页面，并允许剪贴板权限');
+  }
+}
 
 // ==================== OVERVIEW TAB ====================
 function renderOverview(){

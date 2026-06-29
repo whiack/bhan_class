@@ -754,7 +754,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 32; // increment on each deploy to force refresh
+const DATA_VER = 33; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -1363,37 +1363,55 @@ function kpiCleanupPointerGesture(g){
 }
 
 function editKpi(q,idx){
-  while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成',amount:1});
-  const item=kpiData[q][idx];
+  const defaultStatus='\u7b49\u5b8c\u6210';
+  const isNew=idx>=kpiData[q].length;
+  const item=isNew?{name:'',project:'',status:defaultStatus,amount:1}:kpiData[q][idx];
+  const currentStatus=item.status||defaultStatus;
   const div=document.createElement('div');
-  div.innerHTML=`<div onclick="event.stopPropagation()" style="min-width:250px" onmousedown="event.stopPropagation()">
-    <div style="font-weight:600;margin-bottom:8px;font-size:13px">编辑 #${idx+1}</div>
-    <input style="width:100%;padding:7px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;margin-bottom:6px" id="kpiName" value="${item.name||''}" placeholder="学生姓名">
-    <input style="width:100%;padding:7px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;margin-bottom:6px" id="kpiProj" value="${item.project||''}" placeholder="项目名称">
-    <input type="number" step="0.1" min="0" style="width:100%;padding:7px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;margin-bottom:8px" id="kpiAmount" value="${kpiAmount(item)}" placeholder="结课量（项目=1，排版=0.2）">
-    <div style="font-size:11px;color:#999;margin-bottom:4px">状态：</div>
-    <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:10px">
-      ${KPI_STATUSES.map(st=>`<button style="padding:5px 9px;border:2px solid ${item.status===st?'#6366f1':'#e5e7eb'};border-radius:6px;background:${item.status===st?'#f5f3ff':'#fff'};cursor:pointer;font-size:11px;font-weight:${item.status===st?'600':'400'}" onmousedown="event.preventDefault()" onclick="setKpiStatus('${q}',${idx},'${st}')">${st}</button>`).join('')}
-    </div>
-    <div style="display:flex;gap:6px;justify-content:flex-end">
-      <button class="btn btn-danger btn-sm" onmousedown="event.preventDefault()" onclick="clearKpi('${q}',${idx})">清空</button>
-      <button class="btn btn-gray btn-sm" onmousedown="event.preventDefault()" onclick="closePopover()">取消</button>
-      <button class="btn btn-primary btn-sm" onmousedown="event.preventDefault()" onclick="saveKpi('${q}',${idx})">保存</button>
-    </div></div>`;
+  const statusButtons=KPI_STATUSES.map(st=>'<button data-status="'+esc(st)+'" style="padding:5px 9px;border:2px solid '+(currentStatus===st?'#6366f1':'#e5e7eb')+';border-radius:6px;background:'+(currentStatus===st?'#f5f3ff':'#fff')+';cursor:pointer;font-size:11px;font-weight:'+(currentStatus===st?'600':'400')+'" onmousedown="event.preventDefault()" onclick="selectKpiDraftStatus(this,\''+esc(st)+'\')">'+st+'</button>').join('');
+  div.innerHTML='<div onclick="event.stopPropagation()" style="min-width:250px" onmousedown="event.stopPropagation()">'
+    +'<div style="font-weight:600;margin-bottom:8px;font-size:13px">'+(isNew?'\u65b0\u589e\u8bb0\u5f55':'\u7f16\u8f91 #'+(idx+1))+'</div>'
+    +'<input style="width:100%;padding:7px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;margin-bottom:6px" id="kpiName" value="'+esc(item.name||'')+'" placeholder="\u5b66\u751f\u59d3\u540d">'
+    +'<input style="width:100%;padding:7px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;margin-bottom:6px" id="kpiProj" value="'+esc(item.project||'')+'" placeholder="\u9879\u76ee\u540d\u79f0">'
+    +'<input type="number" step="0.1" min="0" style="width:100%;padding:7px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;margin-bottom:8px" id="kpiAmount" value="'+kpiAmount(item)+'" placeholder="\u7ed3\u8bfe\u91cf\uff08\u9879\u76ee=1\uff0c\u6392\u7248=0.2\uff09">'
+    +'<input type="hidden" id="kpiStatus" value="'+esc(currentStatus)+'">'
+    +'<div style="font-size:11px;color:#999;margin-bottom:4px">\u72b6\u6001\uff1a</div>'
+    +'<div id="kpiStatusBtns" style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:10px">'+statusButtons+'</div>'
+    +'<div style="display:flex;gap:6px;justify-content:flex-end">'
+    +(isNew?'':'<button class="btn btn-danger btn-sm" onmousedown="event.preventDefault()" onclick="clearKpi(\''+q+'\','+idx+')">\u6e05\u7a7a</button>')
+    +'<button class="btn btn-gray btn-sm" onmousedown="event.preventDefault()" onclick="closePopover()">\u53d6\u6d88</button>'
+    +'<button class="btn btn-primary btn-sm" onmousedown="event.preventDefault()" onclick="saveKpi(\''+q+'\','+idx+')">\u4fdd\u5b58</button>'
+    +'</div></div>';
   showPopover(div.firstElementChild);
   setTimeout(()=>{const i=document.getElementById('kpiName');if(i)i.focus()},100);
 }
 
-function setKpiStatus(q,idx,status){while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成',amount:1});kpiData[q][idx].status=status;saveKpiDataSorted();closePopover();renderKpi();setTimeout(()=>editKpi(q,idx),100);}
+function selectKpiDraftStatus(btn,status){
+  const input=document.getElementById('kpiStatus');if(input)input.value=status;
+  document.querySelectorAll('#kpiStatusBtns button').forEach(b=>{
+    const on=b===btn;
+    b.style.borderColor=on?'#6366f1':'#e5e7eb';
+    b.style.background=on?'#f5f3ff':'#fff';
+    b.style.fontWeight=on?'600':'400';
+  });
+}
+
+function setKpiStatus(q,idx,status){
+  if(!kpiData[q]||!kpiData[q][idx])return;
+  kpiData[q][idx].status=status;saveKpiDataSorted();closePopover();renderKpi();
+}
 function saveKpi(q,idx){
-  while(kpiData[q].length<=idx)kpiData[q].push({name:'',project:'',status:'等完成',amount:1});
-  const ni=document.getElementById('kpiName'),pi=document.getElementById('kpiProj'),ai=document.getElementById('kpiAmount');
-  kpiData[q][idx].name=(ni?.value||'').trim();kpiData[q][idx].project=(pi?.value||'').trim();
+  const defaultStatus='\u7b49\u5b8c\u6210';
+  const ni=document.getElementById('kpiName'),pi=document.getElementById('kpiProj'),ai=document.getElementById('kpiAmount'),si=document.getElementById('kpiStatus');
+  const isNew=idx>=kpiData[q].length;
+  const item=isNew?{name:'',project:'',status:defaultStatus,amount:1}:kpiData[q][idx];
+  item.name=(ni?.value||'').trim();item.project=(pi?.value||'').trim();item.status=(si?.value||item.status||defaultStatus);
   const amount=parseFloat(ai?.value);
-  kpiData[q][idx].amount=Number.isFinite(amount)?Math.max(0,amount):defaultKpiAmount(kpiData[q][idx]);
+  item.amount=Number.isFinite(amount)?Math.max(0,amount):defaultKpiAmount(item);
+  if(isNew)kpiData[q].push(item);
   saveKpiDataSorted();closePopover();renderKpi();
 }
-function clearKpi(q,idx){kpiData[q].splice(idx,1);saveKpiDataSorted();closePopover();renderKpi();}
+function clearKpi(q,idx){if(idx>=kpiData[q].length){closePopover();return}kpiData[q].splice(idx,1);saveKpiDataSorted();closePopover();renderKpi();}
 
 // ==================== SCHEDULE TAB ====================
 function renderSchedule(){

@@ -648,6 +648,15 @@ body{font-size:15px}
 #tab-kpi .kpi-slot .slot-proj{font-size:13px;line-height:1.25;margin-top:4px}
 #tab-kpi .kpi-slot .slot-status{font-size:12px;padding:4px 8px;border-radius:999px;margin-top:8px}
 #tab-kpi .kpi-slot.empty{font-size:15px}
+#tab-kpi .kpi-current-summary{border-color:rgba(0,113,227,.16);background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(237,247,255,.76));box-shadow:0 18px 46px -30px rgba(0,113,227,.45),inset 0 1px 0 rgba(255,255,255,.9)}
+#tab-kpi .kpi-current-body{display:grid;grid-template-columns:220px 1fr;gap:18px;padding:18px 22px 20px}
+#tab-kpi .kpi-current-main{border-radius:18px;padding:18px;background:linear-gradient(145deg,#0071e3,#5ac8fa);color:#fff;box-shadow:0 18px 38px -24px rgba(0,113,227,.7)}
+#tab-kpi .kpi-current-label{font-size:14px;font-weight:760;opacity:.9}.kpi-current-value{font-size:46px;font-weight:850;line-height:1;margin-top:12px}.kpi-current-main p{margin-top:10px;font-size:13px;font-weight:620;opacity:.86}
+#tab-kpi .kpi-current-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+#tab-kpi .kpi-current-metrics>div{min-height:92px;border-radius:16px;padding:14px;background:rgba(255,255,255,.72);box-shadow:inset 0 1px 0 rgba(255,255,255,.86)}
+#tab-kpi .kpi-current-metrics span{display:block;color:#657081;font-size:13px;font-weight:760}.kpi-current-metrics strong{display:block;margin-top:8px;color:#111827;font-size:28px;line-height:1;font-weight:850}.kpi-current-metrics em{display:block;margin-top:8px;color:#8b95a5;font-style:normal;font-size:12px;font-weight:620}
+#tab-kpi .kpi-current-follow{grid-column:2;display:flex;gap:8px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.62);color:#374151}
+#tab-kpi .kpi-current-follow span{flex:0 0 auto;color:#b45309;font-weight:800}.kpi-current-follow p{margin:0;font-size:13px;line-height:1.5}
 #tab-kpi .kpi-\6709\95ee\9898{background:#fff1f2;border:1px solid #fb7185;box-shadow:0 14px 30px -20px rgba(190,18,60,.42)}
 #tab-kpi .kpi-\6709\95ee\9898 .slot-status{background:#ffe4e6;color:#be123c}
 #tab-kpi .kpi-slot:not(.empty){cursor:pointer;touch-action:none;user-select:none}
@@ -655,7 +664,7 @@ body{font-size:15px}
 #tab-kpi .kpi-drop-target{outline:2px solid rgba(0,113,227,.45);outline-offset:4px;background:rgba(232,242,255,.72)!important}
 .kpi-floating-card{position:fixed!important;z-index:5000!important;pointer-events:none!important;box-shadow:0 28px 70px -26px rgba(20,32,58,.58)!important;opacity:.96;transition:none!important}
 .kpi-dragging-body{user-select:none;cursor:grabbing}
-@media (max-width:768px){#tab-schedule .schedule-table th{height:32px;font-size:11px;padding:5px 2px}#tab-schedule .schedule-table td{height:calc((100dvh - 174px)/7);padding:4px 2px;font-size:11px}#tab-schedule .schedule-table th:first-child{width:42px}#tab-schedule .student-tag{padding:3px 5px;margin:1px;font-size:10px;border-radius:8px;line-height:1.15}#tab-kpi .kpi-grid{grid-template-columns:repeat(2,1fr)!important;gap:8px!important;padding:10px!important}#tab-kpi .kpi-slot{min-height:78px;padding:10px 8px}#tab-kpi .kpi-slot .slot-name{font-size:14px}#tab-kpi .kpi-slot .slot-proj{font-size:12px}#tab-kpi .kpi-slot .slot-status{font-size:11px}}
+@media (max-width:768px){#tab-schedule .schedule-table th{height:32px;font-size:11px;padding:5px 2px}#tab-schedule .schedule-table td{height:calc((100dvh - 174px)/7);padding:4px 2px;font-size:11px}#tab-schedule .schedule-table th:first-child{width:42px}#tab-schedule .student-tag{padding:3px 5px;margin:1px;font-size:10px;border-radius:8px;line-height:1.15}#tab-kpi .kpi-grid{grid-template-columns:repeat(2,1fr)!important;gap:8px!important;padding:10px!important}#tab-kpi .kpi-slot{min-height:78px;padding:10px 8px}#tab-kpi .kpi-slot .slot-name{font-size:14px}#tab-kpi .kpi-slot .slot-proj{font-size:12px}#tab-kpi .kpi-slot .slot-status{font-size:11px}#tab-kpi .kpi-current-body{grid-template-columns:1fr;padding:12px;gap:10px}#tab-kpi .kpi-current-metrics{grid-template-columns:repeat(2,1fr)}#tab-kpi .kpi-current-follow{grid-column:auto}.kpi-current-value{font-size:38px}}
 </style>
 </head>
 <body>
@@ -754,7 +763,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 33; // increment on each deploy to force refresh
+const DATA_VER = 34; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -1031,6 +1040,38 @@ function kpiApprovedAmount(items) {
 function kpiTotalAmount(items) {
   return items.reduce((sum,i)=>sum+kpiAmount(i),0);
 }
+function currentKpiQuarterKey(date=new Date()){
+  const m=date.getMonth()+1;
+  if([6,7,8].includes(m))return '678';
+  if([9,10,11].includes(m))return '91011';
+  if([12,1,2].includes(m))return '120102';
+  return '345';
+}
+function kpiAmountWhere(items,predicate){return items.filter(predicate).reduce((sum,i)=>sum+kpiAmount(i),0);}
+function kpiCurrentSummaryHtml(){
+  const q=currentKpiQuarterKey();
+  const items=kpiData[q]||[];
+  const problem='\u6709\u95ee\u9898', approved='\u8fc7\u5ba1\u4e86', submitted='\u5df2\u63d0\u4ea4', teaching='\u7ed9\u6559\u52a1', video='\u5dee\u89c6\u9891', layout='\u7b49\u6392\u7248';
+  const total=kpiAmountWhere(items,i=>i.status!==problem);
+  const completed=kpiAmountWhere(items,i=>i.status===approved);
+  const ended=kpiAmountWhere(items,i=>[approved,submitted,teaching].includes(i.status));
+  const chaseItems=items.filter(i=>[video,layout].includes(i.status));
+  const chase=chaseItems.reduce((sum,i)=>sum+kpiAmount(i),0);
+  const problems=kpiAmountWhere(items,i=>i.status===problem);
+  const chaseText=chaseItems.length?chaseItems.map(i=>esc(i.name||'-')+' \u00b7 '+esc(i.project||'-')+'\uff08'+esc(i.status)+' '+fmtAmount(kpiAmount(i))+'\uff09').join(' / '):'\u6682\u65e0';
+  return '<div class="panel kpi-current-summary">'
+    +'<div class="panel-header"><h2>\u5f53\u524d\u5b63\u5ea6\u8be6\u7ec6\u603b\u7ed3</h2><span class="count">'+KPI_Q_LABELS[q]+' \u00b7 \u81ea\u52a8\u8bc6\u522b\u5f53\u524d\u6708\u4efd</span></div>'
+    +'<div class="kpi-current-body">'
+    +'<div class="kpi-current-main"><div class="kpi-current-label">\u5f53\u524d\u603b KPI \u91cf</div><div class="kpi-current-value">'+fmtAmount(total)+'</div><p>\u5df2\u6392\u9664\u201c\u6709\u95ee\u9898\u201d\u7684\u8bb0\u5f55</p></div>'
+    +'<div class="kpi-current-metrics">'
+    +'<div><span>\u5df2\u5b8c\u6210 KPI</span><strong>'+fmtAmount(completed)+'</strong><em>\u8fc7\u5ba1\u4e86</em></div>'
+    +'<div><span>\u5df2\u7ecf\u7ed3\u675f</span><strong>'+fmtAmount(ended)+'</strong><em>\u8fc7\u5ba1 + \u63d0\u4ea4 + \u7ed9\u6559\u52a1</em></div>'
+    +'<div><span>\u53ef\u4ee5\u50ac</span><strong>'+fmtAmount(chase)+'</strong><em>\u5dee\u89c6\u9891 + \u7b49\u6392\u7248</em></div>'
+    +'<div><span>\u6709\u95ee\u9898</span><strong>'+fmtAmount(problems)+'</strong><em>\u4e0d\u8ba1\u5165\u603b\u91cf</em></div>'
+    +'</div>'
+    +'<div class="kpi-current-follow"><span>\u53ef\u4ee5\u50ac\uff1a</span><p>'+chaseText+'</p></div>'
+    +'</div></div>';
+}
 function kpiStatusRank(status){const i=KPI_STATUSES.indexOf(status);return i>=0?i:KPI_STATUSES.length;}
 function sortKpiItems(items){
   let changed=false;
@@ -1257,7 +1298,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closePopover();});
 // ==================== KPI TAB ====================
 function renderKpi(){
   sortAllKpiData(kpiData);
-  let html='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;padding:0 0 12px">';
+  let html=kpiCurrentSummaryHtml()+'<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;padding:0 0 12px">';
   for(const [q,items] of Object.entries(kpiData)){
     const done=kpiApprovedAmount(items);
     const total=kpiTotalAmount(items);

@@ -763,7 +763,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 34; // increment on each deploy to force refresh
+const DATA_VER = 35; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -1308,16 +1308,16 @@ function renderKpi(){
     html+=`<div class="kpi-q-card" style="border-left-color:${clr}">
       <h4 style="font-size:13px;margin-bottom:4px">${KPI_Q_LABELS[q]}</h4>
       <div style="font-size:26px;font-weight:700;color:${clr}">${fmtAmount(done)}/${KPI_TARGET}</div>
-      <div style="font-size:11px;color:#999">过审结课量 ${fmtAmount(done)}  · 已填 ${items.length} 条 / ${fmtAmount(total)} 量</div>
+      <div style="font-size:11px;color:#999">过审结课量 ${fmtAmount(done)}  · 已填 ${items.length} 条（${fmtAmount(total)} kpi）</div>
       <div style="background:#f0f0f0;border-radius:6px;height:14px;margin-top:4px;overflow:hidden"><div style="height:100%;border-radius:6px;background:${clr};width:${Math.min(pct,100)}%"></div></div>
     </div>`;
   }
   html+='</div>';
   for(const [q,items] of Object.entries(kpiData)){
     const done=kpiApprovedAmount(items);
-    html+=`<div class="panel kpi-quarter" data-kpi-q="${q}" ondragover="kpiDragOver(event)" ondragleave="kpiDragLeave(event)" ondrop="kpiDrop(event,'${q}',${items.length})" style="margin-bottom:12px"><div class="panel-header"><h2>${KPI_Q_LABELS[q]}</h2><span class="count">过审结课量 ${fmtAmount(done)}/${KPI_TARGET} · 已填 ${items.length} 条</span></div><div class="kpi-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:6px;padding:12px">`;
+    html+=`<div class="panel kpi-quarter" data-kpi-q="${q}" ondragover="kpiDragOver(event)" ondragleave="kpiDragLeave(event)" ondrop="kpiDrop(event,'${q}',${items.length})" style="margin-bottom:12px"><div class="panel-header"><h2>${KPI_Q_LABELS[q]}</h2><span class="count">过审结课量 ${fmtAmount(done)}/${KPI_TARGET} · 已填 ${items.length} 条（${fmtAmount(kpiTotalAmount(items))} kpi）</span></div><div class="kpi-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:6px;padding:12px">`;
     items.forEach((item,i)=>{
-      html+=`<div class="kpi-slot kpi-${item.status}" data-kpi-q="${q}" data-kpi-idx="${i}" onpointerdown="kpiPointerDown(event,'${q}',${i})"><div class="slot-num">#${i+1} ? ${fmtAmount(kpiAmount(item))} ?</div><div class="slot-name">${item.name||'-'}</div><div class="slot-proj">${item.project||''}</div><div class="slot-status">${item.status}</div></div>`;
+      html+=`<div class="kpi-slot kpi-${item.status}" data-kpi-q="${q}" data-kpi-idx="${i}" onpointerdown="kpiPointerDown(event,'${q}',${i})"><div class="slot-num">#${i+1} - ${fmtAmount(kpiAmount(item))}</div><div class="slot-name">${item.name||'-'}</div><div class="slot-proj">${item.project||''}</div><div class="slot-status">${item.status}</div></div>`;
     });
     html+=`<div class="kpi-slot empty" onclick="editKpi('${q}',${items.length})"><span>＋ 新增记录</span></div>`;
     html+='</div></div>';

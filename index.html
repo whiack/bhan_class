@@ -755,7 +755,7 @@ body{font-size:15px}
 
 <script>
 // ==================== DATA & STORAGE ====================
-const COURSES = ['基础课1','基础课2','桌游项目','Unity项目','项目3','项目4'];
+const COURSES = ['基础课1','基础课2','项目1','项目2','项目3','项目4'];
 const STATUS_OPTIONS = ['none','doing','done','other'];
 const STATUS_LABELS = {none:'未进行',doing:'进行中',done:'完成',other:'其他导师上'};
 const DIR_OPTIONS = ['美本','英本','美研','英研','日本','其他','北欧'];
@@ -763,7 +763,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 37; // increment on each deploy to force refresh
+const DATA_VER = 38; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -960,7 +960,7 @@ function defaultStudents() {
 }
 
 function normalizeStudents(list){
-  const keyMap = {'项目1':'桌游项目','项目2':'Unity项目'};
+  const keyMap = {'桌游项目':'项目1','Unity项目':'项目2'};
   let migrated = false;
   (list||[]).forEach(st=>{
     const nextGroup = normalizeGrade(st.group);
@@ -1227,7 +1227,7 @@ function detailToggleActive(id){const s=students.find(x=>x.id===id);if(!s)return
 function detailDeleteStudent(id){closePopover();deleteStudent(id);}
 function setStudentSub(sub){currentStudentSubTab=sub;renderProgress();}
 function cellIcon(s){return {none:'○',doing:'进',done:'✓',other:'他'}[s]||'○';}
-function courseShort(c){return {'基础课1':'基1','基础课2':'基2','桌游项目':'桌','Unity项目':'U','项目3':'3','项目4':'4'}[c]||c;}
+function courseShort(c){return {'基础课1':'基1','基础课2':'基2','项目1':'1','项目2':'2','项目3':'3','项目4':'4'}[c]||c;}
 function esc(v){return String(v||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 
 function addStudent(){

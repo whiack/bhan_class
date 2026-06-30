@@ -11,12 +11,21 @@ function Write-Log {
 
 try {
   Set-Location -LiteralPath $repoRoot
-  Write-Log "Start daily auto sync."
+  Write-Log "Start auto sync."
 
   $status = git status --porcelain
   if (-not $status) {
     Write-Log "No changes. Nothing to commit."
     exit 0
+  }
+
+  if (($status | Measure-Object).Count -eq 1 -and $status[0] -eq " M data.json") {
+    $meaningfulDiff = git diff --unified=0 -- data.json |
+      Where-Object { $_ -match '^[+-]' -and $_ -notmatch '^(---|\+\+\+)' -and $_ -notmatch '"exportTime"' }
+    if (-not $meaningfulDiff) {
+      Write-Log "Only data.json exportTime changed. Skipping commit."
+      exit 0
+    }
   }
 
   git add -A
@@ -26,7 +35,7 @@ try {
     exit 0
   }
 
-  $message = "Daily auto sync $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+  $message = "Auto sync $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
   git commit -m $message
   if ($LASTEXITCODE -ne 0) { throw "git commit failed with exit code $LASTEXITCODE" }
   git push origin main

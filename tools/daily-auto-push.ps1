@@ -28,7 +28,9 @@ try {
 
   $message = "Daily auto sync $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
   git commit -m $message
+  if ($LASTEXITCODE -ne 0) { throw "git commit failed with exit code $LASTEXITCODE" }
   git push origin main
+  if ($LASTEXITCODE -ne 0) { throw "git push failed with exit code $LASTEXITCODE" }
 
   Write-Log "Pushed successfully: $message"
 }

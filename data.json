@@ -42,7 +42,7 @@
       "group": "26",
       "coming": false,
       "master": true,
-      "vip": "",
+      "vip": "v8",
       "direction": "英本",
       "courses": {
         "基础课1": {
@@ -78,7 +78,7 @@
       "group": "27",
       "coming": true,
       "master": true,
-      "vip": "",
+      "vip": "v8",
       "direction": "美本",
       "courses": {
         "基础课1": {
@@ -114,7 +114,7 @@
       "group": "27",
       "coming": true,
       "master": true,
-      "vip": "",
+      "vip": "v5",
       "direction": "英研",
       "courses": {
         "基础课1": {
@@ -258,7 +258,7 @@
       "group": "27",
       "coming": true,
       "master": true,
-      "vip": "",
+      "vip": "v3",
       "direction": "英本",
       "courses": {
         "基础课1": {
@@ -654,7 +654,7 @@
       "group": "27",
       "coming": false,
       "master": true,
-      "vip": "",
+      "vip": "v8",
       "direction": "北欧",
       "courses": {
         "基础课1": {
@@ -798,7 +798,7 @@
       "group": "27",
       "coming": true,
       "master": true,
-      "vip": "",
+      "vip": "非v",
       "direction": "美研",
       "courses": {
         "基础课1": {
@@ -1716,5 +1716,5 @@
       []
     ]
   },
-  "exportTime": "2026-06-29T09:00:47.307Z"
+  "exportTime": "2026-06-30T02:01:18.105Z"
 }

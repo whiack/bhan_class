@@ -997,6 +997,27 @@ function isActiveStudent(student) {
   return !!student?.master || hasActiveCourse(student);
 }
 
+function syncScheduleActiveStudents(list) {
+  if (!list || typeof schData === 'undefined' || !schData) return false;
+  const byName = new Map(list.map(student => [student.name, student]));
+  let changed = false;
+  Object.values(schData).flat(2).forEach(name => {
+    const student = byName.get(name);
+    if (!student || hasActiveCourse(student)) return;
+    const courses = student.courses || {};
+    const targetName = COURSES.find(course => courses[course]?.status !== 'done' && (courses[course]?.text || '').trim())
+      || COURSES.find(course => (courses[course]?.text || '').trim())
+      || COURSES.find(course => courses[course]?.status !== 'done')
+      || COURSES[0];
+    courses[targetName] = courses[targetName] || {status:'none',text:''};
+    courses[targetName].status = 'doing';
+    student.courses = courses;
+    student.completed = false;
+    changed = true;
+  });
+  return changed;
+}
+
 function syncCompletionForList(list) {
   let changed = false;
   (list || []).forEach(student => {
@@ -1138,7 +1159,9 @@ document.querySelectorAll('.nav-item, #mainTabs .tab-btn').forEach(el=>{
 
 // ==================== STUDENT PROGRESS TAB ====================
 function renderProgress() {
-  if(syncCompletionForList(students)) save('student_board_v2_merged',students);
+  const scheduleChanged = syncScheduleActiveStudents(students);
+  const completionChanged = syncCompletionForList(students);
+  if(scheduleChanged || completionChanged) save('student_board_v2_merged',students);
   const searchQ = (document.getElementById('stuSearch')?.value||'').toLowerCase();
   const dirQ = (document.getElementById('stuDir')?.value||'all');
   const groupQ = (document.getElementById('stuGroup')?.value||'all');
@@ -1500,6 +1523,7 @@ document.addEventListener('click',function(e){if(!schQuickAdd)return;const td=e.
 function addToSch(time,day,name){
   if(schData[time][day].includes(name)){alert(`${name} 已在此时段有课！`);return}
   schUndo.push({time,day,removed:null,added:name});schData[time][day].push(name);
+  if(syncScheduleActiveStudents(students)) save('student_board_v2_merged',students);
   save('sch_merged',schData);save('sch_undo',schUndo);renderSchedule();
 }
 function addStudentToSch(){const n=document.getElementById('newStudName').value.trim();const t=document.getElementById('newStudTime').value;const d=parseInt(document.getElementById('newStudDay').value);if(!n||!t){alert('请填写姓名并选择时段');return}addToSch(t,d,n);document.getElementById('newStudName').value='';}

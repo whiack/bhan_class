@@ -763,7 +763,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 35; // increment on each deploy to force refresh
+const DATA_VER = 36; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -780,16 +780,18 @@ function load(key, fallback) {
 function save(key,v) { localStorage.setItem(key,JSON.stringify(v)); localStorage.setItem('data_version',DATA_VER); if(!_syncPaused) autoSyncToFile(); }
 
 // ===== Auto-sync to local data.json (File System Access API) =====
-let _syncHandle=null, _syncDirty=false, _syncPaused=false;
+let _syncHandle=null, _syncDirty=false, _syncPaused=false, _localSync=false;
+const LOCAL_SYNC_URL='http://127.0.0.1:8787/data';
 function updateSyncBadge(){
   const b=document.getElementById('syncBadge'); if(!b)return;
   b.style.display='inline-flex';
-  if(!_syncHandle){b.textContent=_syncDirty?'未绑定 · 有修改':'未绑定';b.className='sync-badge sync-off';b.title='还没有绑定 data.json，本次修改只保存在当前浏览器里。点击后选择 D:\\AIAgent\\课表\\教务平台\\data.json。';return}
-  b.textContent=_syncDirty?'同步中':'已同步';b.className='sync-badge '+(_syncDirty?'sync-wait':'sync-ok');b.title=_syncDirty?'正在写入已绑定的 data.json':'已自动同步到绑定的 data.json';
+  if(_localSync){b.textContent=_syncDirty?'\u672c\u5730\u540c\u6b65\u4e2d':'\u672c\u5730\u81ea\u52a8';b.className='sync-badge '+(_syncDirty?'sync-wait':'sync-ok');b.title='\u5df2\u81ea\u52a8\u8fde\u63a5\u672c\u673a data.json\uff0c\u65e0\u9700\u624b\u52a8\u7ed1\u5b9a';return}
+  if(!_syncHandle){b.textContent=_syncDirty?'\u672a\u7ed1\u5b9a \u00b7 \u6709\u4fee\u6539':'\u672a\u7ed1\u5b9a';b.className='sync-badge sync-off';b.title='\u672a\u8fde\u63a5\u672c\u5730\u52a9\u624b\uff0c\u4e5f\u6ca1\u6709\u7ed1\u5b9a data.json\u3002\u672c\u6b21\u4fee\u6539\u53ea\u4fdd\u5b58\u5728\u5f53\u524d\u6d4f\u89c8\u5668\u91cc\u3002';return}
+  b.textContent=_syncDirty?'\u540c\u6b65\u4e2d':'\u5df2\u540c\u6b65';b.className='sync-badge '+(_syncDirty?'sync-wait':'sync-ok');b.title=_syncDirty?'\u6b63\u5728\u5199\u5165\u5df2\u7ed1\u5b9a\u7684 data.json':'\u5df2\u81ea\u52a8\u540c\u6b65\u5230\u7ed1\u5b9a\u7684 data.json';
 }
-function updateBindUI(){ const b=document.getElementById('bindBtn'); if(!b)return; b.textContent=_syncHandle?'已绑定':'绑定JSON'; b.style.background=_syncHandle?'#dcfce7':''; b.style.color=_syncHandle?'#166534':''; updateSyncBadge(); }
-function handleSyncBadgeClick(){ if(!_syncHandle){bindSyncFile();return} if(_syncDirty)saveFileNow(); }
-function saveFileNow(){ if(!_syncHandle){updateSyncBadge();return} _syncHandle.createWritable().then(w=>{const d={students,kpiData,schedule:schData,exportTime:new Date().toISOString()};w.write(JSON.stringify(d,null,2)).then(()=>{w.close();_syncDirty=false;updateSyncBadge()}).catch(()=>{_syncDirty=true;updateSyncBadge()})}).catch(()=>{_syncHandle=null;updateBindUI()}) }
+function updateBindUI(){ const b=document.getElementById('bindBtn'); if(!b)return; b.textContent=(_localSync?'\u672c\u5730\u81ea\u52a8':(_syncHandle?'\u5df2\u7ed1\u5b9a':'\u7ed1\u5b9aJSON')); b.style.background=(_localSync||_syncHandle)?'#dcfce7':''; b.style.color=(_localSync||_syncHandle)?'#166534':''; updateSyncBadge(); }
+function handleSyncBadgeClick(){ if(_localSync){if(_syncDirty)saveFileNow();return} if(!_syncHandle){bindSyncFile();return} if(_syncDirty)saveFileNow(); }
+async function saveFileNow(){ const d={students,kpiData,schedule:schData,exportTime:new Date().toISOString()}; if(_localSync){try{const res=await fetch(LOCAL_SYNC_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});if(!res.ok)throw new Error('local sync failed');_syncDirty=false;updateSyncBadge();return}catch(e){_localSync=false;_syncDirty=true;updateSyncBadge();}} if(!_syncHandle){updateSyncBadge();return} _syncHandle.createWritable().then(w=>{w.write(JSON.stringify(d,null,2)).then(()=>{w.close();_syncDirty=false;updateSyncBadge()}).catch(()=>{_syncDirty=true;updateSyncBadge()})}).catch(()=>{_syncHandle=null;updateBindUI()}) }
 function autoSyncToFile(){ _syncDirty=true; updateSyncBadge(); saveFileNow(); }
 
 // Persist handle in IndexedDB so it survives page reloads
@@ -860,6 +862,19 @@ function applyFullData(data, stamp, options={}) {
   } finally {
     _syncPaused = previousPause;
   }
+}
+
+async function connectLocalDataServer(){
+  try{
+    const res=await fetch(LOCAL_SYNC_URL+'?ts='+Date.now(),{cache:'no-store'});
+    if(!res.ok)return false;
+    const data=await res.json();
+    if(!Array.isArray(data.students)||!data.kpiData||!data.schedule)return false;
+    _localSync=true;_syncHandle=null;
+    applyFullData(data,data.exportTime||String(DATA_VER),{writeBack:false});
+    _syncDirty=false;updateBindUI();renderCurrentData();
+    return true;
+  }catch(e){_localSync=false;updateBindUI();return false;}
 }
 
 async function loadBoundDataJson(handle) {
@@ -1609,7 +1624,7 @@ function renderOverview(){
   switchTab(savedTab);
   renderSchedule();renderKpi();
   loadBundledDataJson();
-  restoreHandle(); // auto-restore previous file binding
+  connectLocalDataServer().then(ok=>{if(!ok)restoreHandle();}); // prefer local data server, fallback to file binding
 })();
 </script>
 </body>

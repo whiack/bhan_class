@@ -763,7 +763,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 36; // increment on each deploy to force refresh
+const DATA_VER = 37; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -1615,10 +1615,22 @@ function renderOverview(){
   document.getElementById('overviewBody').innerHTML=sd.map(([n,c])=>`<tr><td><strong>${n}</strong></td><td><span class="badge" style="background:#e0e7ff;color:var(--primary);padding:2px 10px;border-radius:10px;font-size:11px">${c} 节/周</span></td><td style="font-size:11px;color:#999">${getDays(n)}</td></tr>`).join('');
 }
 
+function sexagenaryParts(){return {stems:['\u7532','\u4e59','\u4e19','\u4e01','\u620a','\u5df1','\u5e9a','\u8f9b','\u58ec','\u7678'],branches:['\u5b50','\u4e11','\u5bc5','\u536f','\u8fb0','\u5df3','\u5348','\u672a','\u7533','\u9149','\u620c','\u4ea5']};}
+function sexagenaryName(index){const p=sexagenaryParts();const i=((index%60)+60)%60;return p.stems[i%10]+p.branches[i%12];}
+function getChineseCalendarParts(date){const parts=new Intl.DateTimeFormat('zh-CN-u-ca-chinese',{year:'numeric',month:'long',day:'numeric'}).formatToParts(date);const obj={};parts.forEach(p=>{obj[p.type]=p.value});return obj;}
+function chineseMonthNumber(monthText){const s=String(monthText||'').replace('\u95f0','').replace('\u6708','');const map={'\u6b63':1,'\u4e00':1,'\u4e8c':2,'\u4e09':3,'\u56db':4,'\u4e94':5,'\u516d':6,'\u4e03':7,'\u516b':8,'\u4e5d':9,'\u5341':10,'\u5341\u4e00':11,'\u51ac':11,'\u5341\u4e8c':12,'\u814a':12};return map[s]||parseInt(s,10)||1;}
+function sexagenaryMonth(yearName,monthText){const p=sexagenaryParts();const yStem=p.stems.indexOf(String(yearName||'').slice(0,1));const firstStemMap=[2,4,6,8,0,2,4,6,8,0];const m=chineseMonthNumber(monthText);const stem=(firstStemMap[yStem<0?0:yStem]+m-1)%10;const branch=(2+m-1)%12;return p.stems[stem]+p.branches[branch];}
+function julianDayNumber(date){let y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate();if(m<=2){y--;m+=12}const A=Math.floor(y/100);const B=2-A+Math.floor(A/4);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524;}
+function sexagenaryDay(date){return sexagenaryName(julianDayNumber(date)%60);}
+function formatPlatformDateTitle(date=new Date()){const week=['\u65e5','\u4e00','\u4e8c','\u4e09','\u56db','\u4e94','\u516d'][date.getDay()];const lunar=getChineseCalendarParts(date);const yearName=lunar.yearName||sexagenaryName(date.getFullYear()-4);const monthName=sexagenaryMonth(yearName,lunar.month);const dayName=sexagenaryDay(date);return `${date.getFullYear()}\u5e74${date.getMonth()+1}\u6708${date.getDate()}\u65e5  \u661f\u671f${week}  \u519c\u5386 ${yearName}\u5e74${monthName}\u6708${dayName}\u65e5`;}
+
 // ==================== INIT ====================
 (function(){
   const now=new Date();const wd=['日','一','二','三','四','五','六'];
-  document.getElementById('pageDate').textContent=`${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 周${wd[now.getDay()]}`;
+  const titleDate=formatPlatformDateTitle(now);
+  document.getElementById('pageTitle').textContent=titleDate;
+  document.getElementById('pageDate').textContent='';
+  document.title=titleDate;
   updateBindUI();
   const savedTab=load('activeTab','progress');
   switchTab(savedTab);

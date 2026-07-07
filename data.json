@@ -1475,6 +1475,42 @@
         }
       },
       "completed": false
+    },
+    {
+      "id": 44,
+      "name": "林希文",
+      "group": "27",
+      "coming": true,
+      "master": false,
+      "vip": "",
+      "direction": "英美港本游戏",
+      "courses": {
+        "基础课1": {
+          "status": "none",
+          "text": ""
+        },
+        "基础课2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目1": {
+          "status": "doing",
+          "text": "项目课"
+        },
+        "项目2": {
+          "status": "none",
+          "text": ""
+        },
+        "项目3": {
+          "status": "none",
+          "text": ""
+        },
+        "项目4": {
+          "status": "none",
+          "text": ""
+        }
+      },
+      "completed": false
     }
   ],
   "kpiData": {
@@ -1834,5 +1870,5 @@
       []
     ]
   },
-  "exportTime": "2026-07-07T07:17:10.121Z"
+  "exportTime": "2026-07-07T07:21:11.564Z"
 }

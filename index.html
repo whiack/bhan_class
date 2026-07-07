@@ -763,7 +763,7 @@ const TIME_SLOTS = ['9:30','10:30','13:00','14:00','15:00','16:00','17:00'];
 const DAY_NAMES = ['周日','周一','周二','周三','周四'];
 
 let uid = 200;
-const DATA_VER = 39; // increment on each deploy to force refresh
+const DATA_VER = 40; // increment on each deploy to force refresh
 const STUDENT_DELETED_KEY = 'student_deleted_ids_v1';
 const DATA_JSON_STAMP_KEY = 'data_json_export_time_v1';
 
@@ -957,6 +957,9 @@ function defaultStudents() {
     mk(39,'黄泰志','27级',true,false,'V8','美研',[{s:'done',t:'大师课'},{s:'doing',t:'教研studio'},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目课'},{s:'none',t:''}],false),
     mk(40,'Christine','未分组',true,false,'','美本A计划',[{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目'},{s:'none',t:''},{s:'none',t:''}],false),
     mk(41,'屈飞','27级',true,false,'V3','港本-游戏动画',[{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'程序'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
+    mk(42,'刘齐','27级',true,false,'','全日制提赛德1+2-沟',[{s:'doing',t:'基础课'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
+    mk(43,'彭瑞迪','27级',true,false,'','提赛德1+2项目',[{s:'doing',t:'基础课'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
+    mk(44,'林希文','27级',true,false,'','英美港本游戏',[{s:'none',t:''},{s:'none',t:''},{s:'doing',t:'项目课'},{s:'none',t:''},{s:'none',t:''},{s:'none',t:''}],false),
   ];
 }
 
@@ -1650,18 +1653,17 @@ function sexagenaryDay(date){return sexagenaryName(julianDayNumber(date)%60);}
 function formatPlatformDateTitle(date=new Date()){const week=['\u65e5','\u4e00','\u4e8c','\u4e09','\u56db','\u4e94','\u516d'][date.getDay()];const lunar=getChineseCalendarParts(date);const yearName=lunar.yearName||sexagenaryName(date.getFullYear()-4);const monthName=sexagenaryMonth(yearName,lunar.month);const dayName=sexagenaryDay(date);return `${date.getFullYear()}\u5e74${date.getMonth()+1}\u6708${date.getDate()}\u65e5  \u661f\u671f${week}  \u519c\u5386 ${yearName}\u5e74${monthName}\u6708${dayName}\u65e5`;}
 
 // ==================== INIT ====================
-(function(){
-  const now=new Date();const wd=['日','一','二','三','四','五','六'];
+(async function(){
+  const now=new Date();
   const titleDate=formatPlatformDateTitle(now);
   document.getElementById('pageTitle').textContent=titleDate;
   document.getElementById('pageDate').textContent='';
   document.title=titleDate;
   updateBindUI();
-  const savedTab=load('activeTab','progress');
-  switchTab(savedTab);
-  renderSchedule();renderKpi();
-  loadBundledDataJson();
-  connectLocalDataServer().then(ok=>{if(!ok)restoreHandle();}); // prefer local data server, fallback to file binding
+  const localOk = await connectLocalDataServer();
+  const bundledOk = localOk ? false : await loadBundledDataJson();
+  if(!localOk && !bundledOk) restoreHandle();
+  if(!localOk && !bundledOk) renderCurrentData();
 })();
 </script>
 </body>

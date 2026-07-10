@@ -777,7 +777,8 @@ function load(key, fallback) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : (typeof fallback === 'function' ? fallback() : fallback); }
   catch(e) { return (typeof fallback === 'function') ? fallback() : fallback; }
 }
-function save(key,v) { localStorage.setItem(key,JSON.stringify(v)); localStorage.setItem('data_version',DATA_VER); if(!_syncPaused) autoSyncToFile(); }
+const SYNCED_DATA_KEYS=new Set(['student_board_v2_merged','kpi_board_data_merged','sch_merged']);
+function save(key,v) { localStorage.setItem(key,JSON.stringify(v)); localStorage.setItem('data_version',DATA_VER); if(!_syncPaused&&SYNCED_DATA_KEYS.has(key)) autoSyncToFile(); }
 
 // ===== Auto-sync to local data.json (File System Access API) =====
 let _syncHandle=null, _syncDirty=false, _syncPaused=false, _localSync=false;

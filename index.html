@@ -689,7 +689,7 @@ body{font-size:15px}
         <div class="menu-panel">
           <button class="btn btn-primary btn-sm" onclick="exportAll()">下载备份</button>
           <button class="btn btn-gray btn-sm" onclick="document.getElementById('importFile').click()">导入备份</button>
-          <button class="btn btn-gray btn-sm" id="bindBtn" onclick="bindSyncFile()">绑定JSON</button>
+          <button class="btn btn-gray btn-sm" id="bindBtn" onclick="configureDataSource()">绑定JSON</button>
           <button class="btn btn-gray btn-sm" onclick="bindNewFile()">新建绑定</button>
           <button class="btn btn-danger btn-sm" onclick="if(confirm('确定重置为最新数据？你在网页上的修改将丢失。')){localStorage.clear();location.reload()}">重置数据</button>
         </div>
@@ -781,18 +781,33 @@ function save(key,v) { localStorage.setItem(key,JSON.stringify(v)); localStorage
 
 // ===== Auto-sync to local data.json (File System Access API) =====
 let _syncHandle=null, _syncDirty=false, _syncPaused=false, _localSync=false;
+let _remoteSync=false, _remoteVersion=0, _remoteSocket=null, _remoteRetryTimer=null, _remoteSaveTimer=null;
 const LOCAL_SYNC_URL='http://127.0.0.1:8787/data';
+const DEFAULT_REMOTE_BASE_URL='https://uncut-retaining-geologic.ngrok-free.dev';
+const SAVED_REMOTE_BASE_URL=localStorage.getItem('schedule_server_url');
+const OBSOLETE_REMOTE_URLS=['https://luke-cardiac-prophet-silence.trycloudflare.com','https://imagine-bible-becoming-amazing.trycloudflare.com'];
+const REMOTE_BASE_URL=(SAVED_REMOTE_BASE_URL&&!OBSOLETE_REMOTE_URLS.includes(SAVED_REMOTE_BASE_URL))?SAVED_REMOTE_BASE_URL:DEFAULT_REMOTE_BASE_URL;
+const REMOTE_HEADERS={'ngrok-skip-browser-warning':'1'};
 function updateSyncBadge(){
   const b=document.getElementById('syncBadge'); if(!b)return;
   b.style.display='inline-flex';
+  if(_remoteSync){b.textContent=_syncDirty?'\u8fdc\u7a0b\u540c\u6b65\u4e2d':'\u8fdc\u7a0b\u5df2\u540c\u6b65';b.className='sync-badge '+(_syncDirty?'sync-wait':'sync-ok');b.title='\u5df2\u8fde\u63a5\u8fdc\u7a0b\u8bfe\u7a0b\u670d\u52a1\u5668';return}
   if(_localSync){b.textContent=_syncDirty?'\u672c\u5730\u540c\u6b65\u4e2d':'\u672c\u5730\u81ea\u52a8';b.className='sync-badge '+(_syncDirty?'sync-wait':'sync-ok');b.title='\u5df2\u81ea\u52a8\u8fde\u63a5\u672c\u673a data.json\uff0c\u65e0\u9700\u624b\u52a8\u7ed1\u5b9a';return}
   if(!_syncHandle){b.textContent=_syncDirty?'\u672a\u7ed1\u5b9a \u00b7 \u6709\u4fee\u6539':'\u672a\u7ed1\u5b9a';b.className='sync-badge sync-off';b.title='\u672a\u8fde\u63a5\u672c\u5730\u52a9\u624b\uff0c\u4e5f\u6ca1\u6709\u7ed1\u5b9a data.json\u3002\u672c\u6b21\u4fee\u6539\u53ea\u4fdd\u5b58\u5728\u5f53\u524d\u6d4f\u89c8\u5668\u91cc\u3002';return}
   b.textContent=_syncDirty?'\u540c\u6b65\u4e2d':'\u5df2\u540c\u6b65';b.className='sync-badge '+(_syncDirty?'sync-wait':'sync-ok');b.title=_syncDirty?'\u6b63\u5728\u5199\u5165\u5df2\u7ed1\u5b9a\u7684 data.json':'\u5df2\u81ea\u52a8\u540c\u6b65\u5230\u7ed1\u5b9a\u7684 data.json';
 }
-function updateBindUI(){ const b=document.getElementById('bindBtn'); if(!b)return; b.textContent=(_localSync?'\u672c\u5730\u81ea\u52a8':(_syncHandle?'\u5df2\u7ed1\u5b9a':'\u7ed1\u5b9aJSON')); b.style.background=(_localSync||_syncHandle)?'#dcfce7':''; b.style.color=(_localSync||_syncHandle)?'#166534':''; updateSyncBadge(); }
-function handleSyncBadgeClick(){ if(_localSync){if(_syncDirty)saveFileNow();return} if(!_syncHandle){bindSyncFile();return} if(_syncDirty)saveFileNow(); }
-async function saveFileNow(){ const d={students,kpiData,schedule:schData,exportTime:new Date().toISOString()}; if(_localSync){try{const res=await fetch(LOCAL_SYNC_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});if(!res.ok)throw new Error('local sync failed');_syncDirty=false;updateSyncBadge();return}catch(e){_localSync=false;_syncDirty=true;updateSyncBadge();}} if(!_syncHandle){updateSyncBadge();return} _syncHandle.createWritable().then(w=>{w.write(JSON.stringify(d,null,2)).then(()=>{w.close();_syncDirty=false;updateSyncBadge()}).catch(()=>{_syncDirty=true;updateSyncBadge()})}).catch(()=>{_syncHandle=null;updateBindUI()}) }
-function autoSyncToFile(){ _syncDirty=true; updateSyncBadge(); saveFileNow(); }
+function updateBindUI(){ const b=document.getElementById('bindBtn'); if(!b)return; b.textContent=(_remoteSync?'\u8fdc\u7a0b\u670d\u52a1\u5668':(_localSync?'\u672c\u5730\u81ea\u52a8':(_syncHandle?'\u5df2\u7ed1\u5b9a':'\u7ed1\u5b9aJSON'))); b.style.background=(_remoteSync||_localSync||_syncHandle)?'#dcfce7':''; b.style.color=(_remoteSync||_localSync||_syncHandle)?'#166534':''; updateSyncBadge(); }
+function handleSyncBadgeClick(){ if(_remoteSync||_localSync){if(_syncDirty)saveFileNow();return} if(!_syncHandle){bindSyncFile();return} if(_syncDirty)saveFileNow(); }
+function configureDataSource(){
+  if(!_remoteSync){bindSyncFile();return}
+  const next=prompt('\u8fdc\u7a0b\u670d\u52a1\u5668\u5730\u5740\uff1a',REMOTE_BASE_URL);
+  if(next===null)return;
+  const url=next.trim().replace(/\/$/,'');
+  if(!/^https?:\/\//i.test(url)){alert('\u8bf7\u8f93\u5165\u4ee5 http:// \u6216 https:// \u5f00\u5934\u7684\u5730\u5740');return}
+  localStorage.setItem('schedule_server_url',url);location.reload();
+}
+async function saveFileNow(){ const d={students,kpiData,schedule:schData,exportTime:new Date().toISOString()}; if(_remoteSync){await saveRemoteData(d);return} if(_localSync){try{const res=await fetch(LOCAL_SYNC_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});if(!res.ok)throw new Error('local sync failed');_syncDirty=false;updateSyncBadge();return}catch(e){_localSync=false;_syncDirty=true;updateSyncBadge();}} if(!_syncHandle){updateSyncBadge();return} _syncHandle.createWritable().then(w=>{w.write(JSON.stringify(d,null,2)).then(()=>{w.close();_syncDirty=false;updateSyncBadge()}).catch(()=>{_syncDirty=true;updateSyncBadge()})}).catch(()=>{_syncHandle=null;updateBindUI()}) }
+function autoSyncToFile(){ _syncDirty=true; updateSyncBadge(); if(_remoteSync){clearTimeout(_remoteSaveTimer);_remoteSaveTimer=setTimeout(saveFileNow,250);return} saveFileNow(); }
 
 // Persist handle in IndexedDB so it survives page reloads
 function storeHandle(h){ const r=indexedDB.open('sync_fs',1); r.onupgradeneeded=()=>r.result.createObjectStore('handles'); r.onsuccess=()=>{const t=r.result.transaction('handles','readwrite');t.objectStore('handles').put(h,'fh');t.oncomplete=()=>r.result.close()} }
@@ -875,6 +890,86 @@ async function connectLocalDataServer(){
     _syncDirty=false;updateBindUI();renderCurrentData();
     return true;
   }catch(e){_localSync=false;updateBindUI();return false;}
+}
+
+function isEmptyRemoteData(data){
+  const noStudents=!Array.isArray(data?.students)||data.students.length===0;
+  const noKpi=!data?.kpiData||Object.values(data.kpiData).every(v=>!Array.isArray(v)||v.length===0);
+  const noSchedule=!data?.schedule||Object.keys(data.schedule).length===0;
+  return noStudents&&noKpi&&noSchedule;
+}
+
+async function connectRemoteDataServer(){
+  try{
+    const res=await fetch(REMOTE_BASE_URL+'/api/schedule',{cache:'no-store',headers:REMOTE_HEADERS});
+    if(!res.ok)throw new Error('remote read failed');
+    const row=await res.json();
+    if(!row||!row.data||typeof row.version!=='number')throw new Error('bad remote data');
+    _remoteSync=true;_localSync=false;_syncHandle=null;_remoteVersion=row.version;
+    // A newly created empty server must not erase the existing browser data.
+    if(!isEmptyRemoteData(row.data)){
+      applyFullData(row.data,row.data.exportTime||String(row.version),{writeBack:false});
+      renderCurrentData();
+    }
+    _syncDirty=false;updateBindUI();connectRemoteWebSocket();
+    return true;
+  }catch(e){_remoteSync=false;updateBindUI();return false;}
+}
+
+async function fetchLatestRemoteData(){
+  if(!_remoteSync)return false;
+  try{
+    const res=await fetch(REMOTE_BASE_URL+'/api/schedule',{cache:'no-store',headers:REMOTE_HEADERS});
+    if(!res.ok)throw new Error('remote refresh failed');
+    const row=await res.json();
+    if(row.version<=_remoteVersion)return true;
+    _remoteVersion=row.version;
+    if(!isEmptyRemoteData(row.data)){
+      applyFullData(row.data,row.data.exportTime||String(row.version),{writeBack:false});
+      renderCurrentData();
+    }
+    _syncDirty=false;updateSyncBadge();return true;
+  }catch(e){updateSyncBadge();return false;}
+}
+
+async function saveRemoteData(data){
+  const editPassword=prompt('\u8bf7\u8f93\u5165\u4fee\u6539\u5bc6\u7801\uff1a');
+  if(editPassword===null||editPassword===''){
+    _syncDirty=true;updateSyncBadge();
+    alert('\u672a\u8f93\u5165\u5bc6\u7801\uff0c\u672c\u6b21\u4fee\u6539\u5c1a\u672a\u4fdd\u5b58\u5230\u670d\u52a1\u5668\u3002');
+    return false;
+  }
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),15000);
+  try{
+    const res=await fetch(REMOTE_BASE_URL+'/api/schedule',{method:'PUT',headers:{'Content-Type':'application/json','X-Edit-Password':editPassword,...REMOTE_HEADERS},body:JSON.stringify({data,expectedVersion:_remoteVersion}),signal:controller.signal});
+    if(res.status===401){_syncDirty=true;updateSyncBadge();alert('\u5bc6\u7801\u9519\u8bef\uff0c\u672c\u6b21\u4fee\u6539\u672a\u4fdd\u5b58\u3002');return false}
+    if(res.status===409){
+      const conflict=await res.json();
+      _remoteVersion=conflict.serverVersion;
+      if(conflict.serverData){applyFullData(conflict.serverData,conflict.serverData.exportTime||String(conflict.serverVersion),{writeBack:false});renderCurrentData();}
+      _syncDirty=false;updateSyncBadge();
+      alert('\u5176\u4ed6\u8bbe\u5907\u5df2\u7ecf\u4fee\u6539\u4e86\u6570\u636e\uff0c\u9875\u9762\u5df2\u5237\u65b0\u4e3a\u670d\u52a1\u5668\u6700\u65b0\u7248\uff0c\u8bf7\u91cd\u65b0\u8fdb\u884c\u672c\u6b21\u4fee\u6539\u3002');
+      return false;
+    }
+    if(!res.ok)throw new Error('remote write failed');
+    const result=await res.json();
+    if(result.row?.version)_remoteVersion=result.row.version;
+    _syncDirty=false;updateSyncBadge();return true;
+  }catch(e){_syncDirty=true;updateSyncBadge();alert(e.name==='AbortError'?'\u670d\u52a1\u5668\u4fdd\u5b58\u8d85\u65f6\uff0c\u8bf7\u7a0d\u540e\u70b9\u51fb\u540c\u6b65\u72b6\u6001\u91cd\u8bd5\u3002':'\u4fdd\u5b58\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc\u540e\u91cd\u8bd5\u3002');return false;}
+  finally{clearTimeout(timeout)}
+}
+
+function connectRemoteWebSocket(){
+  clearTimeout(_remoteRetryTimer);
+  if(_remoteSocket&&(_remoteSocket.readyState===0||_remoteSocket.readyState===1))return;
+  try{
+    const wsUrl=REMOTE_BASE_URL.replace(/^http/,'ws')+'/ws';
+    _remoteSocket=new WebSocket(wsUrl);
+    _remoteSocket.onmessage=e=>{try{const msg=JSON.parse(e.data);if(msg.type==='change'&&msg.table==='course_schedule'&&msg.version>_remoteVersion)fetchLatestRemoteData()}catch(_){}};
+    _remoteSocket.onclose=()=>{_remoteSocket=null;_remoteRetryTimer=setTimeout(connectRemoteWebSocket,3000)};
+    _remoteSocket.onerror=()=>_remoteSocket?.close();
+  }catch(e){_remoteRetryTimer=setTimeout(connectRemoteWebSocket,3000)}
 }
 
 async function loadBoundDataJson(handle) {
@@ -1660,10 +1755,11 @@ function formatPlatformDateTitle(date=new Date()){const week=['\u65e5','\u4e00',
   document.getElementById('pageDate').textContent='';
   document.title=titleDate;
   updateBindUI();
-  const localOk = await connectLocalDataServer();
-  const bundledOk = localOk ? false : await loadBundledDataJson();
-  if(!localOk && !bundledOk) restoreHandle();
-  if(!localOk && !bundledOk) renderCurrentData();
+  const remoteOk = await connectRemoteDataServer();
+  const localOk = remoteOk ? false : await connectLocalDataServer();
+  const bundledOk = (remoteOk||localOk) ? false : await loadBundledDataJson();
+  if(!remoteOk && !localOk && !bundledOk) restoreHandle();
+  if(!remoteOk && !localOk && !bundledOk) renderCurrentData();
 })();
 </script>
 </body>
